@@ -1,5 +1,5 @@
 # 프로젝트 이름
-
+ # 테스트트트트ㅡ트틑
 <p align="center">
   <br>
   <img width="300px" src="https://github.com/java-is-coffee/FRONT-Groomy_IDE/assets/62227770/579e4274-af17-45a4-ab6f-e568a25446d4"/>
@@ -28,7 +28,6 @@
 ### 로그인
   - 이메일과 비밀번호로 로그인
   - 구글 계정으로 로그인
- - 진짜 테스트트
 
 ### 회원가입
   - 이메일, 비밀번호, 이름, 닉네임을 통해 회원가입 
