@@ -1,5 +1,5 @@
 # 프로젝트 이름
- # 테스트트트트ㅡ트틑
+
 <p align="center">
   <br>
   <img width="300px" src="https://github.com/java-is-coffee/FRONT-Groomy_IDE/assets/62227770/579e4274-af17-45a4-ab6f-e568a25446d4"/>
