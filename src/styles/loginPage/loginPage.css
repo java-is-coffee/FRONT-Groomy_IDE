@@ -1,0 +1,247 @@
+.logoPosition {
+  position: absolute;
+  width: 394px;
+  height: 366px;
+  left: 667px;
+  top: 147px;
+}
+
+.login_mid {
+  position: absolute;
+  left: -21.06%;
+  right: -78.94%;
+  top: 106.18%;
+  bottom: -106.18%;
+  background: #f0f6fb;
+}
+
+.loginComponent {
+  box-sizing: border-box;
+  position: absolute;
+
+  width: 600px;
+  height: 631px;
+  left: 575px;
+  top: 357px;
+  border-radius: 3px;
+}
+
+/* 로그인 컴포넌트 중앙 정렬 */
+.loginBox {
+  /* div */
+
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+
+  border-radius: 3px;
+}
+
+.passwordInput {
+  /* 비밀번호 input */
+
+  box-sizing: border-box;
+  position: absolute;
+
+  left: 20.23%;
+  right: 20.43%;
+  top: 46.91%;
+  bottom: 48.49%;
+
+  background: #ffffff;
+  border: 1px solid #062b52;
+  border-radius: 3px;
+}
+
+.idInput {
+  /* 이메일&아이디 input */
+
+  box-sizing: border-box;
+  position: absolute;
+
+  left: 20.23%;
+  right: 20.43%;
+  top: 40.57%;
+  bottom: 54.83%;
+
+  background: #ffffff;
+  border: 1px solid #062b52;
+  border-radius: 3px;
+}
+
+.midWord {
+  /* 또는 */
+
+  position: absolute;
+  left: 48.64%;
+  right: 46.89%;
+  top: 35.66%;
+  bottom: 62.12%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+
+  color: #7f7f7f;
+}
+
+.midLinearLineLeft {
+  /* Line 3 */
+  position: absolute;
+  left: 20.23%;
+  right: 52.53%;
+  top: 36.77%;
+  bottom: 63.23%;
+
+  border: 1px solid #7f7f7f;
+}
+
+.midLinearLineRight {
+  /* Line 5 */
+
+  position: absolute;
+  left: 54.09%;
+  right: 18.68%;
+  top: 36.77%;
+  bottom: 63.23%;
+
+  border: 1px solid #7f7f7f;
+}
+
+.midLogo div {
+  /* Groomy IDE */
+  position: absolute;
+  left: 28.79%;
+  right: 28.79%;
+  top: 12.84%;
+  bottom: 78.76%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 150%;
+  /* or 60px */
+  letter-spacing: -0.023em;
+
+  color: #062b52;
+}
+
+.loginBtn {
+  box-sizing: border-box;
+
+  position: absolute;
+  left: 20.23%;
+  right: 20.43%;
+  top: 55.15%;
+  bottom: 40.25%;
+
+  background: #062b52;
+  border-radius: 3px;
+}
+
+.loginBtn span {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #ffffff;
+}
+
+.registerBtn {
+  box-sizing: border-box;
+
+  position: absolute;
+  left: 20.23%;
+  right: 20.43%;
+  top: 61.33%;
+  bottom: 34.07%;
+
+  background: #062b52;
+  border-radius: 3px;
+}
+
+.registerBtn span {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+
+  color: #ffffff;
+}
+
+.checkBox {
+  /* checkBox */
+
+  position: absolute;
+  left: 20.23%;
+  right: 77.43%;
+  top: 68.15%;
+  bottom: 29.95%;
+  margin: -1.5px;
+
+  background: #7f7f7f;
+}
+
+.remainText {
+  /* 로그인 상태 유지 수정 필요 */
+
+  position: absolute;
+  left: 23.74%;
+  right: 58.75%;
+  top: 67.67%;
+  bottom: 30.74%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  /* or 18px */
+  letter-spacing: -0.023em;
+
+  color: #7f7f7f;
+}
+
+.resetPassword {
+  /* 비밀번호 재설정 */
+
+  position: absolute;
+  left: 64.2%;
+  right: 20.04%;
+  top: 67.83%;
+  bottom: 29.32%;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+  letter-spacing: -0.023em;
+
+  color: #7f7f7f;
+}
+
+.oauthLogin {
+  /* 회원가입 */
+
+  box-sizing: border-box;
+
+  position: absolute;
+  left: 20.23%;
+  right: 20.43%;
+  top: 29.16%;
+  bottom: 66.24%;
+
+  background: #f0f6fb;
+  border: 1px solid #062b52;
+  border-radius: 3px;
+}
