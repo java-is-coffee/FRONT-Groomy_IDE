@@ -1,0 +1,9 @@
+:root {
+    --main-theme-color: #f0f6fb;
+    --sub-theme-color: #062b52;
+  }
+  
+  .body {
+    background-color: var(--main-theme-color);
+  }
+  

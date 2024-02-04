@@ -1,15 +1,10 @@
 import React from "react";
-import RegisterComponent from "../components/login/registerComponent";
 
 function register() {
-  return (
-    <div>
-      <RegisterComponent/>
-    </div>
-  );
+  return <div></div>;
 }
 
-export default register; 
+export default register;
 
 /* 
 이메일

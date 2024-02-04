@@ -4,6 +4,7 @@ import Login from "./routes/login";
 import Register from "./routes/register";
 import Home from "./routes/home";
 import "./styles/style.css";
+import ResetPassword from "./routes/resetPassword";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
         </Routes>
       </Router>
