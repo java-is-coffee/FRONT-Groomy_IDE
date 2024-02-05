@@ -145,3 +145,12 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.check-text {
+  display: inline;
+  color: red;
+}
+
+.display-none {
+  display: none !important;
+}
