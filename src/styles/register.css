@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* 
   body{
     background-color: var(--main-theme-color);
@@ -122,3 +123,131 @@
   text-align: center;
   margin-bottom: 5px;
 }
+=======
+
+  /* 전체 컨테이너 */
+  .all {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    font-family: "Inter";
+    text-align: center;
+  }
+
+  /* 로고 */
+  .logo-position {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  /* 구글*/
+  .oauth-login-btn {
+    display: flex;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto; 
+    padding: 10px; 
+    font-size: 1rem;
+    color: white;
+
+    background-color: #062b52; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+   /* 구분선 + 입력칸 */
+  .register-component {
+    display: block;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    margin: 10px auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* 구분선 */
+  .line-separator {
+    display: flex;
+    margin: 10px 0;
+    align-items: center;
+    justify-content: center;
+}
+  .or {
+    padding: 0px 10px 10px 10px;
+    color: #7f7f7f;
+  }
+  .line-left, .line-right {
+    flex: 1;
+    height: 1px;
+    border: 1px solid #7f7f7f;
+  }
+
+  /* 입력칸 */
+  .id-input, .password-input, .password-input_2, .name-input, .nickname-input {
+    text-align: center;
+    width: 500px;
+    padding-top: 10px; 
+    padding-bottom: 10px; 
+    margin-bottom: 10px; 
+    background: #ffffff;
+
+    border: 1px solid #062b52;
+    border-radius: 3px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  /* 회원가입 버튼 */
+  .register-btn {
+    display: flex;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    margin: 0px auto; 
+    padding: 10px; 
+    font-size: 1rem;
+    color: white;
+
+    background-color: #062b52; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; 
+  }
+
+  /* 로그인 확인 */
+  .already { 
+    width: 500px; 
+    display: flex;
+    font-size: 14px;
+    color: #7f7f7f;
+    margin-top: 40px;
+    margin-bottom: 0px; 
+    margin-right: 0px;
+    padding: 10px;
+    justify-content: space-between;
+  }
+
+  .q {
+    margin-right: auto;
+    display: inline-block;
+  }
+
+  .login {
+    margin-right: auto;
+    display: inline-block; 
+    color: #7f7f7f;
+    text-decoration: underline;
+    cursor: pointer; 
+  }
+>>>>>>> 5f96876 (Refactor: 회원가입 페이지 수정)
