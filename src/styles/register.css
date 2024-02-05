@@ -7,6 +7,7 @@
 /* 
   body{
     background-color: var(--main-theme-color);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
   } */
@@ -210,7 +211,10 @@
     font-family: "Inter"
   }
 >>>>>>> 7210331 (Refactor : GI-13 로그인css 리팩토링)
+=======
+>>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
 
+<<<<<<< HEAD
   /* 로고 */
 .logo-position {
   display: flex;
@@ -249,22 +253,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 1rem;
-  cursor: pointer;
-}
-
-<<<<<<< HEAD
-  .login {
-    margin-right: auto;
-    display: inline-block; 
-    color: #7f7f7f;
-    text-decoration: underline;
-    cursor: pointer; 
-  }
->>>>>>> 5f96876 (Refactor: 회원가입 페이지 수정)
 =======
-    font-family: "Inter"
-=======
->>>>>>> da01613 (Feat : GI-14 회원가입 기본 기능 추가)
   } */
 
 .register-page {
@@ -295,9 +284,133 @@
   background-color: #062b52;
   border: none;
   border-radius: 5px;
+>>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
   cursor: pointer;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+  .login {
+    margin-right: auto;
+    display: inline-block; 
+    color: #7f7f7f;
+    text-decoration: underline;
+    cursor: pointer; 
+  }
+>>>>>>> 5f96876 (Refactor: 회원가입 페이지 수정)
+=======
+    font-family: "Inter"
+=======
+>>>>>>> da01613 (Feat : GI-14 회원가입 기본 기능 추가)
+  } */
+
+.register-page {
+=======
+/* 구분선 */
+<<<<<<< HEAD
+.line-separator {
+=======
+.lineSeparator {
+>>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
+>>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+<<<<<<< HEAD
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Inter";
+=======
+}
+<<<<<<< HEAD
+.or {
+  padding: 0px 10px 10px 10px;
+  color: #7f7f7f;
+}
+.line-left,
+.line-right {
+  flex: 1;
+  height: 1px;
+  border: 1px solid #7f7f7f;
+>>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
+}
+
+.logoPosition {
+  margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */
+  text-align: center;
+  width: 100%;
+}
+
+/* 구글 버튼 */
+.oauthLoginBtn {
+  display: block;
+  width: 68%;
+
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+
+=======
+
+.or {
+  padding: 0px 10px 10px 10px;
+  color: #7f7f7f;
+}
+
+.LineLeft,
+.LineRight {
+  flex: 1;
+  height: 1px;
+  border: 1px solid #7f7f7f;
+}
+
+/* 정보 입력 창 */
+.registerComponent {
+  display: block;
+  align-items: center;
+  flex-direction: column;
+  width: 70%;
+  margin: 10px auto;
+
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.idInput,
+.passwordInput,
+.passwordInput_2,
+.nameInput,
+.nicknameInput {
+  width: calc(100% - 40px);
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #ffffff;
+
+  border: 1px solid #062b52;
+  border-radius: 3px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 회원가입 - 버튼 */
+.registerBtn {
+  display: block;
+  width: 100%;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+
+>>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
+  background-color: #062b52;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+<<<<<<< HEAD
 /* 구분선 */
 .lineSeparator {
 =======
@@ -434,6 +547,9 @@
 }
 >>>>>>> d26509d (Feat : GI-14 회원가입페이지 이메일 중복체크 비밀번호 재입력 체크 기능)
 =======
+=======
+<<<<<<< HEAD
+>>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
 /* 로그인 확인 */
 .already {
   width: 500px;
@@ -458,5 +574,29 @@
   color: #7f7f7f;
   text-decoration: underline;
   cursor: pointer;
+=======
+/* 이미 계정이 있으세요? */
+.already {
+  display: block;
+  width: 70%;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 1rem;
+  color: #7f7f7f;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+/* 로그인 하기 */
+.ready {
+  display: block;
+  width: 70%;
+  margin: 10px auto;
+  padding: 10px;
+  font-size: 1rem;
+  color: #7f7f7f;
+  text-align: center;
+  margin-bottom: 5px;
+>>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
 }
 >>>>>>> 48859c4 (Refactor: 회원가입 페이지 수정)
