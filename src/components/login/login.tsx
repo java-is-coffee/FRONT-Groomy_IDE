@@ -62,12 +62,12 @@ function LoginComponent() {
     };
 
     try {
-      const response = await axios.post(baseUrl, request);
+      let response = await axios.post(baseUrl, request);
 
-      const result = response.data.data;
-      const code = response.data.status.code;
+      let result = response.data.data;
+      let code = response.data.status.code;
 
-      if (code === 200) {
+      if (code === "200") {
         if (localStorage.getItem("accessToken") === null) {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
@@ -75,7 +75,7 @@ function LoginComponent() {
         } else {
           goMain();
         }
-      } else if (code === 302) {
+      } else if (code === "302") {
         alert("잘못된 정보를 입력하셨습니다");
       }
     } catch (error) {
@@ -98,9 +98,9 @@ function LoginComponent() {
 
         {/* 중앙 분리대 */}
         <div className="line-separator">
-          <span className="mid-line"></span>
+          <span className="line"></span>
           <span className="or">or</span>
-          <span className="mid-line"></span>
+          <span className="line"></span>
         </div>
 
         {/* 로그인칸 */}
@@ -113,14 +113,12 @@ function LoginComponent() {
               id="email"
               placeholder="이메일을 입력하세요."
               value={email}
-              required
               onChange={onChangeEmail}
             />
             <br />
             <input
               type="password"
               className="input-box"
-              required
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
