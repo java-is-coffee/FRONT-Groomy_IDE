@@ -9,12 +9,20 @@ import RegisterComponent from "../components/register/registerComponent";
 import Register from "../components/register/register";
 =======
 import RegisterComponent from "../components/register/registerComponent";
+<<<<<<< HEAD
 >>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
+<<<<<<< HEAD
 >>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
+=======
+=======
+import RegisterComponent from "../components/register/registerComponent";
+>>>>>>> 6c3ba16 (Feat : GI-14 회원가입 기본 기능 추가)
+>>>>>>> e8767ed (Feat : GI-14 회원가입 기본 기능 추가)
 
 function register() {
   return (
     <div>
+<<<<<<< HEAD
       <RegisterComponent />
     </div>
   );
@@ -45,6 +53,11 @@ function register() {
 >>>>>>> da01613 (Feat : GI-14 회원가입 기본 기능 추가)
 =======
 >>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
+=======
+      <Register />
+    </div>
+  );
+>>>>>>> e8767ed (Feat : GI-14 회원가입 기본 기능 추가)
 }
 
 export default register;

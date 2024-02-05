@@ -3,10 +3,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 7d291f6 (Refactor : GI-13 로그인css 리팩토링)
 =======
 >>>>>>> 30ebe99 (Refactor: 회원가입 페이지 수정)
+=======
+=======
+>>>>>>> 6c3ba16 (Feat : GI-14 회원가입 기본 기능 추가)
+>>>>>>> e8767ed (Feat : GI-14 회원가입 기본 기능 추가)
 /* 
   body{
     background-color: var(--main-theme-color);
@@ -218,6 +223,7 @@
 >>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   /* 로고 */
 .logo-position {
   display: flex;
@@ -264,12 +270,21 @@
 /* 전체 컨테이너 */
 .all {
 >>>>>>> 20a3115 (Refactor: 회원가입 페이지 수정)
+=======
+  } */
+
+.register-page {
+>>>>>>> 6c3ba16 (Feat : GI-14 회원가입 기본 기능 추가)
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   font-family: "Inter";
+}
+
+.logoPosition {
+  margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */
   text-align: center;
 }
 
