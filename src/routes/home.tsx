@@ -3,47 +3,41 @@ import Sidebar from "../components/home/sidebar";
 import ProjectsContainer from "../components/home/projectsContainer";
 import "../styles/home/home.css";
 import Nav from "../components/home/navigator";
-import axios from "axios";
-
-const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member";
-
-interface UserInfo {
-  memberId: number;
-  email: string;
-  name: string;
-  nickname: string;
-  helpNumber: number;
-  role: string;
-}
+import {
+  MemberInfo,
+  getMemberInfo,
+} from "../components/api/auth/getMemberInfo";
 
 const Home: React.FC = () => {
   // user 정보 저장용 state
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [sideClose, setSideClosed] = useState(false);
+  const [memberInfo, setMemberInfo] = useState<MemberInfo | null>(null);
+  const [sideClose, setSideClosed] = useState<boolean>(false);
   const accessToken = localStorage.getItem("accessToken");
   const handleSidebar = (changeState: boolean) => {
     setSideClosed(changeState);
   };
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        if (accessToken) {
-          const response = await axios.get<UserInfo>(`${USER_API_URL}/my`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-          sessionStorage.setItem("user", JSON.stringify(response.data));
-          setUserInfo(response.data);
+    const fetchMemberData = async () => {
+      const hasMemberInfo = await getMemberInfo();
+      if (hasMemberInfo) {
+        const storedMemberInfo = sessionStorage.getItem("member");
+        if (storedMemberInfo) {
+          try {
+            const memberInfoObj: MemberInfo = JSON.parse(storedMemberInfo);
+            setMemberInfo(memberInfoObj);
+          } catch (error) {
+            console.error("Auth error", error);
+            setMemberInfo(null);
+          }
         } else {
-          console.error("accessToken 오류...");
+          setMemberInfo(null);
         }
-      } catch (error) {
-        console.error("서버 오류입니다.", error);
       }
     };
-    fetchUserInfo();
+
+    if (!memberInfo) {
+      fetchMemberData();
+    }
   }, [accessToken]);
   return (
     <div>
@@ -55,7 +49,7 @@ const Home: React.FC = () => {
           <Sidebar
             onChange={handleSidebar}
             sideClose={sideClose}
-            userInfo={userInfo}
+            userInfo={memberInfo}
           />
         </aside>
         <div className={`main-content ${sideClose ? "wide" : ""}`}>
