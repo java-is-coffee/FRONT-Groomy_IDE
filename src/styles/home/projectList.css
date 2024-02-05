@@ -1,0 +1,8 @@
+.projects {
+  padding-top: 32px;
+  padding-left: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: flex-start;
+}
