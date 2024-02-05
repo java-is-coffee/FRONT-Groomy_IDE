@@ -2,12 +2,16 @@ import React, { useCallback, useEffect, useState } from "react";
 <<<<<<< HEAD
 <<<<<<< HEAD
 import "../../styles/loginPage/login.css";
+<<<<<<< HEAD
 =======
 import "../../styles/loginPage/loginPage.css";
 >>>>>>> f3e3572 (Rename : GI-13 로그인 컴포넌트 이동)
 =======
 import "../../styles/loginPage/login.css";
 >>>>>>> 7d291f6 (Refactor : GI-13 로그인css 리팩토링)
+=======
+import "../../styles/loginPage/login.css";
+>>>>>>> 7210331 (Refactor : GI-13 로그인css 리팩토링)
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -76,6 +80,10 @@ function LoginComponent() {
       const code = response.data.status.code;
 
       if (code === "200") {
+<<<<<<< HEAD
+=======
+        alert("로그인 성공");
+>>>>>>> 7210331 (Refactor : GI-13 로그인css 리팩토링)
         if (localStorage.getItem("accessToken") === null) {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
@@ -105,10 +113,17 @@ function LoginComponent() {
         </div>
 
         {/* 중앙 분리대 */}
+<<<<<<< HEAD
         <div className="line-separator">
           <span className="line"></span>
           <span className="or">or</span>
           <span className="line"></span>
+=======
+        <div>
+          <span className="midLinearLineLeft"></span>
+          <span className="midWord">or</span>
+          <span className="midLinearLineRight"></span>
+>>>>>>> 7210331 (Refactor : GI-13 로그인css 리팩토링)
         </div>
 
         {/* 로그인칸 */}
@@ -127,7 +142,11 @@ function LoginComponent() {
             <br />
             <input
               type="password"
+<<<<<<< HEAD
               className="input-box"
+=======
+              className="passwordInput"
+>>>>>>> 7210331 (Refactor : GI-13 로그인css 리팩토링)
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
