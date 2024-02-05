@@ -122,3 +122,12 @@
   text-align: center;
   margin-bottom: 5px;
 }
+
+.check-text {
+  display: inline;
+  color: red;
+}
+
+.display-none {
+  display: none !important;
+}
