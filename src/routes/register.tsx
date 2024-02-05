@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import RegisterComponent from "../components/register/registerComponent";
 
 function register() {
@@ -17,6 +18,14 @@ function register() {
       <RegisterComponent />
     </div>
   );
+=======
+import RegisterComponent from '../components/Register';
+
+function register() {
+  return <div>
+     <RegisterComponent />
+  </div>;
+>>>>>>> b8a3880 (Feat : 이름 수정)
 }
 
 export default register;
