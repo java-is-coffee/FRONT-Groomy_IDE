@@ -127,6 +127,7 @@
   text-align: center;
   margin-bottom: 5px;
 }
+<<<<<<< HEAD
 =======
 
   /* 전체 컨테이너 */
@@ -381,3 +382,14 @@
   margin-bottom: 5px;
 }
 >>>>>>> 7d291f6 (Refactor : GI-13 로그인css 리팩토링)
+=======
+
+.check-text {
+  display: inline;
+  color: red;
+}
+
+.display-none {
+  display: none !important;
+}
+>>>>>>> d26509d (Feat : GI-14 회원가입페이지 이메일 중복체크 비밀번호 재입력 체크 기능)
