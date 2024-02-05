@@ -155,6 +155,7 @@ function RegisterComponent() {
             placeholder="이메일을 입력하세요."
             onChange={onChangeEmail}
             onBlur={checkDupelicate}
+            required
           />{" "}
           <div
             id="wrong-password"
@@ -168,6 +169,7 @@ function RegisterComponent() {
             className="passwordInput"
             placeholder="비밀번호를 입력하세요."
             onChange={onChangePassword}
+            required
           />
           <input
             type="password"
@@ -176,6 +178,7 @@ function RegisterComponent() {
             placeholder="비밀번호를 다시 입력하세요."
             onChange={onChangeCheckPassword}
             onBlur={onBlurCheckPassword}
+            required
           />{" "}
           <div
             id="wrong-password"
@@ -189,6 +192,7 @@ function RegisterComponent() {
             className="nameInput"
             placeholder="이름을 입력하세요."
             onChange={onChangeName}
+            required
           />
           <input
             type="text"
@@ -196,6 +200,7 @@ function RegisterComponent() {
             className="nicknameInput"
             placeholder="닉네임을 입력하세요."
             onChange={onChangeNickname}
+            required
           />
           <button type="submit" className="registerBtn">
             회원가입
