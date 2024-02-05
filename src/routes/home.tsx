@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/home/sidebar";
-import ProjectList from "../components/home/projectList";
+import ProjectsContainer from "../components/home/projectsContainer";
 import "../styles/home/home.css";
 import Nav from "../components/home/navigator";
 import axios from "axios";
@@ -61,7 +61,7 @@ const Home: React.FC = () => {
           />
         </aside>
         <div className={`main-content ${sideClose ? "wide" : ""}`}>
-          <ProjectList onChange={handleSidebar} sideClose={sideClose} />
+          <ProjectsContainer onChange={handleSidebar} sideClose={sideClose} />
         </div>
       </div>
     </div>

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { VscProject } from "react-icons/vsc";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa6";
 import "../../styles/home/sidebar.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface UserInfo {
   memberId: number;
