@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../../styles/loginPage/login.css";
+import "../../styles/loginPage/loginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -67,7 +67,8 @@ function LoginComponent() {
       const result = response.data.data;
       const code = response.data.status.code;
 
-      if (code === 200) {
+      if (code === "200") {
+        alert("로그인 성공");
         if (localStorage.getItem("accessToken") === null) {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
@@ -97,10 +98,10 @@ function LoginComponent() {
         </div>
 
         {/* 중앙 분리대 */}
-        <div className="line-separator">
-          <span className="mid-line"></span>
-          <span className="or">or</span>
-          <span className="mid-line"></span>
+        <div>
+          <span className="midLinearLineLeft"></span>
+          <span className="midWord">or</span>
+          <span className="midLinearLineRight"></span>
         </div>
 
         {/* 로그인칸 */}
@@ -119,8 +120,7 @@ function LoginComponent() {
             <br />
             <input
               type="password"
-              className="input-box"
-              required
+              className="passwordInput"
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
