@@ -1,12 +1,8 @@
 import React from "react";
 import RegisterComponent from "../components/register/registerComponent";
+import RegisterComponent from "../components/register/registerComponent";
 
 function register() {
-  return (
-    <div>
-      <RegisterComponent />
-    </div>
-  );
   return (
     <div>
       <RegisterComponent />
