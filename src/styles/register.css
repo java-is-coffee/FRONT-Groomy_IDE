@@ -599,4 +599,16 @@
   margin-bottom: 5px;
 >>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
 }
+<<<<<<< HEAD
 >>>>>>> 48859c4 (Refactor: 회원가입 페이지 수정)
+=======
+
+.check-text {
+  display: inline;
+  color: red;
+}
+
+.display-none {
+  display: none !important;
+}
+>>>>>>> b43ced0 (Feat : GI-14 회원가입페이지 이메일 중복체크 비밀번호 재입력 체크 기능)
