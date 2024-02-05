@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+<<<<<<< HEAD
 import "../../styles/loginPage/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -12,11 +13,21 @@ interface LoginDTO {
   data: LoginData;
 }
 
+=======
+import "../styles/loginPage/loginPage.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+>>>>>>> 7e1139f (Feat : 이름 수정)
 function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const goRegister = () => {
+<<<<<<< HEAD
     navigate("/register");
+=======
+    navigate("/regitser");
+>>>>>>> 7e1139f (Feat : 이름 수정)
   };
 
   const goResetPassword = () => {
@@ -52,6 +63,7 @@ function LoginComponent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+<<<<<<< HEAD
     const inputData: LoginData = {
       email: email,
       password: password,
@@ -76,6 +88,37 @@ function LoginComponent() {
           goMain();
         }
       } else if (code === "302") {
+=======
+    let inputData = {
+      data: {
+        email: email,
+        password: password,
+      },
+    };
+
+    try {
+      let resp = await axios.post(baseUrl, inputData);
+
+      let result = resp.data.data;
+      let code = resp.data.status.code;
+
+      console.log(resp.data);
+
+      if (checkLogin(code)) {
+        alert("로그인 성공");
+        if (localStorage.getItem("accessToken") === null) {
+          alert("로컬 스토리지 저장");
+          localStorage.setItem("accessToken", result.accessToken);
+          localStorage.setItem("refreshToken", result.refreshToken);
+          console.log(localStorage.getItem("accessToken"));
+          goMain();
+        } else {
+          alert("저장된거 꺼낸다");
+          console.log(localStorage.getItem("accessToken"));
+          goMain();
+        }
+      } else if (!checkLogin(code)) {
+>>>>>>> 7e1139f (Feat : 이름 수정)
         alert("잘못된 정보를 입력하셨습니다");
       }
     } catch (error) {
@@ -83,6 +126,7 @@ function LoginComponent() {
     }
   };
 
+<<<<<<< HEAD
   return (
     <div className="login-page">
       {/* 로고  */}
@@ -101,6 +145,32 @@ function LoginComponent() {
           <span className="line"></span>
           <span className="or">or</span>
           <span className="line"></span>
+=======
+  const checkLogin = (code: string) => {
+    if (code === "200") return true;
+    if (code === "302") return false;
+    return false;
+  };
+
+  return (
+    <div>
+      {/* 로고  */}
+      <div className="logoPosition">
+        <img src="icon/Logo.png" alt="구르미 로고" />
+      </div>
+
+      <div className="loginComponent">
+        {/* Oauth 로그인 버튼 */}
+        <div>
+          <button className="oauthLogin"> 구글로 로그인 </button>
+        </div>
+
+        {/* 중앙 분리대 */}
+        <div>
+          <span className="midLinearLineLeft"></span>
+          <span className="midWord">or</span>
+          <span className="midLinearLineRight"></span>
+>>>>>>> 7e1139f (Feat : 이름 수정)
         </div>
 
         {/* 로그인칸 */}
@@ -108,28 +178,47 @@ function LoginComponent() {
           <form onSubmit={handleSubmit}>
             <input
               type="email"
+<<<<<<< HEAD
               className="input-box"
+=======
+              className="idInput"
+>>>>>>> 7e1139f (Feat : 이름 수정)
               name="email"
               id="email"
               placeholder="이메일을 입력하세요."
               value={email}
+<<<<<<< HEAD
               required
+=======
+>>>>>>> 7e1139f (Feat : 이름 수정)
               onChange={onChangeEmail}
             />
             <br />
             <input
               type="password"
+<<<<<<< HEAD
               className="input-box"
+=======
+              className="passwordInput"
+>>>>>>> 7e1139f (Feat : 이름 수정)
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
               onChange={onChangePassword}
             />
+<<<<<<< HEAD
             <button className="basic-btn" type="submit">
               <span>로그인</span>
             </button>
           </form>
           <button className="basic-btn" onClick={goRegister}>
+=======
+            <button className="loginBtn" type="submit">
+              <span>로그인</span>
+            </button>
+          </form>
+          <button className="registerBtn" onClick={goRegister}>
+>>>>>>> 7e1139f (Feat : 이름 수정)
             <span>회원가입</span>
           </button>
         </div>
