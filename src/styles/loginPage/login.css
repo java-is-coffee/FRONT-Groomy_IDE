@@ -55,7 +55,7 @@
   color: #7f7f7f;
 }
 
-.mid-line {
+.line {
   flex: 1;
   height: 0.5px;
   border: 0.5px solid black;
