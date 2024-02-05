@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LoginComponent() {
+  const accessToken = localStorage.getItem("accessToken");
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
+    if (accessToken) {
       goMain();
     }
-  }, []);
+  }, [accessToken]);
 
   const navigate = useNavigate();
 
