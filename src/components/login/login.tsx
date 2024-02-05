@@ -98,9 +98,9 @@ function LoginComponent() {
 
         {/* 중앙 분리대 */}
         <div className="line-separator">
-          <span className="line"></span>
+          <span className="mid-line"></span>
           <span className="or">or</span>
-          <span className="line"></span>
+          <span className="mid-line"></span>
         </div>
 
         {/* 로그인칸 */}
