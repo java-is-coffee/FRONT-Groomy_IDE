@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../../styles/loginPage/loginPage.css";
+import "../../styles/loginPage/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -68,7 +68,6 @@ function LoginComponent() {
       let code = response.data.status.code;
 
       if (code === "200") {
-        alert("로그인 성공");
         if (localStorage.getItem("accessToken") === null) {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
@@ -85,23 +84,23 @@ function LoginComponent() {
   };
 
   return (
-    <div>
+    <div className="login-page">
       {/* 로고  */}
-      <div className="logoPosition">
+      <div className="logo-position">
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <div className="loginComponent">
+      <div className="login-component">
         {/* Oauth 로그인 버튼 */}
         <div>
-          <button className="oauthLogin"> 구글로 로그인 </button>
+          <button className="oauth-loginBtn"> 구글로 로그인 </button>
         </div>
 
         {/* 중앙 분리대 */}
-        <div>
-          <span className="midLinearLineLeft"></span>
-          <span className="midWord">or</span>
-          <span className="midLinearLineRight"></span>
+        <div className="line-separator">
+          <span className="line"></span>
+          <span className="or">or</span>
+          <span className="line"></span>
         </div>
 
         {/* 로그인칸 */}
@@ -109,7 +108,7 @@ function LoginComponent() {
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              className="idInput"
+              className="input-box"
               name="email"
               id="email"
               placeholder="이메일을 입력하세요."
@@ -119,17 +118,17 @@ function LoginComponent() {
             <br />
             <input
               type="password"
-              className="passwordInput"
+              className="input-box"
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
               onChange={onChangePassword}
             />
-            <button className="loginBtn" type="submit">
+            <button className="basic-btn" type="submit">
               <span>로그인</span>
             </button>
           </form>
-          <button className="registerBtn" onClick={goRegister}>
+          <button className="basic-btn" onClick={goRegister}>
             <span>회원가입</span>
           </button>
         </div>
