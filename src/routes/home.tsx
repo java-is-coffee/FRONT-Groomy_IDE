@@ -21,15 +21,13 @@ const Home: React.FC = () => {
   // user 정보 저장용 state
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [sideClose, setSideClosed] = useState(false);
-  const requestData = { data: "" };
+  const accessToken = localStorage.getItem("accessToken");
   const handleSidebar = (changeState: boolean) => {
     setSideClosed(changeState);
   };
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken");
-        console.log(requestData);
         if (accessToken) {
           const response = await axios.get<UserInfo>(`${USER_API_URL}/my`, {
             headers: {
@@ -46,7 +44,7 @@ const Home: React.FC = () => {
       }
     };
     fetchUserInfo();
-  }, []);
+  }, [accessToken]);
   return (
     <div>
       <nav className="nav">
