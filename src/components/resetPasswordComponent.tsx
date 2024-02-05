@@ -73,7 +73,7 @@ function ResetPasswordComponent() {
   return (
     <div>
       <div className="logoPosition">
-        <img src="icon/Logo.png" />
+        <img src="icon/Logo.png" alt="logo" />
       </div>
       {/* 비밀번호 재설정 */}
       <div className="midText">비밀번호 재설정</div>
