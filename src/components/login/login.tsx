@@ -16,7 +16,7 @@ function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const goRegister = () => {
-    navigate("/regitser");
+    navigate("/register");
   };
 
   const goResetPassword = () => {
