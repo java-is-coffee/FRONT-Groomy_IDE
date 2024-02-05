@@ -9,10 +9,13 @@ type Language = keyof typeof LangColor;
 type projectProps = {
   projectDetails: {
     projectId: number;
+    memberId: number;
     projectName: string;
-    language: Language | string;
     description: string;
-    createDate: string;
+    language: string;
+    createdTime: string;
+    deleted: boolean;
+    projectPath: string;
   };
 };
 
@@ -42,7 +45,7 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails }) => {
         {projectDetails.language}
       </span>
       <div className="project-description">{projectDetails.description}</div>
-      <div className="project-date">{projectDetails.createDate}</div>
+      <div className="project-created-time">{projectDetails.createdTime}</div>
       <button className="project-action">
         <span>이동하기</span>
       </button>
