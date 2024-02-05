@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../styles/loginPage/loginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
   const goRegister = () => {
     navigate("/regitser");
   };
@@ -13,17 +14,15 @@ function LoginComponent() {
     navigate("/resetPassword");
   };
 
-  const goMain = () => {
+  const goMain = useCallback(() => {
     navigate("/");
-  };
+  }, [navigate]);
 
   useEffect(() => {
     if (accessToken) {
       goMain();
     }
   }, [accessToken, goMain]);
-
-  const navigate = useNavigate();
 
   const baseUrl: string =
     "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/login";
