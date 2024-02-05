@@ -1,7 +1,7 @@
 import React from 'react';
 import "../../styles/register.css";
 
-function RegisterComponent() {
+function Register() {
 
     // 폼  제출
     // const handleSubmit = (event) => {
@@ -77,4 +77,4 @@ function RegisterComponent() {
 }
 
 
-export default RegisterComponent;
+export default Register;
