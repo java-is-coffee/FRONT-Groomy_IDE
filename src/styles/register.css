@@ -685,4 +685,16 @@
   cursor: pointer;
 >>>>>>> 20a3115 (Refactor: 회원가입 페이지 수정)
 }
+<<<<<<< HEAD
 >>>>>>> b43ced0 (Feat : GI-14 회원가입페이지 이메일 중복체크 비밀번호 재입력 체크 기능)
+=======
+
+.check-text {
+  display: inline;
+  color: red;
+}
+
+.display-none {
+  display: none !important;
+}
+>>>>>>> aae6623 (Feat : GI-14 회원가입페이지 이메일 중복체크 비밀번호 재입력 체크 기능)
