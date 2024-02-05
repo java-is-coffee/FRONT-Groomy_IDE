@@ -5,14 +5,6 @@ import axios from "axios";
 
 function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
-  useEffect(() => {
-    if (accessToken) {
-      goMain();
-    }
-  }, [accessToken]);
-
-  const navigate = useNavigate();
-
   const goRegister = () => {
     navigate("/regitser");
   };
@@ -24,6 +16,14 @@ function LoginComponent() {
   const goMain = () => {
     navigate("/");
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      goMain();
+    }
+  }, [accessToken, goMain]);
+
+  const navigate = useNavigate();
 
   const baseUrl: string =
     "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/login";
