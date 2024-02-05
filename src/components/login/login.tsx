@@ -241,10 +241,10 @@ function LoginComponent() {
     };
 
     try {
-      let response = await axios.post(baseUrl, request);
+      const response = await axios.post(baseUrl, request);
 
-      let result = response.data.data;
-      let code = response.data.status.code;
+      const result = response.data.data;
+      const code = response.data.status.code;
 
       if (code === "200") {
 <<<<<<< HEAD
