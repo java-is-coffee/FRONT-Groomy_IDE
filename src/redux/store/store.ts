@@ -7,7 +7,7 @@ export type AppDispatch = typeof store.dispatch;
 
 const store = configureStore({
   reducer: {
-    auth: authReducer,
+    // auth: authReducer,
   },
 });
 

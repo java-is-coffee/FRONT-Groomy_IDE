@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import ProjectCard from "./projectCard";
 
-import "../../styles/home/projectList.css";
+import "../../styles/home/projectsContainer.css";
 
 const PROJECT_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/ide/list";
 
-interface ProjectList {
-  list: ProjectDetails[];
-}
+// interface ProjectList {
+//   list: ProjectDetails[];
+// }
 
 interface ProjectDetails {
   projectId: number;
@@ -26,8 +26,11 @@ type projectListProps = {
   sideClose: boolean;
 };
 
-const ProjectList: React.FC<projectListProps> = ({ onChange, sideClose }) => {
-  const [projectList, setProjectList] = useState<ProjectDetails[] | null>(null);
+const ProjectsContainer: React.FC<projectListProps> = ({
+  onChange,
+  sideClose,
+}) => {
+  // const [projectList, setProjectList] = useState<ProjectDetails[] | null>(null);
   const apiProjects = [
     {
       projectId: 1,
@@ -151,7 +154,8 @@ const ProjectList: React.FC<projectListProps> = ({ onChange, sideClose }) => {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-          setProjectList(response.data);
+          // setProjectList(response.data);
+          console.log(response.data);
         } else {
           console.error("accessToken 오류...");
         }
@@ -177,4 +181,4 @@ const ProjectList: React.FC<projectListProps> = ({ onChange, sideClose }) => {
     </div>
   );
 };
-export default ProjectList;
+export default ProjectsContainer;

@@ -4,8 +4,6 @@ import { MdOutlineMoreHoriz } from "react-icons/md";
 
 import "../../styles/home/projectCard.css";
 
-type Language = keyof typeof LangColor;
-
 type projectProps = {
   projectDetails: {
     projectId: number;
