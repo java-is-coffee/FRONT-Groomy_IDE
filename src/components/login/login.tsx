@@ -67,7 +67,7 @@ function LoginComponent() {
       const result = response.data.data;
       const code = response.data.status.code;
 
-      if (code === "200") {
+      if (code === 200) {
         if (localStorage.getItem("accessToken") === null) {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
@@ -98,9 +98,9 @@ function LoginComponent() {
 
         {/* 중앙 분리대 */}
         <div className="line-separator">
-          <span className="line"></span>
+          <span className="mid-line"></span>
           <span className="or">or</span>
-          <span className="line"></span>
+          <span className="mid-line"></span>
         </div>
 
         {/* 로그인칸 */}
@@ -119,6 +119,7 @@ function LoginComponent() {
             <input
               type="password"
               className="input-box"
+              required
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
