@@ -23,8 +23,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
   const navigate = useNavigate();
   return (
     <div className="sidebar">
-      <div className="close-button" onClick={() => onChange(!sideClose)}>
-        <MdOutlineKeyboardDoubleArrowLeft size={"32px"} />
+      <div className="button-container">
+        <div className="close-button" onClick={() => onChange(!sideClose)}>
+          <MdOutlineKeyboardDoubleArrowLeft size={"32px"} />
+        </div>
       </div>
       <div className="side-list">
         <div
