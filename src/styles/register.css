@@ -6,6 +6,7 @@
   body{
     background-color: var(--main-theme-color);
 
+<<<<<<< HEAD
   } */
 
 .register-page {
@@ -257,7 +258,18 @@
 >>>>>>> 5f96876 (Refactor: 회원가입 페이지 수정)
 =======
     font-family: "Inter"
+=======
+>>>>>>> da01613 (Feat : GI-14 회원가입 기본 기능 추가)
   } */
+
+.register-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Inter";
+}
 
 .logoPosition {
   margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */

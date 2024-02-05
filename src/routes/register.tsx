@@ -1,5 +1,8 @@
 import React from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> da01613 (Feat : GI-14 회원가입 기본 기능 추가)
 import RegisterComponent from "../components/register/registerComponent";
 
 function register() {
@@ -8,6 +11,7 @@ function register() {
       <RegisterComponent />
     </div>
   );
+<<<<<<< HEAD
   return (
     <div>
       <RegisterComponent />
@@ -26,6 +30,8 @@ function register() {
      <RegisterComponent />
   </div>;
 >>>>>>> b8a3880 (Feat : 이름 수정)
+=======
+>>>>>>> da01613 (Feat : GI-14 회원가입 기본 기능 추가)
 }
 
 export default register;
