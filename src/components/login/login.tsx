@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 831f7d0 (Refactor : GI-13 로그인css 리팩토링)
 import "../../styles/loginPage/login.css";
 <<<<<<< HEAD
 =======
@@ -8,10 +11,16 @@ import "../../styles/loginPage/loginPage.css";
 >>>>>>> f3e3572 (Rename : GI-13 로그인 컴포넌트 이동)
 =======
 import "../../styles/loginPage/login.css";
+<<<<<<< HEAD
 >>>>>>> 7d291f6 (Refactor : GI-13 로그인css 리팩토링)
 =======
 import "../../styles/loginPage/login.css";
 >>>>>>> 7210331 (Refactor : GI-13 로그인css 리팩토링)
+=======
+=======
+import "../../styles/loginPage/loginPage.css";
+>>>>>>> 987ec91 (Refactor : GI-13 로그인css 리팩토링)
+>>>>>>> 831f7d0 (Refactor : GI-13 로그인css 리팩토링)
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
