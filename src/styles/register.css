@@ -2,8 +2,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 7d291f6 (Refactor : GI-13 로그인css 리팩토링)
+=======
+>>>>>>> 30ebe99 (Refactor: 회원가입 페이지 수정)
 /* 
   body{
     background-color: var(--main-theme-color);
@@ -257,26 +260,34 @@
   } */
 
 .register-page {
+=======
+/* 전체 컨테이너 */
+.all {
+>>>>>>> 20a3115 (Refactor: 회원가입 페이지 수정)
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   font-family: "Inter";
+  text-align: center;
 }
 
-.logoPosition {
-  margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */
-  text-align: center;
+/* 로고 */
+.logo-position {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
   width: 100%;
 }
 
-/* 구글 버튼 */
-.oauthLoginBtn {
-  display: block;
-  width: 68%;
-
-  margin: 10px auto;
+/* 구글*/
+.oauth-login-btn {
+  display: flex;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+  margin: 0px auto;
   padding: 10px;
   font-size: 1rem;
   color: white;
@@ -288,6 +299,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   .login {
@@ -306,6 +318,8 @@
 
 .register-page {
 =======
+=======
+>>>>>>> 30ebe99 (Refactor: 회원가입 페이지 수정)
 /* 구분선 */
 <<<<<<< HEAD
 .line-separator {
@@ -369,23 +383,52 @@
 .registerComponent {
   display: block;
   align-items: center;
+=======
+/* 구분선 + 입력칸 */
+.register-component {
+  display: block;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+>>>>>>> 20a3115 (Refactor: 회원가입 페이지 수정)
   flex-direction: column;
-  width: 70%;
-  margin: 10px auto;
 
+  margin: 10px auto;
+  margin-bottom: 20px;
   border-radius: 5px;
   box-sizing: border-box;
   font-size: 1rem;
   cursor: pointer;
 }
 
-.idInput,
-.passwordInput,
-.passwordInput_2,
-.nameInput,
-.nicknameInput {
-  width: calc(100% - 40px);
-  padding: 10px;
+/* 구분선 */
+.line-separator {
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+  justify-content: center;
+}
+.or {
+  padding: 0px 10px 10px 10px;
+  color: #7f7f7f;
+}
+.line-left,
+.line-right {
+  flex: 1;
+  height: 1px;
+  border: 1px solid #7f7f7f;
+}
+
+/* 입력칸 */
+.id-input,
+.password-input,
+.password-input_2,
+.name-input,
+.nickname-input {
+  text-align: center;
+  width: 500px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin-bottom: 10px;
   background: #ffffff;
 
@@ -394,11 +437,13 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 회원가입 - 버튼 */
-.registerBtn {
-  display: block;
-  width: 100%;
-  margin: 10px auto;
+/* 회원가입 버튼 */
+.register-btn {
+  display: flex;
+  width: 500px;
+  align-items: center;
+  justify-content: center;
+  margin: 0px auto;
   padding: 10px;
   font-size: 1rem;
   color: white;
@@ -410,6 +455,7 @@
   cursor: pointer;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* 구분선 */
 .lineSeparator {
@@ -550,6 +596,9 @@
 =======
 <<<<<<< HEAD
 >>>>>>> fa94804 (Feat : GI-14 회원가입 기본 기능 추가)
+=======
+<<<<<<< HEAD
+>>>>>>> 30ebe99 (Refactor: 회원가입 페이지 수정)
 /* 로그인 확인 */
 .already {
   width: 500px;
@@ -576,25 +625,31 @@
   cursor: pointer;
 =======
 /* 이미 계정이 있으세요? */
+=======
+/* 로그인 확인 */
+>>>>>>> 20a3115 (Refactor: 회원가입 페이지 수정)
 .already {
-  display: block;
-  width: 70%;
-  margin: 10px auto;
-  padding: 10px;
-  font-size: 1rem;
+  width: 500px;
+  display: flex;
+  font-size: 14px;
   color: #7f7f7f;
-  text-align: center;
-  margin-bottom: 5px;
+  margin-top: 40px;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  padding: 10px;
+  justify-content: space-between;
 }
 
-/* 로그인 하기 */
-.ready {
-  display: block;
-  width: 70%;
-  margin: 10px auto;
-  padding: 10px;
-  font-size: 1rem;
+.q {
+  margin-right: auto;
+  display: inline-block;
+}
+
+.login {
+  margin-right: auto;
+  display: inline-block;
   color: #7f7f7f;
+<<<<<<< HEAD
   text-align: center;
   margin-bottom: 5px;
 >>>>>>> 5ee9a5e (Feat : GI-14 회원가입 기본 기능 추가)
@@ -610,5 +665,9 @@
 
 .display-none {
   display: none !important;
+=======
+  text-decoration: underline;
+  cursor: pointer;
+>>>>>>> 20a3115 (Refactor: 회원가입 페이지 수정)
 }
 >>>>>>> b43ced0 (Feat : GI-14 회원가입페이지 이메일 중복체크 비밀번호 재입력 체크 기능)
