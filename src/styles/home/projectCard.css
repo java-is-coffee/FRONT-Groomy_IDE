@@ -25,6 +25,11 @@
   border: 1px solid #e1e1e1;
 }
 
+.tools {
+  display: flex;
+  flex-direction: row;
+}
+
 .project-language {
   width: 70px;
   color: #ffffff;
