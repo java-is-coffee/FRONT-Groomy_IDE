@@ -78,6 +78,16 @@ function Register() {
           </a>
         </div>
       </div>
+      <div className="already">
+        <div>
+          <span className="q">이미 계정이 있으세요?</span>
+        </div>
+        <div>
+          <a href="/login" className="login">
+            로그인
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
