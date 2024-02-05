@@ -98,6 +98,7 @@
 
   color: #7f7f7f;
 }
+<<<<<<< HEAD
 .login-page {
   display: flex;
   flex-direction: column;
@@ -198,3 +199,5 @@
 
   color: #7f7f7f;
 }
+=======
+>>>>>>> 7d291f6 (Refactor : GI-13 로그인css 리팩토링)
