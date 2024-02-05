@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
+<<<<<<< HEAD
 import "../../styles/loginPage/login.css";
+=======
+import "../../styles/loginPage/loginPage.css";
+>>>>>>> f3e3572 (Rename : GI-13 로그인 컴포넌트 이동)
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
