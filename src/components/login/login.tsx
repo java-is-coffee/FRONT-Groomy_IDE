@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../styles/loginPage/loginPage.css";
+import "../../styles/loginPage/loginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
