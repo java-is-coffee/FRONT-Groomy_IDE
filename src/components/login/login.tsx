@@ -3,6 +3,15 @@ import "../../styles/loginPage/loginPage.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+interface LoginDTO {
+  data: LoginData;
+}
+
 function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
@@ -43,46 +52,36 @@ function LoginComponent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let inputData = {
-      data: {
-        email: email,
-        password: password,
-      },
+    const inputData: LoginData = {
+      email: email,
+      password: password,
+    };
+
+    const request: LoginDTO = {
+      data: inputData,
     };
 
     try {
-      let resp = await axios.post(baseUrl, inputData);
+      let response = await axios.post(baseUrl, request);
 
-      let result = resp.data.data;
-      let code = resp.data.status.code;
+      let result = response.data.data;
+      let code = response.data.status.code;
 
-      console.log(resp.data);
-
-      if (checkLogin(code)) {
+      if (code === "200") {
         alert("로그인 성공");
         if (localStorage.getItem("accessToken") === null) {
-          alert("로컬 스토리지 저장");
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
-          console.log(localStorage.getItem("accessToken"));
           goMain();
         } else {
-          alert("저장된거 꺼낸다");
-          console.log(localStorage.getItem("accessToken"));
           goMain();
         }
-      } else if (!checkLogin(code)) {
+      } else if (code === "302") {
         alert("잘못된 정보를 입력하셨습니다");
       }
     } catch (error) {
       alert("네트워크 오류 발생. 잠시 뒤, 이용해주세요.");
     }
-  };
-
-  const checkLogin = (code: string) => {
-    if (code === "200") return true;
-    if (code === "302") return false;
-    return false;
   };
 
   return (
