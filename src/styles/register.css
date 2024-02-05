@@ -1,13 +1,17 @@
 /* 
   body{
     background-color: var(--main-theme-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh; 
-    font-family: "Inter"
+
   } */
+
+.register-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Inter";
+}
 
 .logoPosition {
   margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */
