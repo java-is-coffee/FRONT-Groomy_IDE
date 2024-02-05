@@ -113,12 +113,14 @@ function LoginComponent() {
               id="email"
               placeholder="이메일을 입력하세요."
               value={email}
+              required
               onChange={onChangeEmail}
             />
             <br />
             <input
               type="password"
               className="input-box"
+              required
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
