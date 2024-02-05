@@ -49,6 +49,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "identity-obj-proxy": "^3.0.0",
+    "jest-environment-jsdom": "^29.7.0",
     "ts-jest": "^29.1.2"
   },
   "transformIgnorePatterns": [
