@@ -43,7 +43,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
           ) : (
             <div className="user-panel">
               <span className="name">로그인이 필요합니다</span>
-              <span className="email">로그인</span>
             </div>
           )}
         </div>
