@@ -1,16 +1,30 @@
 .test {
-  background-color: rgb(127, 127, 234);
-  box-sizing: border-box;
+  background-color: var(--main-theme-color);
+  max-height: 45rem;
+  min-height: 45rem;
+  overflow-y: auto;
 }
 
 .box-border {
   box-sizing: border-box;
+  border: 2px solid black;
 }
 
 .w-50 {
   width: 50%;
 }
 
+.float-right {
+  float: right;
+}
+
+.line-bottom {
+  border-bottom: 1px solid black;
+}
+
+.mr-15 {
+  margin-right: 15px;
+}
 .p-15 {
   padding: 15px;
 }
@@ -23,18 +37,34 @@
   margin-top: 15px;
 }
 
+.mt-30 {
+  margin-top: 30px;
+}
+
 .m-10 {
   margin: 10px;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.display-flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.board-top {
+  margin: -15px -15px 10px -15px;
+  padding: 15px;
+  background-color: white;
 }
 
 .board-item {
   background-color: white;
   width: 100%;
-  margin-bottom: 15px;
-}
 
-.board-item-bottom-right {
-  float: right;
+  margin-bottom: 15px;
 }
 
 .board-item-bottom-icon {
@@ -68,7 +98,7 @@
   line-height: 22px;
 }
 
-.board-write-btn {
+.board-writing-btn {
   position: relative;
   bottom: 20px;
   left: 0px;
@@ -81,4 +111,23 @@
   font-weight: bold;
   box-shadow: 0px 5px 15px gray;
   cursor: pointer;
+}
+
+.board-write-content {
+  resize: none;
+}
+
+.board-write-btn {
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: 0.5px solid black;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-sub-color {
+  background-color: #062b52;
+  color: white;
 }

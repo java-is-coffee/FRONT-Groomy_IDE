@@ -27,7 +27,7 @@ const BoardCard = ({ boardItem }: { boardItem: BoardDetails }) => {
 
       <div className="board-item-bottom">
         <span className="board-item-user-name">{boardItem.memberId}</span>
-        <div className="board-item-bottom-right">
+        <div className="float-right">
           <span className="board-item-bottom-icon">
             <FaRegThumbsUp />
             <span className="board-item-bottom-icon-number">

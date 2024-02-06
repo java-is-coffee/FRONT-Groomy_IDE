@@ -18,7 +18,7 @@ interface UserInfo {
   role: string;
 }
 
-const Home: React.FC = () => {
+const BoardList: React.FC = () => {
   // user 정보 저장용 state
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [sideClose, setSideClosed] = useState(false);
@@ -66,4 +66,4 @@ const Home: React.FC = () => {
     </div>
   );
 };
-export default Home;
+export default BoardList;

@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./routes/login";
 import Register from "./routes/register";
 import Home from "./routes/home";
-import HomeTest from "./routes/homeTest";
+import BoadList from "./routes/boardList";
 import "./styles/style.css";
 import ResetPassword from "./routes/resetPassword";
+import Write from "./routes/boardWrite";
+import Content from "./routes/contentTest";
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/boardTest" element={<HomeTest />}></Route>
+          <Route path="/board" element={<BoadList />}></Route>
+          <Route path="/board/write" element={<Write />}></Route>
+          <Route path="/board/content" element={<Content />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
