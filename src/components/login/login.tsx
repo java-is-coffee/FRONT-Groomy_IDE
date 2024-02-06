@@ -67,7 +67,7 @@ function LoginComponent() {
       const result = response.data.data;
       const code = response.data.status.code;
 
-      if (code === "200") {
+      if (code === 200) {
         if (localStorage.getItem("accessToken") === null) {
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
@@ -75,7 +75,7 @@ function LoginComponent() {
         } else {
           goMain();
         }
-      } else if (code === "302") {
+      } else if (code === 302) {
         alert("잘못된 정보를 입력하셨습니다");
       }
     } catch (error) {
