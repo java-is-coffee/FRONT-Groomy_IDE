@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./routes/login";
 import Register from "./routes/register";
 import Home from "./routes/home";
+import HomeTest from "./routes/homeTest";
 import "./styles/style.css";
 import ResetPassword from "./routes/resetPassword";
 
@@ -12,6 +13,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/boardTest" element={<HomeTest />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
