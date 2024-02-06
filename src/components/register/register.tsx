@@ -128,22 +128,22 @@ function RegisterComponent() {
   };
   return (
     <div className="register-page">
-      <div className="logoPosition">
+      <div className="logo-position">
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
       <div>
-        <button type="button" className="oauthLoginBtn">
+        <button type="button" className="oauth-login-btn">
           {" "}
           구글로 로그인{" "}
         </button>
       </div>
 
-      <div className="registerComponent">
-        <div className="lineSeparator">
-          <span className="LineLeft"></span>
+      <div className="register-component">
+        <div className="line-separator">
+          <span className="line-left"></span>
           <span className="or">or</span>
-          <span className="LineRight"></span>
+          <span className="line-right"></span>
         </div>
 
         {/* <form onSubmit={handleSubmit}> */}
@@ -151,7 +151,7 @@ function RegisterComponent() {
           <input
             type="text"
             name="emailId"
-            className="idInput"
+            className="id-input"
             placeholder="이메일을 입력하세요."
             onChange={onChangeEmail}
             onBlur={checkDupelicate}
@@ -166,7 +166,7 @@ function RegisterComponent() {
           <input
             type="password"
             name="password"
-            className="passwordInput"
+            className="password-input"
             placeholder="비밀번호를 입력하세요."
             onChange={onChangePassword}
             required
@@ -174,7 +174,7 @@ function RegisterComponent() {
           <input
             type="password"
             name="password_2"
-            className="passwordInput_2"
+            className="password-input_2"
             placeholder="비밀번호를 다시 입력하세요."
             onChange={onChangeCheckPassword}
             onBlur={onBlurCheckPassword}
@@ -189,7 +189,7 @@ function RegisterComponent() {
           <input
             type="text"
             name="name"
-            className="nameInput"
+            className="name-input"
             placeholder="이름을 입력하세요."
             onChange={onChangeName}
             required
@@ -197,23 +197,21 @@ function RegisterComponent() {
           <input
             type="text"
             name="nickname"
-            className="nicknameInput"
+            className="nickname-input"
             placeholder="닉네임을 입력하세요."
             onChange={onChangeNickname}
             required
           />
-          <button type="submit" className="registerBtn">
+          <button type="submit" className="register-btn">
             회원가입
           </button>
         </form>
       </div>
 
-      <div>
-        <span className="already">이미 계정이 있으세요?</span>
-        <a href="/login" className="ready">
-          로그인
-        </a>
-      </div>
+        <div className="already">
+             <div><span className="q">이미 계정이 있으세요?</span></div>
+             <div><a href="/login" className="login">로그인</a></div>
+        </div>
     </div>
   );
 }
