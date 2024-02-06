@@ -1,6 +1,6 @@
-import { EnumType } from "typescript";
+//import { EnumType } from "typescript";
 import * as actionTypes from "../actions/authAction";
-import { access } from "fs";
+//import { access } from "fs";
 
 /*
   dispatch 예시

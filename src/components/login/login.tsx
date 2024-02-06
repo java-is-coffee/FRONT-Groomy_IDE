@@ -1,13 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../styles/loginPage/loginPage.css";
+import "../../styles/loginPage/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+interface LoginDTO {
+  data: LoginData;
+}
 
 function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const goRegister = () => {
-    navigate("/regitser");
+    navigate("/register");
   };
 
   const goResetPassword = () => {
@@ -43,35 +52,30 @@ function LoginComponent() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let inputData = {
-      data: {
-        email: email,
-        password: password,
-      },
+    const inputData: LoginData = {
+      email: email,
+      password: password,
+    };
+
+    const request: LoginDTO = {
+      data: inputData,
     };
 
     try {
-      let resp = await axios.post(baseUrl, inputData);
+      const response = await axios.post(baseUrl, request);
 
-      let result = resp.data.data;
-      let code = resp.data.status.code;
+      const result = response.data.data;
+      const code = response.data.status.code;
 
-      console.log(resp.data);
-
-      if (checkLogin(code)) {
-        alert("로그인 성공");
+      if (code === 200) {
         if (localStorage.getItem("accessToken") === null) {
-          alert("로컬 스토리지 저장");
           localStorage.setItem("accessToken", result.accessToken);
           localStorage.setItem("refreshToken", result.refreshToken);
-          console.log(localStorage.getItem("accessToken"));
           goMain();
         } else {
-          alert("저장된거 꺼낸다");
-          console.log(localStorage.getItem("accessToken"));
           goMain();
         }
-      } else if (!checkLogin(code)) {
+      } else if (code === 302) {
         alert("잘못된 정보를 입력하셨습니다");
       }
     } catch (error) {
@@ -79,30 +83,24 @@ function LoginComponent() {
     }
   };
 
-  const checkLogin = (code: string) => {
-    if (code === "200") return true;
-    if (code === "302") return false;
-    return false;
-  };
-
   return (
-    <div>
+    <div className="login-page">
       {/* 로고  */}
-      <div className="logoPosition">
+      <div className="logo-position">
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <div className="loginComponent">
+      <div className="login-component">
         {/* Oauth 로그인 버튼 */}
         <div>
-          <button className="oauthLogin"> 구글로 로그인 </button>
+          <button className="oauth-loginBtn"> 구글로 로그인 </button>
         </div>
 
         {/* 중앙 분리대 */}
-        <div>
-          <span className="midLinearLineLeft"></span>
-          <span className="midWord">or</span>
-          <span className="midLinearLineRight"></span>
+        <div className="line-separator">
+          <span className="mid-line"></span>
+          <span className="or">or</span>
+          <span className="mid-line"></span>
         </div>
 
         {/* 로그인칸 */}
@@ -110,27 +108,29 @@ function LoginComponent() {
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              className="idInput"
+              className="input-box"
               name="email"
               id="email"
               placeholder="이메일을 입력하세요."
               value={email}
+              required
               onChange={onChangeEmail}
             />
             <br />
             <input
               type="password"
-              className="passwordInput"
+              className="input-box"
+              required
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
               onChange={onChangePassword}
             />
-            <button className="loginBtn" type="submit">
+            <button className="basic-btn" type="submit">
               <span>로그인</span>
             </button>
           </form>
-          <button className="registerBtn" onClick={goRegister}>
+          <button className="basic-btn" onClick={goRegister}>
             <span>회원가입</span>
           </button>
         </div>
