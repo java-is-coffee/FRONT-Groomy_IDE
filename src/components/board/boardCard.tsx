@@ -17,9 +17,9 @@ import { FaRegCommentDots } from "react-icons/fa";
 
 const BoardCard = ({ boardItem }: { boardItem: BoardDetails }) => {
   return (
-    <div className="board-item">
-      <div className="board-item-top">
-        <span className="board-item-completed-box">미해결</span>
+    <div className="board-item box-border p-15">
+      <div className="board-item-top mt-15">
+        <span className="board-item-completed-box p-15">미해결</span>
         <span>{boardItem.title}</span>
       </div>
 

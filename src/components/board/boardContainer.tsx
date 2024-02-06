@@ -64,8 +64,8 @@ function BoradContainer() {
   //   setboardList(test_boardList);
 
   return (
-    <div>
-      <div className="w-50">
+    <div className="w-50 p-15 test box-border">
+      <div className="">
         {/* 보드 리스트가 만약 없을 */}
         {boardList.map((board) => (
           <div>
@@ -73,6 +73,7 @@ function BoradContainer() {
           </div>
         ))}
       </div>
+      <button className="board-write-btn">글쓰기</button>
     </div>
   );
 }
