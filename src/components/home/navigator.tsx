@@ -3,15 +3,15 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 
 import "../../styles/home/nav.css";
-import { useNavigate } from "react-router-dom";
+import { ContentType } from "../../routes/home";
 
 type navProps = {
   onChange: (newState: boolean) => void;
   sideClose: boolean;
+  onOpen: () => void;
 };
 
-const Nav: React.FC<navProps> = ({ onChange, sideClose }) => {
-  const navigate = useNavigate();
+const Nav: React.FC<navProps> = ({ onChange, sideClose, onOpen }) => {
   return (
     <div className="menu-bar">
       <div
@@ -21,10 +21,7 @@ const Nav: React.FC<navProps> = ({ onChange, sideClose }) => {
         <MdKeyboardDoubleArrowRight size={"32px"} />
       </div>
       <div>
-        <button
-          className="new-project"
-          onClick={() => navigate("/project/new")}
-        >
+        <button className="new-project" onClick={onOpen}>
           <span>NEW PROJECT</span>
           <GoPlus size={"20px"} />
         </button>
