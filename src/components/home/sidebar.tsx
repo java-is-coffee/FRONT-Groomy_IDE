@@ -1,6 +1,7 @@
 import { VscProject } from "react-icons/vsc";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa6";
+import { IoIosChatbubbles } from "react-icons/io";
 import "../../styles/home/sidebar.css";
 import { useNavigate } from "react-router-dom";
 
@@ -45,6 +46,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
             </div>
           )}
         </div>
+        
+        {/* 프로젝트 */}
         <div className="nav-menu">
           <div className="menu">
             <div className="menu-container">
@@ -54,6 +57,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
               <span>프로젝트</span>
             </div>
           </div>
+          
+          {/* 질문 게시판 */}
           <div
             className="menu"
             onClick={() => {
@@ -65,6 +70,21 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
                 <FaWpforms size={"32px"} />
               </div>
               <span>질문게시판</span>
+            </div>
+          </div>
+          
+          {/* 채팅 */}
+          <div
+            className="menu"
+            onClick={() => {
+              navigate("/chat");
+            }}
+          >
+            <div className="menu-container">
+              <div className="icon">
+                <IoIosChatbubbles size={"32px"} />
+              </div>
+              <span>채팅</span>
             </div>
           </div>
         </div>
