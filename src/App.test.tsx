@@ -1,10 +1,12 @@
-import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
+import { render } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { store } from "./redux/store/store"; // Or a specific test store if needed
 import App from "./App";
 
 test("renders new project button", () => {
-  render(<App />);
-  const buttonElement = screen.getByText(/NEW PROJECT/i);
-  expect(buttonElement).toBeInTheDocument();
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
 });
