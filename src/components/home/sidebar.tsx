@@ -3,26 +3,71 @@ import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa6";
 import "../../styles/home/sidebar.css";
 import { useNavigate } from "react-router-dom";
-
-interface UserInfo {
-  memberId: number;
-  email: string;
-  name: string;
-  nickname: string;
-  helpNumber: number;
-  role: string;
-}
+import { useEffect } from "react";
+import { getMemberInfo } from "../../api/auth/getMemberInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import { addMember } from "../../redux/reducers/memberReducer";
+import { ContentType } from "../../routes/home";
 
 type SidebarProps = {
+  onSelectContents: (content: ContentType) => void;
   onChange: (newState: boolean) => void;
   sideClose: boolean;
-  userInfo: UserInfo | null;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  onSelectContents,
+  onChange,
+  sideClose,
+}) => {
+  // member 정보 저장용 state
+  const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
+  const member = useSelector((state: RootState) => state.member.member);
+  const dispatch = useDispatch();
+
+  //sidebar 스크롤 따라가게 하기
+  window.addEventListener("scroll", function () {
+    const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+
+    // 메뉴바의 높이를 고려하여 스크롤 위치에 따라 top 값을 조정합니다.
+    const topPosition = scrollPosition; // 52는 메뉴바의 높이입니다.
+
+    if (topPosition > 0) {
+      sidebar.style.top = `${topPosition}px`;
+    } else {
+      sidebar.style.top = `0px`;
+    }
+  });
+
+  // main contents handler
+  const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target;
+    console.log(target);
+    onSelectContents(ContentType.ProjectList);
+  };
+
+  // member 정보 불러오기
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      const hasMemberInfo = await getMemberInfo();
+      console.log(hasMemberInfo);
+      if (hasMemberInfo) {
+        dispatch(addMember(hasMemberInfo));
+      } else {
+        console.log("정보 불러오기 오류");
+      }
+    };
+
+    if (!member) {
+      fetchMemberData();
+    }
+    console.log(member);
+  }, [accessToken, dispatch, member]);
   return (
-    <div className="sidebar">
+    <div className="sidebar-menu">
       <div className="button-container">
         <div className="close-button" onClick={() => onChange(!sideClose)}>
           <MdOutlineKeyboardDoubleArrowLeft size={"32px"} />
@@ -32,13 +77,13 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
         <div
           className="user-container"
           onClick={() => {
-            userInfo ? navigate("/user") : navigate("/login");
+            member ? navigate("/user") : navigate("/login");
           }}
         >
-          {userInfo ? (
+          {member ? (
             <div className="user-panel">
-              <span className="name">{userInfo.name}</span>
-              <span className="email">{userInfo.email}</span>
+              <span className="name">{member.name}</span>
+              <span className="email">{member.email}</span>
             </div>
           ) : (
             <div className="user-panel">
@@ -47,21 +92,16 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose, userInfo }) => {
           )}
         </div>
         <div className="nav-menu">
-          <div className="menu">
-            <div className="menu-container">
+          <div className="menu" onClick={handleMainContent}>
+            <div className="menu-container" id="project">
               <div className="icon">
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
             </div>
           </div>
-          <div
-            className="menu"
-            onClick={() => {
-              navigate("/board");
-            }}
-          >
-            <div className="menu-container">
+          <div className="menu" onClick={handleMainContent}>
+            <div className="menu-container" id="board">
               <div className="icon">
                 <FaWpforms size={"32px"} />
               </div>
