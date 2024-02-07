@@ -1,0 +1,59 @@
+/* 드롭다운 버튼 스타일링 */
+.project-card-dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  position: relative; /* 버튼을 기준으로 드롭다운 메뉴를 위치시킵니다. */
+}
+
+/* 드롭다운 버튼에 마우스를 올렸을 때의 스타일링 */
+.project-card-dropdown button:hover {
+  background-color: #f2f2f2;
+}
+
+/* 드롭다운 메뉴 스타일링 */
+.project-card-dropdown-menu {
+  position: absolute; /* 상대적 위치 지정된 버튼에 대해 절대적 위치 지정 */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100; /* 다른 요소 위에 나타나도록 z-index 설정 */
+}
+
+/* 드롭다운 메뉴 내부의 버튼 스타일링 */
+.project-card-dropdown-menu button {
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: bold;
+}
+
+.project-card-dropdown-menu button:last-child {
+  border-bottom: none;
+  color: tomato;
+}
+
+.project-card-dropdown-menu button:last-child:hover {
+  border-bottom: none;
+  background-color: rgb(230, 114, 94);
+  color: white;
+}
+
+/* 드롭다운 메뉴 내부의 버튼에 마우스를 올렸을 때의 스타일링 */
+.project-card-dropdown-menu button:hover {
+  background-color: var(--sub-theme-color);
+  color: white;
+}

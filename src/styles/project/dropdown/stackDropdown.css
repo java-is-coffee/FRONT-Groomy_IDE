@@ -1,0 +1,74 @@
+.dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* stackDropdown.css */
+
+.stack-container {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  gap: 10px; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+/* 드롭다운 버튼 스타일 */
+.dropdown-button {
+  color: #7d7d7d;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  max-height: 33.5px;
+}
+
+/* 드롭다운 메뉴 아이템 스타일 */
+.stack-item-container {
+  max-height: 33px;
+  padding: 5px;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stack-item-container span {
+  text-align: center;
+  font-size: 14px;
+}
+
+.stack-item-container:hover {
+  background-color: var(--sub-theme-color);
+  color: white;
+}
+
+.stack-icon {
+  padding: 5px;
+  border-radius: 50%; /* 원형 아이콘 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
