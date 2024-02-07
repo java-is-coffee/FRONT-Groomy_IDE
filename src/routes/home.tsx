@@ -1,59 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/home/sidebar";
-import ProjectsContainer from "../components/home/projectsContainer";
 import "../styles/home/home.css";
 import Nav from "../components/home/navigator";
-import {
-  MemberInfo,
-  getMemberInfo,
-} from "../components/api/auth/getMemberInfo";
+import MainContent from "../components/home/mainContent";
+import NewProjectModal from "../components/project/newProjectModal";
+
+export enum ContentType {
+  ProjectList = "project-list",
+  Board = "board",
+  Chat = "chat",
+}
 
 const Home: React.FC = () => {
-  // user 정보 저장용 state
-  const [memberInfo, setMemberInfo] = useState<MemberInfo | null>(null);
+  // sidebar 닫힘 여부
   const [sideClose, setSideClosed] = useState<boolean>(false);
-  const accessToken = localStorage.getItem("accessToken");
-  const handleSidebar = (changeState: boolean) => {
+  // sidebar handler
+  const handleSidebarToggle = (changeState: boolean) => {
     setSideClosed(changeState);
   };
-  useEffect(() => {
-    const fetchMemberData = async () => {
-      const hasMemberInfo = await getMemberInfo();
-      if (hasMemberInfo) {
-        const storedMemberInfo = sessionStorage.getItem("member");
-        if (storedMemberInfo) {
-          try {
-            const memberInfoObj: MemberInfo = JSON.parse(storedMemberInfo);
-            setMemberInfo(memberInfoObj);
-          } catch (error) {
-            console.error("Auth error", error);
-            setMemberInfo(null);
-          }
-        } else {
-          setMemberInfo(null);
-        }
+  // 메인 컨텐츠 타입 state
+  const [curContent, setCurContent] = useState<ContentType>(
+    ContentType.ProjectList
+  );
+  // 메인 컨텐츠 handler
+  const handleContentChange = (content: ContentType) => {
+    setCurContent((prevContent) => {
+      if (prevContent !== content) {
+        setCurContent(content);
+        return content;
       }
-    };
+      return prevContent;
+    });
+  };
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
 
-    if (!memberInfo) {
-      fetchMemberData();
-    }
-  }, [accessToken]);
+  const handleOpenModal = () => {
+    setIsProjectModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsProjectModalOpen(false);
+  };
   return (
     <div>
       <nav className="nav">
-        <Nav onChange={handleSidebar} sideClose={sideClose} />
+        <Nav
+          onChange={handleSidebarToggle}
+          sideClose={sideClose}
+          onOpen={handleOpenModal}
+        />
       </nav>
+      <NewProjectModal isOpen={isProjectModalOpen} onClose={handleCloseModal} />
       <div className="container">
         <aside className={`sidebar ${sideClose ? "closed" : ""}`}>
           <Sidebar
-            onChange={handleSidebar}
+            onSelectContents={handleContentChange}
+            onChange={handleSidebarToggle}
             sideClose={sideClose}
-            userInfo={memberInfo}
           />
         </aside>
         <div className={`main-content ${sideClose ? "wide" : ""}`}>
-          <ProjectsContainer onChange={handleSidebar} sideClose={sideClose} />
+          <MainContent curContent={curContent} />
         </div>
       </div>
     </div>
