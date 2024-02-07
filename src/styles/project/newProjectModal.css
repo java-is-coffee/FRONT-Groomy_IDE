@@ -1,0 +1,105 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  width: 500px;
+  height: 500px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.modal-close-button {
+  cursor: pointer;
+  transition: all ease 0.1s;
+}
+.modal-close-button:hover {
+  transform: scale(1.2);
+}
+
+.new-project-form {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 15px;
+}
+
+.new-project-description {
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.new-project-title {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.modal-button {
+  font-size: 15px;
+  border: 0px;
+  border-radius: 4px;
+  background-color: var(--main-theme-color);
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.modal-button:hover {
+  background-color: var(--sub-theme-color);
+  color: white;
+  cursor: pointer;
+}
+
+.members-selected {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: 30px;
+}
+
+.group-member {
+  margin-top: 9px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  font-size: 12px;
+  background-color: var(--sub-theme-color);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 8px;
+}
+
+.group-member span {
+  display: block; /* 블록 레벨 요소로 만듭니다 */
+  text-align: center; /* 텍스트를 중앙으로 정렬 */
+  margin: auto; /* 좌우 마진을 자동으로 설정하여 가운데 정렬 */
+}
+
+.member-remove-icons {
+  display: flex;
+  align-self: center; /* 자기 자신을 수직 중앙 정렬합니다 */
+}
