@@ -63,6 +63,7 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
             setIsExistingMember(true);
             return false;
           }
+          return true;
         });
       } catch (error) {
         console.log("api error입니다.");

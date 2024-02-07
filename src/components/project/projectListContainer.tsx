@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../../styles/project/projectListContainer.css";
 import ProjectCard from "./projectCard";
 
@@ -9,11 +9,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { patchProjects } from "../../redux/reducers/projectReducer";
-
-interface ProjectListContainer {
-  projectList: ProjectDetails[];
-  onPatch: () => ProjectDetails[];
-}
 
 const ProjectListContainer: React.FC = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -34,7 +29,7 @@ const ProjectListContainer: React.FC = () => {
     if (!projects) {
       fetchProjectListData();
     }
-  }, [accessToken, projects]);
+  }, [accessToken, projects, dispatch]);
   return (
     <div className="project-list">
       {projects &&

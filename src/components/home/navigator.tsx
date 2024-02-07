@@ -3,7 +3,6 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 
 import "../../styles/home/nav.css";
-import { ContentType } from "../../routes/home";
 
 type navProps = {
   onChange: (newState: boolean) => void;
