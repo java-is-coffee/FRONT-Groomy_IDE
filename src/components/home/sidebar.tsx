@@ -32,9 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
     const scrollPosition = window.scrollY || document.documentElement.scrollTop;
 
-    // 메뉴바의 높이를 고려하여 스크롤 위치에 따라 top 값을 조정합니다.
-    const topPosition = scrollPosition; // 52는 메뉴바의 높이입니다.
-
+    const topPosition = scrollPosition;
     if (topPosition > 0) {
       sidebar.style.top = `${topPosition}px`;
     } else {
