@@ -1,65 +1,66 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/home/sidebar";
-import ProjectsContainer from "../components/home/projectsContainer";
 import "../styles/home/home.css";
 import Nav from "../components/home/navigator";
-import axios from "axios";
+import MainContent from "../components/home/mainContent";
+import NewProjectModal from "../components/project/newProjectModal";
 
-const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member";
-
-interface UserInfo {
-  memberId: number;
-  email: string;
-  name: string;
-  nickname: string;
-  helpNumber: number;
-  role: string;
+export enum ContentType {
+  ProjectList = "project-list",
+  Board = "board",
+  Chat = "chat",
 }
 
 const Home: React.FC = () => {
-  // user 정보 저장용 state
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [sideClose, setSideClosed] = useState(false);
-  const accessToken = localStorage.getItem("accessToken");
-  const handleSidebar = (changeState: boolean) => {
+  // sidebar 닫힘 여부
+  const [sideClose, setSideClosed] = useState<boolean>(false);
+  // sidebar handler
+  const handleSidebarToggle = (changeState: boolean) => {
     setSideClosed(changeState);
   };
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        if (accessToken) {
-          const response = await axios.get<UserInfo>(`${USER_API_URL}/my`, {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          });
-          sessionStorage.setItem("user", JSON.stringify(response.data));
-          setUserInfo(response.data);
-        } else {
-          console.error("accessToken 오류...");
-        }
-      } catch (error) {
-        console.error("서버 오류입니다.", error);
+  // 메인 컨텐츠 타입 state
+  const [curContent, setCurContent] = useState<ContentType>(
+    ContentType.ProjectList
+  );
+  // 메인 컨텐츠 handler
+  const handleContentChange = (content: ContentType) => {
+    setCurContent((prevContent) => {
+      if (prevContent !== content) {
+        setCurContent(content);
+        return content;
       }
-    };
-    fetchUserInfo();
-  }, [accessToken]);
+      return prevContent;
+    });
+  };
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
+
+  const handleOpenModal = () => {
+    setIsProjectModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsProjectModalOpen(false);
+  };
   return (
     <div>
       <nav className="nav">
-        <Nav onChange={handleSidebar} sideClose={sideClose} />
+        <Nav
+          onChange={handleSidebarToggle}
+          sideClose={sideClose}
+          onOpen={handleOpenModal}
+        />
       </nav>
+      <NewProjectModal isOpen={isProjectModalOpen} onClose={handleCloseModal} />
       <div className="container">
         <aside className={`sidebar ${sideClose ? "closed" : ""}`}>
           <Sidebar
-            onChange={handleSidebar}
+            onSelectContents={handleContentChange}
+            onChange={handleSidebarToggle}
             sideClose={sideClose}
-            userInfo={userInfo}
           />
         </aside>
         <div className={`main-content ${sideClose ? "wide" : ""}`}>
-          <ProjectsContainer onChange={handleSidebar} sideClose={sideClose} />
+          <MainContent curContent={curContent} />
         </div>
       </div>
     </div>
