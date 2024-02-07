@@ -1,33 +1,27 @@
 .project-card {
   background-color: white;
-  border: 1px solid #e1e1e1;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 30px;
+  padding: 10px;
   width: 210px;
-  height: 230px;
+  min-height: 230px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .project-header {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  justify-items: center;
+  align-items: flex-end;
+  border-bottom: 1px solid #ccc;
 }
 
 .project-title {
+  padding: 8px;
   font-weight: bold;
-}
-
-.line {
-  width: 100%;
-  border: 1px solid #e1e1e1;
-}
-
-.tools {
-  display: flex;
-  flex-direction: row;
 }
 
 .project-language {
@@ -56,17 +50,19 @@
 
 .project-action {
   background-color: var(--main-theme-color);
-  color: black;
-  border: none;
+  font-weight: bold;
+  color: #34568b;
+  border: 1px #34568b solid;
   border-radius: 4px;
   padding: 8px 16px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
+  transition: all 0.3s;
 }
 
 .project-action:hover {
-  background-color: var(--sub-theme-color);
+  background-color: #34568b;
   color: white;
 }
