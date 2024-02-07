@@ -1,20 +1,11 @@
-/* 
-  body{
-    background-color: var(--main-theme-color);
-
-  } */
-
-.register-page {
+/* 전체 컨테이너 */
+.all {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   font-family: "Inter";
-}
-
-.logoPosition {
-  margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */
   text-align: center;
 }
 
@@ -136,13 +127,4 @@
   color: #7f7f7f;
   text-decoration: underline;
   cursor: pointer;
-}
-
-.check-text {
-  display: inline;
-  color: red;
-}
-
-.display-none {
-  display: none !important;
 }

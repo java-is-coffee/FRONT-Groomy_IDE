@@ -75,7 +75,7 @@ function LoginComponent() {
         } else {
           goMain();
         }
-      } else if (code === "302") {
+      } else if (code === 302) {
         alert("잘못된 정보를 입력하셨습니다");
       }
     } catch (error) {
@@ -113,6 +113,7 @@ function LoginComponent() {
               id="email"
               placeholder="이메일을 입력하세요."
               value={email}
+              required
               onChange={onChangeEmail}
             />
             <br />
