@@ -7,19 +7,20 @@
   background-color: white;
 }
 
-.open-sidebar-button {
-  display: none;
+.sidebar-button {
+  padding: 20px;
 }
 
-.open-sidebar-button.close {
-  padding: 20px;
+.sidebar-button.close {
+  padding: 10px;
 }
 
 .new-project {
   margin-right: 10px;
   font-size: medium;
-  background-color: white;
-  border: 0;
+  color: white;
+  background-color: var(--sub-theme-color);
+  border: 1px solid var(--sub-theme-color);
   display: flex;
   align-items: center;
   padding: 10px;
@@ -29,6 +30,6 @@
 }
 
 .new-project:hover {
-  background-color: var(--sub-theme-color);
-  color: white;
+  background-color: #87ceeb;
+  color: black;
 }

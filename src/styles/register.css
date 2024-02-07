@@ -1,3 +1,13 @@
+/* 전체 컨테이너 */
+.all {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Inter";
+  text-align: center;
+}
 
 
   /* 전체 컨테이너 */
