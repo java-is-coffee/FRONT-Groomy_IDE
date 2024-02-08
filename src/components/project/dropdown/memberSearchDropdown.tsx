@@ -29,6 +29,7 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
       setSearchEmail("");
       setSearchedMember(null);
       setIsOpen(false);
+      setIsExistingMember(false);
     }
   };
 
@@ -39,7 +40,10 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
+        setSearchEmail("");
+        setSearchedMember(null);
         setIsOpen(false);
+        setIsExistingMember(false);
       }
     };
 
@@ -58,6 +62,7 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
           searchEmail
         );
         setSearchedMember(storedMember);
+        console.log(groupMembers);
         groupMembers.map((member) => {
           if (member.memberId === storedMember?.memberId) {
             setIsExistingMember(true);
