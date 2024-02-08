@@ -14,7 +14,7 @@
 
 .sidebar {
   background-color: white;
-  width: 250px;
+  width: 300px;
   transition: width 0.3s ease-in-out;
   z-index: 3;
   overflow: hidden;
