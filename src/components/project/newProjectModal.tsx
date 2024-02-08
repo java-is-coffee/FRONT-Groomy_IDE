@@ -81,7 +81,6 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
 
   const removeProjectMember = (event: React.MouseEvent<HTMLElement>) => {
     const target = event.target as HTMLElement;
-    console.log(target.parentElement);
     const removeMemberId = target.parentElement?.parentElement?.id;
     setGroupMembers((prev: SearchedMember[]) => {
       return prev.filter(
