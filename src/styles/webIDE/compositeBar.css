@@ -1,0 +1,51 @@
+.action-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 아이콘들을 수직 중앙 정렬 */
+}
+
+.action-option {
+  width: 47px;
+  height: 48px;
+  position: relative; /* 알림 표시를 위한 위치 지정 기준 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #929090;
+  transition: color 0.2s ease;
+}
+
+.action-option.selected {
+  border-left: 3px solid coral;
+  color: black;
+}
+
+.action-option:hover {
+  color: black;
+}
+
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; /* 아이콘 크기 조정 */
+  height: 24px; /* 아이콘 크기 조정 */
+}
+
+/* 알림 표시 스타일 */
+.action-option::after {
+  /* content: "2"; 알림 숫자, 실제 구현에선 동적으로 변경될 수 있음 */
+  position: absolute;
+  top: -10px; /* 알림 표시 위치 조정 */
+  right: -10px; /* 알림 표시 위치 조정 */
+  background-color: var(--sub-theme-color); /* 알림 배경색 */
+  color: white; /* 알림 글자색 */
+  width: 20px; /* 알림 크기 조정 */
+  height: 20px; /* 알림 크기 조정 */
+  border-radius: 50%; /* 원형 모양으로 만들기 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px; /* 알림 글자 크기 조정 */
+  border: 2px solid white; /* 배경과 구분되는 테두리 */
+}
