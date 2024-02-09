@@ -7,6 +7,7 @@
 
 .side-container {
   width: 280px;
+  min-width: 150px;
   display: block;
   background-color: var(--main-theme-color);
   border-right: 1px solid #ccc;
@@ -29,6 +30,10 @@
   width: 5px;
   height: 100vh;
   background-color: var(--main-theme-color);
+}
+
+.resize-handle.active {
+  background-color: var(--sub-theme-color);
 }
 
 .resize-handle:hover {

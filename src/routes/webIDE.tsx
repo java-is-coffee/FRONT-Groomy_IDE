@@ -4,15 +4,17 @@ import StatusBar from "../components/webIDE/statusBar";
 import CompositeBar from "../components/webIDE/compositeBar";
 
 import "../styles/webIDE/webIDE.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
+import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
 
 const WebIDE = () => {
   const testFiles = ["test.java", "test.py", "codes.js"];
   const isResizing = useRef(false);
   const [sideContainerWidth, setSideContainerWidth] = useState(280); // 너비 상태 관리
   const resizeHandle = useRef<HTMLDivElement>(null); // 리사이징 핸들에 대한 참조
+  const dispatch = useDispatch();
 
   const isOpenSide = useSelector(
     (state: RootState) => state.ideSideContainer.open
@@ -21,9 +23,15 @@ const WebIDE = () => {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isResizing.current) {
-        const newWidth = e.clientX;
-        setSideContainerWidth(newWidth); // 너비 상태 업데이트
-        console.log(newWidth);
+        const newWidth = e.clientX - 48;
+        if (newWidth > 150) {
+          setSideContainerWidth(newWidth); // 너비가 200px 이상일 때만 상태 업데이트
+        } else {
+          // 너비가 200px 이하일 경우, 사이드바 닫기 및 너비 조절 중단
+          dispatch(toggleSideContainer()); // 사이드바 닫기 액션 디스패치
+          isResizing.current = false; // 리사이징 중단
+          window.removeEventListener("mousemove", handleMouseMove); // 마우스 이동 이벤트 리스너 제거
+        }
       }
     };
 
@@ -65,7 +73,7 @@ const WebIDE = () => {
       </div>
       <div
         ref={resizeHandle} // 리사이징 핸들 참조 연결
-        className="resize-handle"
+        className={`resize-handle ${isResizing.current ? " active" : ""}`}
       />
       <div
         className="code-editor"
