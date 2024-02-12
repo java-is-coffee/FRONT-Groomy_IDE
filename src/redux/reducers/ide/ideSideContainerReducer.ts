@@ -1,18 +1,17 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import IdeOptionType from "../../../enum/ideOptionType";
+import { createSlice } from "@reduxjs/toolkit";
 
 // 초기 상태의 타입 정의
-interface ideSideContainer {
+interface isSideOpen {
   open: boolean;
 }
 
 // 초기 상태
-const initialState: ideSideContainer = {
+const initialState: isSideOpen = {
   open: true,
 };
 
 const ideSideContainer = createSlice({
-  name: "ideOption",
+  name: "isSideContainerOpen",
   initialState,
   reducers: {
     toggleSideContainer: (state) => {
