@@ -6,7 +6,6 @@ import {
   CodeDetails,
   removeCodeTab,
   resetCurEditingCode,
-  saveCode,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 
