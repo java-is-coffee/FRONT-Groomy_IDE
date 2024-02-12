@@ -13,8 +13,8 @@
 }
 
 .side-container.closed {
-  display: block; /* 오타 수정 */
   width: 0; /* 너비를 0으로 설정 */
+  min-width: 0;
   overflow: hidden; /* 내용이 넘칠 경우 숨김 */
 }
 
@@ -29,6 +29,12 @@
   width: 3px;
   height: 100vh;
   background-color: #ccc;
+}
+
+.resize-handle.closed {
+  display: block; /* 오타 수정 */
+  width: 0; /* 너비를 0으로 설정 */
+  overflow: hidden; /* 내용이 넘칠 경우 숨김 */
 }
 
 .resize-handle.active {

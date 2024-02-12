@@ -115,10 +115,17 @@ const WebIDE = () => {
       >
         <SideContainer />
       </div>
-      <div
-        ref={resizeHandle} // 리사이징 핸들 참조 연결
-        className={`resize-handle${resizing ? " active" : ""}`}
-      />
+      {isOpenSide ? (
+        <div
+          ref={resizeHandle} // 리사이징 핸들 참조 연결
+          className={`resize-handle${resizing ? " active" : ""}`}
+        />
+      ) : (
+        <div
+          ref={resizeHandle} // 리사이징 핸들 참조 연결
+          className={`resize-handle closed${resizing ? " active" : ""}`}
+        />
+      )}
       <div
         className="code-editor"
         style={
