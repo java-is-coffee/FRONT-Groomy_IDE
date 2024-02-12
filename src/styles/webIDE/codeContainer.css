@@ -8,9 +8,68 @@
 .code-tab-container {
   display: flex; /* 탭들을 가로로 정렬 */
   border-bottom: 1px solid #ccc; /* 탭 아래에 구분선 추가 */
-  background-color: white;
+  background-color: var(--main-theme-color);
   width: 100%;
   min-height: 35px;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-x: scroll;
+}
+
+/* CSS */
+.code-edit-starter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use the full height of the viewport */
+  text-align: center;
+  color: #808080; /* This is a light gray color, adjust as needed */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Choose a font-family that fits your design */
+}
+
+.code-edit-starter img {
+  max-width: 300px; /* Adjust as needed */
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.code-edit-starter span {
+  font-size: 20px; /* Adjust as needed */
+  letter-spacing: 1px; /* Adjust as needed */
+}
+
+.code-tab-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  background-color: var(--main-theme-color);
+  border-right: 1px solid #ccc;
+  border-top: 3px solid transparent; /* Ensure layout doesn't shift when active */
+  gap: 3px;
+  padding: 0 10px; /* Fixed padding syntax */
+  min-width: 120px;
+}
+
+.code-tab-items.active {
+  border-top: 3px solid orange;
+  background-color: white;
+}
+
+.code-tab-items svg {
+  width: 20px;
+  /* align-items is unnecessary here unless this is a flex container */
+}
+
+.code-tab-items span {
+  text-align: center;
+  /* align-items is unnecessary here unless this is a flex container */
+  font-style: italic;
+  font-weight: 350;
+  font-size: 14px;
 }
 
 /* 에디터 스타일링 */
