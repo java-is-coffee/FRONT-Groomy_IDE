@@ -33,6 +33,9 @@ const CodeEditor = () => {
   const curFile = useSelector(
     (state: RootState) => state.editingCode.editingCode
   );
+  const editFiles = useSelector(
+    (state: RootState) => state.editingCode.codeTabs
+  );
   const monacoInstance = useMonaco();
   const dispatch = useDispatch();
 
@@ -96,14 +99,22 @@ const CodeEditor = () => {
         });
     }
   }, [monacoInstance, theme]);
+  console.log(editFiles.length);
   return (
     <div className="code-container">
       <CodeTab />
-      <Editor
-        language={curFile.lang}
-        value={curFile.content}
-        onMount={handleEditorDidMount}
-      />
+      {editFiles.length !== 0 ? (
+        <Editor
+          language={curFile.lang}
+          value={curFile.content}
+          onMount={handleEditorDidMount}
+        />
+      ) : (
+        <div className="code-edit-starter">
+          <img src="/icon/Logo.png" alt="logo..." />
+          <span>select file to edit</span>
+        </div>
+      )}
     </div>
   );
 };
