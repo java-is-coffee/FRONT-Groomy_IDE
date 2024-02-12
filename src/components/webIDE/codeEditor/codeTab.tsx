@@ -5,6 +5,8 @@ import getLanguageIcon from "./language";
 import {
   CodeDetails,
   removeCodeTab,
+  resetCurEditingCode,
+  saveCode,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 
@@ -22,6 +24,7 @@ const CodeTab = () => {
   // 선택한 탭 닫기
   const closeTab = (id: string) => {
     dispatch(removeCodeTab(id));
+    dispatch(resetCurEditingCode());
   };
   // 탭 클릭으로 전환
   const handleTabSelect = (code: CodeDetails) => {
