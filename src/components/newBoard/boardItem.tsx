@@ -1,50 +1,49 @@
 import React from "react";
-import { BoardDetails } from "./boardContainer";
+
+import "../../styles/board/board.css";
+
+import { BoardDetails } from "../../api/board/patchBoardList";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { GrView } from "react-icons/gr";
 import { FaRegCommentDots } from "react-icons/fa";
+type boardProps = {
+  BoardDetails: BoardDetails;
+};
 
-// interface BoardDetails {
-//   boardId: number;
-//   memberId: number;
-//   title: string;
-//   content: string;
-//   viewNumber: number;
-//   helpNumber: number;
-//   commentNumber: number;
-//   completed: boolean;
-// }
-
-const BoardCard = ({ boardItem }: { boardItem: BoardDetails }) => {
+const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
   return (
-    <div className="board-item box-border p-15">
+    // 게시글 상단 미해결 과 제목
+    <div className="board-item box-border p-15" id={`${BoardDetails.boardId}`}>
       <div className="board-item-top mt-15">
-        <span className="board-item-completed-box p-15">미해결</span>
-        <span>{boardItem.title}</span>
+        <span className="board-item-completed-box">미해결</span>
+        <span>{BoardDetails.title}</span>
       </div>
 
-      <div className="board-item-content">{boardItem.content}</div>
+      {/* 내용  */}
+      <div className="board-item-content">{BoardDetails.content}</div>
 
+      {/* 멤버 아이디 */}
       <div className="board-item-bottom">
-        <span className="board-item-user-name">{boardItem.memberId}</span>
+        <span className="board-item-user-name">{BoardDetails.nickname}</span>
         <div className="float-right">
           <span className="board-item-bottom-icon">
             <FaRegThumbsUp />
             <span className="board-item-bottom-icon-number">
-              {boardItem.helpNumber}
+              {BoardDetails.helpNumber}
             </span>
           </span>
 
+          {/* 도움, 댓글 갯수  */}
           <span className="board-item-bottom-icon">
             <GrView />
             <span className="board-item-bottom-icon-number">
-              {boardItem.commentNumber}
+              {BoardDetails.viewNumber}
             </span>
           </span>
           <span className="board-item-bottom-icon">
             <FaRegCommentDots />
             <span className="board-item-bottom-icon-number">
-              {boardItem.helpNumber}
+              {BoardDetails.commentNumber}
             </span>
           </span>
         </div>
@@ -52,6 +51,4 @@ const BoardCard = ({ boardItem }: { boardItem: BoardDetails }) => {
     </div>
   );
 };
-
-export default BoardCard;
-// 미해결 타이틀 내용 유저이름 헬프 뷰 코멘트
+export default BoardItem;

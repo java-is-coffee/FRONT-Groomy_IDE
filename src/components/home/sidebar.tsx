@@ -42,9 +42,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   // main contents handler
   const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target;
+    const target = event.currentTarget.id;
     console.log(target);
-    onSelectContents(ContentType.ProjectList);
+
+    if (target === "project") onSelectContents(ContentType.ProjectList);
+    if (target === "board") onSelectContents(ContentType.BoardList);
   };
 
   // member 정보 불러오기
@@ -90,16 +92,16 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
         </div>
         <div className="nav-menu">
-          <div className="menu" onClick={handleMainContent}>
-            <div className="menu-container" id="project">
+          <div className="menu" id="project" onClick={handleMainContent}>
+            <div className="menu-container">
               <div className="icon">
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
             </div>
           </div>
-          <div className="menu" onClick={handleMainContent}>
-            <div className="menu-container" id="board">
+          <div className="menu" id="board" onClick={handleMainContent}>
+            <div className="menu-container">
               <div className="icon">
                 <FaWpforms size={"32px"} />
               </div>
