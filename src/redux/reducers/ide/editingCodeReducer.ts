@@ -27,6 +27,11 @@ const curEditingCode = createSlice({
   name: "editingCode",
   initialState,
   reducers: {
+    // 코드 창 닫을 시 현재 수정중인 파일 reset
+    resetCurEditingCode: (state, action: PayloadAction) => {
+      state.editingCode = initialState.editingCode;
+    },
+
     // 현재 수정중인 파일 설정
     setCurEditingCode: (state, action: PayloadAction<CodeDetails>) => {
       state.editingCode = action.payload;
@@ -63,6 +68,11 @@ const curEditingCode = createSlice({
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { setCurEditingCode, addCodeTab, removeCodeTab, saveCode } =
-  curEditingCode.actions;
+export const {
+  resetCurEditingCode,
+  setCurEditingCode,
+  addCodeTab,
+  removeCodeTab,
+  saveCode,
+} = curEditingCode.actions;
 export default curEditingCode.reducer;

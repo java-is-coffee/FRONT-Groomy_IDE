@@ -87,6 +87,36 @@ const CodeEditor = () => {
   //   setTheme(EditorTheme.xcode);
   // };
 
+  const handleEditorChange = useCallback(
+    (
+      value: string | undefined,
+      event: monaco.editor.IModelContentChangedEvent
+    ) => {
+      if (value !== undefined && curFile) {
+        // Create a new FileItem object with the updated content
+        const updateFile: FileItem = {
+          id: curFile.id,
+          name: curFile.name,
+          type: "file", // Assuming the type is 'file' since you're editing content
+          content: value,
+        };
+
+        // Dispatch an action to update the current file content in the store
+        dispatch(saveItem(updateFile));
+
+        // You might also want to update the code details in the store
+        // (Assuming you have a function to determine the language from the filename)
+        const updatedCodeDetails: CodeDetails = {
+          ...curFile,
+          content: value,
+        };
+
+        dispatch(saveCode(updatedCodeDetails));
+      }
+    },
+    [curFile, dispatch]
+  );
+
   // monaco code editor theme setting
   useEffect(() => {
     if (monacoInstance) {
@@ -108,6 +138,7 @@ const CodeEditor = () => {
           language={curFile.lang}
           value={curFile.content}
           onMount={handleEditorDidMount}
+          onChange={handleEditorChange}
         />
       ) : (
         <div className="code-edit-starter">
