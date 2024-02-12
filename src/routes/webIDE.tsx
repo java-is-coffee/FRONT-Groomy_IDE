@@ -8,10 +8,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
 import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
+import { FileItem, setItems } from "../redux/reducers/ide/fileSystemReducer";
 
 const WebIDE = () => {
-  const testFiles = ["test.java", "test.py", "codes.js"];
+  const data: FileItem[] = [
+    {
+      id: "1",
+      name: "Root",
+      type: "folder",
+      children: [
+        {
+          id: "2",
+          name: "SubFolder",
+          type: "folder",
+          children: [
+            {
+              id: "3",
+              name: "FileInSubFolder.txt",
+              type: "file",
+            },
+            {
+              id: "4",
+              name: "test.ts",
+              type: "file",
+              content: "function ex",
+            },
+          ],
+        },
+        {
+          id: "5",
+          name: "FileInRoot.c",
+          type: "file",
+        },
+        {
+          id: "6",
+          name: "FileInRoot.cpp",
+          type: "file",
+        },
+      ],
+    },
+  ];
   const isResizing = useRef(false);
+  const [resizing, setResizing] = useState(false);
   const [sideContainerWidth, setSideContainerWidth] = useState(280); // 너비 상태 관리
   const resizeHandle = useRef<HTMLDivElement>(null); // 리사이징 핸들에 대한 참조
   const dispatch = useDispatch();
@@ -20,44 +58,50 @@ const WebIDE = () => {
     (state: RootState) => state.ideSideContainer.open
   );
 
+  // 사이드 컨테이너 마우스 드레그 & 드롭으로 조절 기능
   useEffect(() => {
+    const currentResizeHandle = resizeHandle.current;
     const handleMouseMove = (e: MouseEvent) => {
       if (isResizing.current) {
         const newWidth = e.clientX - 48;
         if (newWidth > 150) {
-          setSideContainerWidth(newWidth); // 너비가 200px 이상일 때만 상태 업데이트
+          setSideContainerWidth(newWidth);
         } else {
-          // 너비가 200px 이하일 경우, 사이드바 닫기 및 너비 조절 중단
-          dispatch(toggleSideContainer()); // 사이드바 닫기 액션 디스패치
-          isResizing.current = false; // 리사이징 중단
-          window.removeEventListener("mousemove", handleMouseMove); // 마우스 이동 이벤트 리스너 제거
+          dispatch(toggleSideContainer());
+          isResizing.current = false;
+          setResizing(false); // 여기서 리사이징 상태 업데이트
         }
       }
     };
 
     const handleMouseUp = () => {
       isResizing.current = false;
+      setResizing(false); // 여기서 리사이징 상태 업데이트
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
 
     const startResizing = (e: MouseEvent) => {
+      e.preventDefault();
       isResizing.current = true;
+      setResizing(true); // 여기서 리사이징 상태 업데이트
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp, { once: true });
     };
 
-    // 리사이징 핸들에 대한 참조를 사용하여 이벤트 리스너를 등록합니다.
-    if (resizeHandle.current) {
-      resizeHandle.current.addEventListener("mousedown", startResizing);
+    if (currentResizeHandle) {
+      currentResizeHandle.addEventListener("mousedown", startResizing);
     }
 
     return () => {
-      // 컴포넌트 언마운트 시 이벤트 리스너 제거
-      if (resizeHandle.current) {
-        resizeHandle.current.removeEventListener("mousedown", startResizing);
+      if (currentResizeHandle) {
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mouseup", handleMouseUp);
       }
     };
-  }, []);
+  }, [dispatch]); // isResizing을 의존성 배열에서 제거
+  // test 폴더 구조 주입
+  dispatch(setItems(data));
   return (
     <div className="ide">
       <div className="composite-bar">
@@ -73,14 +117,14 @@ const WebIDE = () => {
       </div>
       <div
         ref={resizeHandle} // 리사이징 핸들 참조 연결
-        className={`resize-handle ${isResizing.current ? " active" : ""}`}
+        className={`resize-handle${resizing ? " active" : ""}`}
       />
       <div
         className="code-editor"
         style={
           isOpenSide
-            ? { width: `calc(100% - ${sideContainerWidth}px - 53px)` }
-            : { width: `calc(100% -  53px)` }
+            ? { width: `calc(100% - ${sideContainerWidth}px - 52px)` }
+            : { width: `calc(100% -  52px)` }
         }
       >
         <CodeEditor />

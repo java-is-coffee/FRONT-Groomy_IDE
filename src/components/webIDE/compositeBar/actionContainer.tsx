@@ -4,7 +4,6 @@ import { GiBlackBook } from "react-icons/gi";
 import "../../../styles/webIDE/compositeBar.css";
 import IdeOptionType from "../../../enum/ideOptionType";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { RootState } from "../../../redux/store/store";
 import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
 import { toggleSideContainer } from "../../../redux/reducers/ide/ideSideContainerReducer";
