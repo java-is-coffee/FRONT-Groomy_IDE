@@ -12,6 +12,7 @@ export const store = configureStore({
   reducer: {
     projects: projectsReducer, // projects 슬라이스의 리듀서를 스토어에 등록합니다.
     member: memberReducer,
+    board: boardReducer,
     ideOption: ideOptionReducer,
     ideSideContainer: ideSideContainerReducer,
     fileSystem: fileSystemReducer,
