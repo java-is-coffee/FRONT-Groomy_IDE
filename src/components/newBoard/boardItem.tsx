@@ -2,10 +2,10 @@ import React from "react";
 
 import "../../styles/board/board.css";
 
-import { BoardDetails } from "../../api/board/patchBoardList";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { GrView } from "react-icons/gr";
 import { FaRegCommentDots } from "react-icons/fa";
+import { BoardDetails } from "../../redux/reducers/boardReducer";
 type boardProps = {
   BoardDetails: BoardDetails;
 };

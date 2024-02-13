@@ -2,6 +2,7 @@ import BoardList from "../newBoard/boardList";
 import { ContentType } from "../../routes/home";
 import ProjectListContainer from "../project/projectListContainer";
 import BoardContent from "../newBoard/boardContent";
+import NewBoardPage from "../newBoard/newBoardContent";
 
 interface MainContentProps {
   curContent: ContentType;
@@ -19,6 +20,8 @@ const MainContent: React.FC<MainContentProps> = ({
       return <BoardList onSelectContents={onSelectContents} />;
     case ContentType.BoardContent:
       return <BoardContent onSelectContents={onSelectContents} />;
+    case ContentType.BoardWrite:
+      return <NewBoardPage />;
     default:
       return <ProjectListContainer />;
   }

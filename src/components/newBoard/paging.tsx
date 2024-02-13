@@ -11,12 +11,9 @@ import {
   patchCurrentPage,
   patchMaxPage,
   patchPageOffset,
-} from "../../redux/reducers/boardReducer";
-import {
   BoardDetails,
-  patchBoardList,
-  PageNumber,
-} from "../../api/board/patchBoardList";
+} from "../../redux/reducers/boardReducer";
+import { patchBoardList, PageNumber } from "../../api/board/patchBoardList";
 import { patchBoard } from "../../redux/reducers/boardReducer";
 
 function Paging() {

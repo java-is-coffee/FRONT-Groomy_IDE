@@ -9,6 +9,7 @@ export enum ContentType {
   ProjectList = "project-list",
   BoardList = "board-list",
   BoardContent = "board-content",
+  BoardWrite = "board-write",
   Chat = "chat",
 }
 

@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { PageNumber, patchBoardList } from "../../api/board/patchBoardList";
 import { MdKeyboardArrowLeft } from "react-icons/md";
-import { BoardDetails } from "../../api/board/patchBoardContent";
-import { patchBoard } from "../../redux/reducers/boardReducer";
+import { BoardDetails, patchBoard } from "../../redux/reducers/boardReducer";
 import Comment from "./comment";
 
 const BoardContent = ({
@@ -23,6 +22,7 @@ const BoardContent = ({
 
   const dispatch = useDispatch();
 
+  //이전 화면으로 돌아갈때 필요한 정보 가져오기
   const fetchBoardListData = async () => {
     try {
       const Page: PageNumber = {

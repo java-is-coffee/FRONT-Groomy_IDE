@@ -1,23 +1,42 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
+import { CommentDetails } from "./patchCommentList";
 import { BoardDetails } from "../../redux/reducers/boardReducer";
 
 const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board";
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board/write";
 
-export interface PageNumber {
-  page: number | null;
+export interface NewBoard {
+  memberId: number;
+  nickname: string;
+  title: string;
+  content: string;
+  completed: boolean;
 }
 
-//prop으로 넘기기
-// projectList 가져오는 메서드
-export const patchBoardList = async ({
-  page,
-}: PageNumber): Promise<BoardDetails[] | null> => {
+interface NewBoardDTO {
+  data: NewBoard;
+}
+
+export const postNewBoard = async (
+  inputDTO: NewBoard
+): Promise<BoardDetails | null> => {
   const storedToken = localStorage.getItem("accessToken");
-  const pageNumber: PageNumber = {
-    page: page,
+
+  const inputData: NewBoard = {
+    memberId: inputDTO.memberId,
+    nickname: inputDTO.nickname,
+    title: inputDTO.title,
+    content: inputDTO.content,
+    completed: inputDTO.completed,
   };
+
+  const requestDTO: NewBoardDTO = {
+    data: inputData,
+  };
+
+  console.log(`${USER_API_URL}`);
+  console.log(requestDTO);
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
     return null;
@@ -28,10 +47,12 @@ export const patchBoardList = async ({
     },
   };
   try {
-    const response = await axios.get<BoardDetails[]>(
-      `${USER_API_URL}/${page}`,
+    const response = await axios.post<BoardDetails>(
+      `${USER_API_URL}`,
+      requestDTO,
       config
     );
+
     if (response.status === 200) {
       return response.data;
     } else {
@@ -47,7 +68,7 @@ export const patchBoardList = async ({
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return patchBoardList(pageNumber);
+          return postNewBoard(inputData);
         }
       }
     } else {
@@ -57,3 +78,4 @@ export const patchBoardList = async ({
     return null;
   }
 };
+//

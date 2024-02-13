@@ -1,6 +1,5 @@
 // projectsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BoardDetails } from "../../api/board/patchBoardList";
 import { CommentDetails } from "../../api/board/patchCommentList";
 
 // 초기 상태의 타입 정의
@@ -13,6 +12,20 @@ interface BoardStaus {
   currentPage: number | null;
   pageOffset: number | null;
   commentList: CommentDetails[] | null;
+}
+
+export interface BoardDetails {
+  boardId: number;
+  memberId: number;
+  title: string;
+  nickname: string;
+  content: string;
+  viewNumber: number;
+  commentNumber: number;
+  scrapNumber: number;
+  createdTime: string;
+  helpNumber: number;
+  isCompleted: boolean;
 }
 
 // 초기 상태

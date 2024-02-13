@@ -3,14 +3,11 @@ import "../../styles/project/projectListContainer.css";
 import "../../styles/board/board.css";
 import BoardItem from "./boardItem";
 import { ContentType } from "../../routes/home";
-import {
-  BoardDetails,
-  patchBoardList,
-  PageNumber,
-} from "../../api/board/patchBoardList";
+import { patchBoardList, PageNumber } from "../../api/board/patchBoardList";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import {
+  BoardDetails,
   patchBoard,
   patchComment,
   patchContent,
@@ -18,10 +15,7 @@ import {
 } from "../../redux/reducers/boardReducer";
 import { FaClipboardQuestion } from "react-icons/fa6";
 import Paging from "./paging";
-import {
-  ContentId,
-  patchBoardContent,
-} from "../../api/board/patchBoardContent";
+import { patchBoardContent } from "../../api/board/patchBoardContent";
 import {
   BoardId,
   CommentDetails,
@@ -58,8 +52,8 @@ const BoardListContainer = ({
 
   const fetchBoardListData = async (id: number) => {
     try {
-      const content: ContentId = {
-        contentId: id,
+      const content: BoardId = {
+        boardId: id,
       };
       const storedContent: BoardDetails | null = await patchBoardContent(
         content
@@ -90,12 +84,18 @@ const BoardListContainer = ({
 
   const chageComponent = (event: React.MouseEvent<HTMLDivElement>) => {
     const targetId = event.currentTarget.id;
-    const fetchContentId = parseInt(targetId);
 
-    fetchBoardListData(fetchContentId);
-    fetchCommentList(fetchContentId);
-    dispatch(patchContentId(fetchContentId));
-    onSelectContents(ContentType.BoardContent);
+    if (targetId) {
+      const fetchContentId = parseInt(targetId);
+
+      fetchBoardListData(fetchContentId);
+      fetchCommentList(fetchContentId);
+      dispatch(patchContentId(fetchContentId));
+      onSelectContents(ContentType.BoardContent);
+    } else {
+      onSelectContents(ContentType.BoardWrite);
+      console.log("글쓰기");
+    }
   };
 
   return (
@@ -116,7 +116,9 @@ const BoardListContainer = ({
         ))}
 
       {/* 글쓰기 버튼 */}
-      <button className="board-writing-btn">글쓰기</button>
+      <div className="board-writing-btn" onClick={chageComponent}>
+        글쓰기
+      </div>
       <div className="display-flex-justify-center">
         <Paging />
       </div>
