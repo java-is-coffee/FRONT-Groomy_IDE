@@ -7,7 +7,9 @@ import NewProjectModal from "../components/project/newProjectModal";
 
 export enum ContentType {
   ProjectList = "project-list",
-  Board = "board",
+  BoardList = "board-list",
+  BoardContent = "board-content",
+  BoardWrite = "board-write",
   Chat = "chat",
 }
 
@@ -60,7 +62,10 @@ const Home: React.FC = () => {
           />
         </aside>
         <div className={`main-content ${sideClose ? "wide" : ""}`}>
-          <MainContent curContent={curContent} />
+          <MainContent
+            curContent={curContent}
+            onSelectContents={handleContentChange}
+          />
         </div>
       </div>
     </div>

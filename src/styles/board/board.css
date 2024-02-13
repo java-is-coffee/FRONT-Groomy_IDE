@@ -1,0 +1,199 @@
+.test {
+  background-color: var(--main-theme-color);
+  max-height: 92.5vh;
+  min-height: 92.5vh;
+  overflow-y: auto;
+}
+
+.box-border {
+  box-sizing: border-box;
+  border: 2px solid black;
+  overflow-y: auto;
+}
+
+.inline {
+  display: inline;
+}
+
+.display-flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.float-right {
+  float: right;
+}
+
+.line-bottom {
+  border-bottom: 1px solid black;
+}
+
+.mr-15 {
+  margin-right: 15px;
+}
+
+.ml-15 {
+  margin-left: 15px;
+}
+.p-15 {
+  padding: 15px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.m-10 {
+  margin: 10px;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.display-flex-start {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.display-flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.display-flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+
+.board-top {
+  margin: -15px -15px 10px -15px;
+  padding: 15px;
+  background-color: white;
+}
+
+.board-item {
+  background-color: white;
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.board-item:hover {
+  background-color: var(--main-theme-color);
+  transition: background-color 0.5s ease;
+}
+
+.board-item-bottom-icon {
+  margin-left: 10px;
+}
+.board-item-bottom-icon-number {
+  margin-left: 5px;
+}
+
+.board-item-completed-box {
+  background: #ccf0fe;
+  border-radius: 50px;
+  margin-right: 15px;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.board-item-content {
+  margin: 20px 0px 15px 10px; /*위 오른 아래 왼*/
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: #000000;
+}
+
+.user-name {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.board-writing-btn {
+  position: relative;
+  bottom: 20px;
+  left: 0px;
+
+  border: none;
+  border-radius: 16px;
+  background: royalblue;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  box-shadow: 0px 5px 15px gray;
+  cursor: pointer;
+}
+
+.board-write-content {
+  resize: none;
+}
+
+.board-write-btn {
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: 0.5px solid black;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-sub-color {
+  background-color: #062b52;
+  color: white;
+}
+
+.board-content-content {
+  min-height: 20vh;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.comment-content {
+  margin-left: 24px;
+}
+
+.comment-input {
+  background-color: white;
+  width: 98%;
+  padding: 5px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.display-flex-row-reverse {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.board-page {
+  margin: 0px 5px 0px 5px;
+  padding: 0px 10px 0px 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.board-page:hover {
+  background-color: aquamarine;
+}

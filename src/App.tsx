@@ -13,6 +13,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          {/* <Route path="/board/:id" element={<BoadList />}></Route>
+          <Route path="/board/write" element={<Write />}></Route>
+          <Route path="/board/content/:id" element={<Content />}></Route> */}
           <Route path="/login" element={<Login />}></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>

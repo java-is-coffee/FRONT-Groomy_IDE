@@ -16,6 +16,7 @@ const ProjectListContainer: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchProjectListData = async () => {
+      console.log("test중입니다.");
       try {
         const storedProjects: ProjectDetails[] | null =
           await patchProjectList();
