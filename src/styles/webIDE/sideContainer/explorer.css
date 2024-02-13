@@ -1,0 +1,37 @@
+.explore-options {
+  display: flex;
+  padding: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.explore-tools {
+  display: flex;
+  flex-direction: row;
+}
+
+.explore-tools-icon {
+  width: 15px;
+  height: 15px;
+  justify-content: center;
+  padding: 3px;
+  margin-left: 3px;
+  border-radius: 4px;
+}
+
+.explore-tools-icon:hover {
+  background-color: #ccc;
+}
+
+.code-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.code-icon {
+  padding: 2px;
+}
+
+.code-title {
+  margin-left: 3px;
+}
