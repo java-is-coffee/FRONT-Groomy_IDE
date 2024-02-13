@@ -2,11 +2,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import projectsReducer from "../reducers/projectReducer"; // projectsSlice.ts에서 정의한 리듀서를 가져옵니다.
 import memberReducer from "../reducers/memberReducer";
+import ideOptionReducer from "../reducers/ide/ideOptionReducer";
+import ideSideContainerReducer from "../reducers/ide/ideSideContainerReducer";
+import fileSystemReducer from "../reducers/ide/fileSystemReducer";
+import editingCodeReducer from "../reducers/ide/editingCodeReducer";
 
 export const store = configureStore({
   reducer: {
     projects: projectsReducer, // projects 슬라이스의 리듀서를 스토어에 등록합니다.
     member: memberReducer,
+    ideOption: ideOptionReducer,
+    ideSideContainer: ideSideContainerReducer,
+    fileSystem: fileSystemReducer,
+    editingCode: editingCodeReducer,
   },
 });
 

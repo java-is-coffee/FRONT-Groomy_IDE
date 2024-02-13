@@ -5,6 +5,7 @@ import Register from "./routes/register";
 import Home from "./routes/home";
 import "./styles/style.css";
 import ResetPassword from "./routes/resetPassword";
+import WebIDE from "./routes/webIDE";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/code-editor" element={<WebIDE />}></Route>
         </Routes>
       </Router>
     </div>

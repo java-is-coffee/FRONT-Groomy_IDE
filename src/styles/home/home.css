@@ -4,6 +4,7 @@
   position: fixed;
   z-index: 2;
 }
+
 .container {
   display: flex;
   flex-direction: row;
