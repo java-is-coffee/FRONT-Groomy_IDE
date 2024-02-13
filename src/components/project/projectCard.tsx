@@ -3,6 +3,7 @@ import React from "react";
 import "../../styles/project/projectCard.css";
 import { ProjectDetails } from "../../api/project/patchProjectList";
 import ProjectCardDropdown from "./dropdown/projectCardDropdown";
+import { useNavigate } from "react-router-dom";
 
 type projectProps = {
   projectDetails: ProjectDetails;
@@ -18,6 +19,7 @@ enum LangColor {
 }
 
 const ProjectCard: React.FC<projectProps> = ({ projectDetails }) => {
+  const nav = useNavigate();
   const color =
     LangColor[projectDetails.language as keyof typeof LangColor] || "white";
   return (
@@ -31,7 +33,10 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails }) => {
       </span>
       <div className="project-description">{projectDetails.description}</div>
       <div className="project-created-time">{projectDetails.createdDate}</div>
-      <button className="project-action">
+      <button
+        className="project-action"
+        onClick={() => nav(`/code-editor/${projectDetails.projectId}`)}
+      >
         <span>이동하기</span>
       </button>
     </div>
