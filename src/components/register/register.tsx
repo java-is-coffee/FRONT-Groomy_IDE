@@ -54,13 +54,17 @@ function RegisterComponent() {
 
     try {
       const response = await axios.post(dupeCheckUrl, requestDTO);
-      const result = response.data.data.duplicated;
+      const result = response.data;
+      console.log(result);
 
       if (result === false) {
+        console.log("정답이");
         setIsCheckedEmail(true);
       } else if (result === true) {
         setIsCheckedEmail(false);
       }
+
+      console.log(isCheckedEmail);
     } catch (error) {
       alert("통신 실패");
     }
@@ -208,10 +212,16 @@ function RegisterComponent() {
         </form>
       </div>
 
-        <div className="already">
-             <div><span className="q">이미 계정이 있으세요?</span></div>
-             <div><a href="/login" className="login">로그인</a></div>
+      <div className="already">
+        <div>
+          <span className="q">이미 계정이 있으세요?</span>
         </div>
+        <div>
+          <a href="/login" className="login">
+            로그인
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

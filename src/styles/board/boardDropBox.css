@@ -1,0 +1,12 @@
+.dropdown-box {
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  border: 0.5px solid black;
+  padding: 5px 5px 15px 5px;
+  width: 10vh;
+  text-align: center;
+}

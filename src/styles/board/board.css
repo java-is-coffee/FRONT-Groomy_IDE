@@ -21,7 +21,7 @@
 }
 
 .w-50 {
-  width: 50%;
+  width: 60%;
 }
 
 .float-right {
@@ -145,6 +145,10 @@
   cursor: pointer;
 }
 
+.relative {
+  position: relative;
+}
+
 .board-write-content {
   resize: none;
 }
@@ -196,4 +200,12 @@
 
 .board-page:hover {
   background-color: aquamarine;
+}
+
+.hori-dot {
+  padding: 2px;
+}
+
+.hori-dot:hover {
+  background-color: rgb(218, 218, 218);
 }

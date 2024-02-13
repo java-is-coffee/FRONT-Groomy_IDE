@@ -12,6 +12,7 @@ interface BoardStaus {
   currentPage: number | null;
   pageOffset: number | null;
   commentList: CommentDetails[] | null;
+  isEdited: boolean;
 }
 
 export interface BoardDetails {
@@ -38,6 +39,7 @@ const initialState: BoardStaus = {
   currentPage: null, //현재 페이지가 몇페이지 인지 나타냄
   pageOffset: null, // 현재 몇페이지 까지 offset인지. (페이지 넘길때 필요)
   commentList: null,
+  isEdited: false,
 };
 
 const BoardReducer = createSlice({
@@ -58,6 +60,9 @@ const BoardReducer = createSlice({
     },
     patchContent: (state, action: PayloadAction<BoardDetails>) => {
       state.content = action.payload;
+    },
+    patchIsEdited: (state, action: PayloadAction<boolean>) => {
+      state.isEdited = action.payload;
     },
     patchPageOffset: (state, action: PayloadAction<number>) => {
       state.pageOffset = action.payload;
@@ -88,6 +93,7 @@ export const {
   patchContent,
   patchCurrentPage,
   patchPageOffset,
+  patchIsEdited,
   patchComment,
 } = BoardReducer.actions;
 export default BoardReducer.reducer;

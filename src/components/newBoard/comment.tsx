@@ -14,7 +14,7 @@ function Comment() {
 
   const [writeReply, setWriteReply] = useState(false);
 
-  const user = useSelector((state: RootState) => state.member.member);
+  const userInfo = useSelector((state: RootState) => state.member.member);
   const curId = useSelector((state: RootState) => state.board.contentId);
 
   const commentList = useSelector(
@@ -27,15 +27,20 @@ function Comment() {
 
   const dispatch = useDispatch();
 
+  const handleEdit = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    console.log(event.currentTarget);
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (curId !== null && user?.nickname && user.memberId) {
+    if (curId !== null && userInfo?.nickname && userInfo.memberId) {
       const comment: CommentDetail = {
         boardId: curId,
         content: content,
-        nickname: user.nickname,
+        nickname: userInfo.nickname,
         originComment: null,
-        memberId: user.memberId,
+        memberId: userInfo.memberId,
       };
 
       await newComment(comment);
@@ -71,15 +76,29 @@ function Comment() {
             <hr />
 
             {/* 작성자 아이콘 & 관리 아이콘 */}
-            <div className="display-flex-space-between">
+            <div className="display-flex-space-between relative">
               <div className="display-flex-center">
                 <FaUserCircle size={24} />
                 <h4 className="inline ml-15">{data.nickname}</h4>
               </div>
 
-              <div className="float-right display-flex-center">
-                <HiOutlineDotsHorizontal size={24} />
-              </div>
+              {userInfo?.memberId === data.memberId ? (
+                <div>
+                  <div className="float-right project-card-dropdown">
+                    <HiOutlineDotsHorizontal className="hori-dot" size={24} />
+                    <div className="project-card-dropdown-menu">
+                      <div
+                        className="dropdown-item"
+                        id={`${data.commentId}Edit`}
+                        onClick={handleEdit}
+                      >
+                        Edit
+                      </div>
+                      <div className="dropdown-item">Delete</div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
 
             <div className="comment-content">{data.content}</div>

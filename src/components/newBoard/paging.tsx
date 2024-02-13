@@ -80,7 +80,7 @@ function Paging() {
   };
   const frontList = () => {
     if (maxPage !== null && pageOffset !== null) {
-      if (pageOffset + 5 <= maxPage) {
+      if (pageOffset + 5 < maxPage) {
         const tempList = setList(maxPage, pageOffset + 5);
         console.log(tempList);
         dispatch(patchPage(tempList));

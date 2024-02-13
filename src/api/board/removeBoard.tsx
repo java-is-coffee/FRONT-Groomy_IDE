@@ -1,21 +1,12 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
-import { BoardId } from "./patchCommentList";
-import { BoardDetails } from "../../redux/reducers/boardReducer";
 
 const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board";
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board/delete";
 
-//prop으로 넘기기
-// projectList 가져오는 메서드
-export const patchBoardContent = async ({
-  boardId,
-}: BoardId): Promise<BoardDetails | null> => {
+export const removeBoard = async (boardId: number) => {
   const storedToken = localStorage.getItem("accessToken");
 
-  const content: BoardId = {
-    boardId: boardId,
-  };
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
     return null;
@@ -26,12 +17,7 @@ export const patchBoardContent = async ({
     },
   };
   try {
-    const response = await axios.get<BoardDetails>(
-      `${USER_API_URL}/content/${boardId}`,
-      config
-    );
-
-    console.log(`${USER_API_URL}/content/${boardId}`);
+    const response = await axios.delete(`${USER_API_URL}/${boardId}`, config);
 
     if (response.status === 200) {
       return response.data;
@@ -48,7 +34,7 @@ export const patchBoardContent = async ({
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return patchBoardContent(content);
+          return;
         }
       }
     } else {
@@ -58,3 +44,4 @@ export const patchBoardContent = async ({
     return null;
   }
 };
+//
