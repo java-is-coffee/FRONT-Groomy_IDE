@@ -1,30 +1,14 @@
 import React, { useState } from "react";
 import "../../styles/board/board.css";
 import { FaClipboard } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { NewBoard, postNewBoard } from "../../api/board/postNewBoard";
-
-interface BoardContent {
-  memberId: number | undefined;
-  nickname: string | undefined;
-  title: string;
-  content: string;
-  completed: boolean;
-}
-
-interface BoardWriteDTO {
-  data: BoardContent;
-}
-
-const accessToken = localStorage.getItem("accessToken");
 
 function NewBoardPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
-  const [isAnony, setIsAnony] = useState(false);
   const user = useSelector((state: RootState) => state.member.member);
 
   function onChangeTitle(event: React.FormEvent<HTMLInputElement>): void {
@@ -47,10 +31,10 @@ function NewBoardPage() {
     setIsCompleted(value);
   }
 
-  function checkAnony(event: React.FormEvent<HTMLInputElement>): void {
-    const value = event.currentTarget.checked;
-    setIsAnony(value);
-  }
+  // function checkAnony(event: React.FormEvent<HTMLInputElement>): void {
+  //   const value = event.currentTarget.checked;
+
+  // }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -78,7 +62,7 @@ function NewBoardPage() {
         <div className="mt-15">
           <span className="font-bold">제목</span>
           <span className="float-right">
-            <input type="checkbox" name="anonymous" onChange={checkAnony} />
+            <input type="checkbox" name="anonymous" />
             <span>익명 선택</span>
           </span>
           <span className="float-right mr-15">

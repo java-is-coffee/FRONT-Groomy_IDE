@@ -1,6 +1,5 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
-import { CommentDetails } from "./patchCommentList";
 import { BoardDetails } from "../../redux/reducers/boardReducer";
 
 const USER_API_URL =
