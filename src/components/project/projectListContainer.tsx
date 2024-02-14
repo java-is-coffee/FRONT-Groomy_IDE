@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/project/projectListContainer.css";
 import ProjectCard from "./projectCard";
 
@@ -6,23 +6,15 @@ import {
   ProjectDetails,
   patchProjectList,
 } from "../../api/project/patchProjectList";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { patchProjects } from "../../redux/reducers/projectReducer";
 
 const ProjectListContainer: React.FC = () => {
-  const accessToken = localStorage.getItem("accessToken");
-  const projects = useSelector((state: RootState) => state.projects.projects);
-  const dispatch = useDispatch();
+  const [projects, setProjects] = useState<ProjectDetails[] | null>();
   useEffect(() => {
     const fetchProjectListData = async () => {
-      console.log("test중입니다.");
       try {
         const storedProjects: ProjectDetails[] | null =
           await patchProjectList();
-        if (storedProjects) {
-          dispatch(patchProjects(storedProjects));
-        }
+        setProjects(storedProjects);
       } catch (error) {
         console.log("api 에러");
       }
@@ -30,12 +22,16 @@ const ProjectListContainer: React.FC = () => {
     if (!projects) {
       fetchProjectListData();
     }
-  }, [accessToken, projects, dispatch]);
+  }, []);
   return (
     <div className="project-list">
       {projects &&
         projects.map((project) => (
-          <ProjectCard key={project.projectId} projectDetails={project} />
+          <ProjectCard
+            key={project.projectId}
+            projectDetails={project}
+            type="project"
+          />
         ))}
     </div>
   );
