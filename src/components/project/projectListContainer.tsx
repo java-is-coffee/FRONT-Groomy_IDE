@@ -7,7 +7,7 @@ import {
   patchProjectList,
 } from "../../api/project/patchProjectList";
 
-const ProjectListContainer: React.FC = () => {
+const ProjectListContainer = () => {
   const [projects, setProjects] = useState<ProjectDetails[] | null>();
   useEffect(() => {
     const fetchProjectListData = async () => {
@@ -22,7 +22,7 @@ const ProjectListContainer: React.FC = () => {
     if (!projects) {
       fetchProjectListData();
     }
-  }, []);
+  }, [projects]);
   return (
     <div className="project-list">
       {projects &&
