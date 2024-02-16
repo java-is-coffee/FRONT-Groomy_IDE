@@ -34,7 +34,6 @@ export const postNewProject = async (
     data: newProject,
   };
   try {
-    console.log(request);
     const response = await axios.post(
       `${USER_API_URL}/create`,
       request,
