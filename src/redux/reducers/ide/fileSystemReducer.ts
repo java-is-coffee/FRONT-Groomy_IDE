@@ -3,8 +3,9 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface FileItem {
   id: string;
   name: string;
-  type: "file" | "folder";
-  content?: string; // 파일일 경우의 내용 (선택적)
+  path: string;
+  type: "FILE" | "FOLDER";
+  lastUpdatedTime: string;
   children?: FileItem[]; // 폴더일 경우 자식 아이템을 포함할 수 있음 (선택적)
 }
 
@@ -27,7 +28,7 @@ interface IaddFile {
 const updateItem = (item: FileItem, payload: FileItem): FileItem => {
   if (item.id === payload.id) {
     return payload;
-  } else if (item.type === "folder" && item.children) {
+  } else if (item.type === "FOLDER" && item.children) {
     return {
       ...item,
       children: item.children.map((child) => updateItem(child, payload)),
@@ -51,7 +52,7 @@ const fileSystem = createSlice({
 
       const addItem = (items: FileItem[]): FileItem[] => {
         return items.map((folder) => {
-          if (folder.id === parentId && folder.type === "folder") {
+          if (folder.id === parentId && folder.type === "FOLDER") {
             return { ...folder, children: [...(folder.children || []), item] };
           } else if (folder.children) {
             return { ...folder, children: addItem(folder.children) };
