@@ -3,12 +3,11 @@ import { ChevronRight, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import {
-  addItem,
-  addItemToFolder,
   FileItem,
+  setItems,
 } from "../../../redux/reducers/ide/fileSystemReducer";
 import getLanguageIcon, { getLangExtension } from "../codeEditor/language";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { VscNewFile } from "react-icons/vsc";
 import { VscNewFolder } from "react-icons/vsc";
 import NewItemInput from "../codeEditor/newFile";
@@ -17,57 +16,43 @@ import {
   addCodeTab,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
+import { getFileTree } from "../../../api/\bfile/getFileTree";
+import { useParams } from "react-router-dom";
+import useTree from "../../../hooks/useTree";
+import { getFileContent } from "../../../api/\bfile/getFileContent";
+
+// 언어에 맞는 로고 가져오기
+const setLabel = (name: string) => {
+  const source: string[] = name.split(".");
+  const icon = getLanguageIcon(source[1]);
+  return (
+    <div className="code-details">
+      <div className="code-icon">{icon}</div>
+      <div className="code-title">{name}</div>
+    </div>
+  );
+};
 
 const RenderTree = () => {
-  const [expanded, setExpanded] = useState<string[]>([]); // 확장된 노드의 ID 목록
+  const { projectId } = useParams();
   const [inputValue, setInputValue] = useState("");
-  const [isAddingFile, setIsAddingFile] = useState(false);
-  const [isAddingFolder, setIsAddingFolder] = useState(false);
-  const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
+  const [isAddingFile, setIsAddingFile] = useState("");
   const dispatch = useDispatch();
   const userFiles = useSelector(
     (state: RootState) => state.fileSystem.fileSystem
   );
+  const {
+    expanded,
+    selectedFolder,
+    handleFolderSelected,
+    handleNodeToggle,
+    openNode,
+  } = useTree(); // 커스텀 훅 사용
 
   // 파일 추가 취소 메서드
   const onCancel = () => {
-    setIsAddingFile(false);
-    setIsAddingFolder(false);
+    setIsAddingFile("");
     setInputValue("");
-  };
-
-  // 언어에 맞는 로고 가져오기
-  const setLabel = (name: string) => {
-    const source: string[] = name.split(".");
-    const icon = getLanguageIcon(source[1]);
-    return (
-      <div className="code-details">
-        <div className="code-icon">{icon}</div>
-        <div className="code-title">{name}</div>
-      </div>
-    );
-  };
-
-  // 선택된 폴더 핸들러
-  const handleFolderSelected = (folderId: string) => {
-    setSelectedFolderId(folderId);
-  };
-
-  // 폴더 선택시 토글 되었는지 안되었는지 확인하는 메서드
-  const handleNodeToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
-    setExpanded(nodeIds);
-    // 선택된 폴더가 닫히면 입력 필드 비활성화
-    if (selectedFolderId && !nodeIds.includes(selectedFolderId)) {
-      onCancel();
-      setSelectedFolderId(null); // 선택된 폴더 ID 초기화
-    }
-  };
-
-  // 펼쳐진 폴더 추가
-  const openNode = () => {
-    if (selectedFolderId && !expanded.includes(selectedFolderId)) {
-      setExpanded((prev) => [...prev, selectedFolderId]);
-    }
   };
 
   // 새로운 폴더 & 파일 생성 input value 가져오기
@@ -78,11 +63,11 @@ const RenderTree = () => {
   // 버튼이 클릭된 경우 생성 input 랜더링
   const renderNewItemInput = () => {
     return (
-      (isAddingFile || isAddingFolder) && (
+      isAddingFile !== "" && (
         <NewItemInput
           inputValue={inputValue}
           handleInputChange={handleInputChange}
-          type={isAddingFile ? "file" : "folder"}
+          type={isAddingFile}
           handleConfirm={handleConfirm}
           onCancel={onCancel}
         />
@@ -93,15 +78,15 @@ const RenderTree = () => {
   // 파일구조 material tree 사용해서 랜더링하기
   // 폴더인 경우 재귀를 통해서 랜더링
   const renderTree = (items: FileItem) => {
-    return items.type === "folder" ? (
+    return items.type === "FOLDER" ? (
       <TreeItem
         key={items.id}
         nodeId={items.id}
         label={items.name}
-        onClick={() => handleFolderSelected(items.id)}
+        onClick={() => handleFolderSelected(items)}
       >
-        {items.children && items.children.map((node) => renderTree(node))}
-        {items.id === selectedFolderId && renderNewItemInput()}
+        {items.children && items.children.map(renderTree)}
+        {items.id === selectedFolder?.id && renderNewItemInput()}
       </TreeItem>
     ) : (
       <TreeItem
@@ -113,48 +98,55 @@ const RenderTree = () => {
     );
   };
 
+  const fetchFileContent = async (oldPath: string) => {
+    if (projectId) {
+      const result = await getFileContent(projectId, oldPath);
+      if (result) {
+        return result;
+      } else {
+        console.log("코드 세부 정보 불러오기 오류");
+      }
+    }
+    return "";
+  };
+
   // edit 할 파일 선택시 code space에 추가
-  const handleFileEditing = (items: FileItem) => {
+  const handleFileEditing = async (items: FileItem) => {
     const file: string[] = items.name.split(".");
+    // api 패치 추가예정
+    const content = await fetchFileContent(items.path);
     const editingCode: CodeDetails = {
       id: items.id,
       name: items.name,
       lang: getLangExtension(file[1]),
-      content: items.content ? items.content : "",
+      content: content,
     };
     dispatch(setCurEditingCode(editingCode));
     dispatch(addCodeTab(editingCode));
-    // api 패치 추가예정
   };
 
   // 새로운 document submit 핸들러
   const handleConfirm = (type: string) => {
-    const newItem: FileItem =
-      type === "file"
-        ? {
-            id: Date.now().toString(),
-            name: inputValue === "" ? "new-file" : inputValue,
-            type: "file",
-            content: "empty file",
-          }
-        : {
-            id: Date.now().toString(),
-            name: inputValue === "" ? "new-folder" : inputValue,
-            type: "folder",
-            children: [],
-          };
-    if (selectedFolderId === null) {
-      dispatch(addItem(newItem));
-    } else {
-      const itemInfo = {
-        item: newItem,
-        parentId: selectedFolderId,
-      };
-      dispatch(addItemToFolder(itemInfo));
-    }
+    // 프로젝트 생성 request 처리
     onCancel();
   };
 
+  useEffect(() => {
+    const fetchFileTree = async () => {
+      if (projectId) {
+        try {
+          const result = await getFileTree(projectId);
+          if (result) {
+            dispatch(setItems(result));
+          }
+        } catch (error) {
+          // 에러 핸들링 추가
+          console.error("Failed to load project file tree:", error);
+        }
+      }
+    };
+    fetchFileTree();
+  }, [projectId, dispatch]);
   return (
     <div>
       <div className="explore-options">
@@ -163,8 +155,10 @@ const RenderTree = () => {
           <div
             className="explore-tools-icon"
             onClick={() => {
-              setIsAddingFile(true);
-              openNode();
+              setIsAddingFile("FILE");
+              if (selectedFolder) {
+                openNode(selectedFolder.id);
+              }
             }}
           >
             <VscNewFile size={"17px"} />
@@ -172,8 +166,10 @@ const RenderTree = () => {
           <div
             className="explore-tools-icon"
             onClick={() => {
-              setIsAddingFolder(true);
-              openNode();
+              setIsAddingFile("FOLDER");
+              if (selectedFolder) {
+                openNode(selectedFolder.id);
+              }
             }}
           >
             <VscNewFolder size={"17px"} />
@@ -196,7 +192,8 @@ const RenderTree = () => {
           },
         }}
       >
-        {userFiles.map(renderTree)}
+        {userFiles.map((items) => renderTree(items))}
+        {selectedFolder ? "" : renderNewItemInput()}
       </TreeView>
     </div>
   );
