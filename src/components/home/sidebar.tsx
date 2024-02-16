@@ -59,7 +59,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   useEffect(() => {
     const fetchMemberData = async () => {
       const hasMemberInfo = await getMemberInfo();
-      console.log(hasMemberInfo);
       if (hasMemberInfo) {
         dispatch(addMember(hasMemberInfo));
       } else {
