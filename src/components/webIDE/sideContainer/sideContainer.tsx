@@ -7,6 +7,7 @@ import Explorer from "./explorer";
 import "../../../styles/webIDE/sideContainer/sideContainer.css";
 import Board from "./board";
 import Chat from "./chat";
+import LiveShare from "./liveShare";
 
 const SideContainer: React.FC = () => {
   const option = useSelector((state: RootState) => state.ideOption.option);
@@ -19,6 +20,8 @@ const SideContainer: React.FC = () => {
         return <Board />;
       case IdeOptionType.Chat:
         return <Chat />;
+      case IdeOptionType.LiveShare:
+        return <LiveShare />;
       default:
         return null;
     }

@@ -8,52 +8,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
 import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
-import { FileItem, setItems } from "../redux/reducers/ide/fileSystemReducer";
+
+import {
+  WebsocketProvider,
+  useWebSocketContext,
+} from "../context/webSocketContext";
+import { useLocation } from "react-router-dom";
 
 const WebIDE = () => {
-  const data: FileItem[] = [
-    {
-      id: "1",
-      name: "Root",
-      type: "folder",
-      children: [
-        {
-          id: "2",
-          name: "SubFolder",
-          type: "folder",
-          children: [
-            {
-              id: "3",
-              name: "FileInSubFolder.txt",
-              type: "file",
-            },
-            {
-              id: "4",
-              name: "test.ts",
-              type: "file",
-              content: "function ex",
-            },
-          ],
-        },
-        {
-          id: "5",
-          name: "FileInRoot.c",
-          type: "file",
-        },
-        {
-          id: "6",
-          name: "FileInRoot.cpp",
-          type: "file",
-        },
-      ],
-    },
-  ];
   const isResizing = useRef(false);
   const [resizing, setResizing] = useState(false);
   const [sideContainerWidth, setSideContainerWidth] = useState(280); // 너비 상태 관리
   const resizeHandle = useRef<HTMLDivElement>(null); // 리사이징 핸들에 대한 참조
   const dispatch = useDispatch();
-
+  const { connect, disconnect } = useWebSocketContext();
+  const location = useLocation();
   const isOpenSide = useSelector(
     (state: RootState) => state.ideSideContainer.open
   );
@@ -100,46 +69,56 @@ const WebIDE = () => {
       }
     };
   }, [dispatch]); // isResizing을 의존성 배열에서 제거
-  // test 폴더 구조 주입
-  dispatch(setItems(data));
+
+  useEffect(() => {
+    // 페이지에 진입할 때 웹소켓 연결
+    connect("ws/project");
+
+    // 컴포넌트가 언마운트될 때 웹소켓 연결 해제
+    return () => {
+      disconnect();
+    };
+  }, [connect, disconnect, location.pathname]);
   return (
-    <div className="ide">
-      <div className="composite-bar">
-        <CompositeBar />
-      </div>
-      <div
-        className={`side-container ${isOpenSide ? "" : "closed"}`}
-        style={
-          isOpenSide ? { width: `${sideContainerWidth}px` } : { width: "0px" }
-        }
-      >
-        <SideContainer />
-      </div>
-      {isOpenSide ? (
+    <WebsocketProvider>
+      <div className="ide">
+        <div className="composite-bar">
+          <CompositeBar />
+        </div>
         <div
-          ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle${resizing ? " active" : ""}`}
-        />
-      ) : (
+          className={`side-container ${isOpenSide ? "" : "closed"}`}
+          style={
+            isOpenSide ? { width: `${sideContainerWidth}px` } : { width: "0px" }
+          }
+        >
+          <SideContainer />
+        </div>
+        {isOpenSide ? (
+          <div
+            ref={resizeHandle} // 리사이징 핸들 참조 연결
+            className={`resize-handle${resizing ? " active" : ""}`}
+          />
+        ) : (
+          <div
+            ref={resizeHandle} // 리사이징 핸들 참조 연결
+            className={`resize-handle closed${resizing ? " active" : ""}`}
+          />
+        )}
         <div
-          ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle closed${resizing ? " active" : ""}`}
-        />
-      )}
-      <div
-        className="code-editor"
-        style={
-          isOpenSide
-            ? { width: `calc(100% - ${sideContainerWidth}px - 52px)` }
-            : { width: `calc(100% -  52px)` }
-        }
-      >
-        <CodeEditor />
+          className="code-editor"
+          style={
+            isOpenSide
+              ? { width: `calc(100% - ${sideContainerWidth}px - 52px)` }
+              : { width: `calc(100% -  52px)` }
+          }
+        >
+          <CodeEditor />
+        </div>
+        <div className="status-bar">
+          <StatusBar />
+        </div>
       </div>
-      <div className="status-bar">
-        <StatusBar />
-      </div>
-    </div>
+    </WebsocketProvider>
   );
 };
 

@@ -3,6 +3,7 @@ enum IdeOptionType {
   File = "file",
   Board = "board",
   Chat = "chat",
+  LiveShare = "live-share",
 }
 
 export default IdeOptionType;
