@@ -8,12 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
 import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
+
 import {
   WebsocketProvider,
   useWebSocketContext,
 } from "../context/webSocketContext";
-import useWebSocket from "../hooks/useWebSocket";
-import { useLocation } from "react-router-dom";
 
 const WebIDE = () => {
   const isResizing = useRef(false);
