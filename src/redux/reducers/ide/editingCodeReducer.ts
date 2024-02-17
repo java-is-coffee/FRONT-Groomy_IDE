@@ -27,15 +27,10 @@ const curEditingCode = createSlice({
   name: "editingCode",
   initialState,
   reducers: {
-    // 코드 창 닫을 시 현재 수정중인 파일 reset
-    resetCurEditingCode: (state, action: PayloadAction) => {
-      state.editingCode = initialState.editingCode;
-    },
-
     // 현재 수정중인 파일 설정
     setCurEditingCode: (state, action: PayloadAction<CodeDetails>) => {
       state.editingCode = action.payload;
-      console.log(state.editingCode);
+      sessionStorage.setItem("curCode", JSON.stringify(action.payload));
     },
     // 새로 선택된 파일 코드 탭에 추가
     addCodeTab: (state, action: PayloadAction<CodeDetails>) => {
@@ -48,13 +43,18 @@ const curEditingCode = createSlice({
     },
     // 닫힌 코드 탭 삭제
     removeCodeTab: (state, action: PayloadAction<string>) => {
-      state.codeTabs = state.codeTabs.filter(
+      const filteredCodeTabs = state.codeTabs.filter(
         (code) => code.id !== action.payload
       );
-      if (state.codeTabs.length !== 0) {
-        state.editingCode = state.codeTabs[0];
-      } else {
-        state.editingCode = initialState.editingCode;
+
+      state.codeTabs = filteredCodeTabs;
+      if (state.editingCode.id === action.payload) {
+        // 첫 번째 탭을 현재 편집 중인 코드로 설정
+        if (state.codeTabs.length > 0) {
+          state.editingCode = filteredCodeTabs[0];
+        } else {
+          state.editingCode = initialState.editingCode;
+        }
       }
     },
     // 수정된 코드 저장
@@ -68,11 +68,6 @@ const curEditingCode = createSlice({
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const {
-  resetCurEditingCode,
-  setCurEditingCode,
-  addCodeTab,
-  removeCodeTab,
-  saveCode,
-} = curEditingCode.actions;
+export const { setCurEditingCode, addCodeTab, removeCodeTab, saveCode } =
+  curEditingCode.actions;
 export default curEditingCode.reducer;
