@@ -16,12 +16,12 @@ const memberReducer = createSlice({
   name: "Member",
   initialState,
   reducers: {
-    addMember: (state, action: PayloadAction<MemberInfo>) => {
+    setMember: (state, action: PayloadAction<MemberInfo>) => {
       state.member = action.payload;
     },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { addMember } = memberReducer.actions;
+export const { setMember } = memberReducer.actions;
 export default memberReducer.reducer;
