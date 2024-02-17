@@ -99,15 +99,14 @@ const RenderTree = () => {
   };
 
   const fetchFileContent = async (oldPath: string) => {
-    if (projectId) {
+    try {
+      if (!projectId) throw new Error("Project ID가 없습니다.");
       const result = await getFileContent(projectId, oldPath);
-      if (result) {
-        return result;
-      } else {
-        console.log("코드 세부 정보 불러오기 오류");
-      }
+      return result || ""; // result가 undefined 또는 null일 경우 빈 문자열 반환
+    } catch (error) {
+      console.error("코드 세부 정보 불러오기 오류:", error);
+      return ""; // 오류가 발생했을 경우 빈 문자열 반환
     }
-    return "";
   };
 
   // edit 할 파일 선택시 code space에 추가
@@ -121,6 +120,7 @@ const RenderTree = () => {
       lang: getLangExtension(file[1]),
       content: content,
     };
+    sessionStorage.setItem("curCode", JSON.stringify(editingCode));
     dispatch(setCurEditingCode(editingCode));
     dispatch(addCodeTab(editingCode));
   };

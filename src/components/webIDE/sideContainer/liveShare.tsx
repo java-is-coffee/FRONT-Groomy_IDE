@@ -1,10 +1,10 @@
+import useWebSocket from "../../../hooks/useWebSocket";
 import "../../../styles/webIDE/sideContainer/explorer.css";
-import { useWebSocketContext } from "../../../context/webSocketContext";
 
 const LiveShare = () => {
-  const { connect, disconnect } = useWebSocketContext();
+  const { connect, subscribe, disconnect } = useWebSocket();
   const handleSharing = () => {
-    connect("ws/project");
+    // connect("ws/project");
   };
   const handleDisconnect = () => {
     disconnect();
