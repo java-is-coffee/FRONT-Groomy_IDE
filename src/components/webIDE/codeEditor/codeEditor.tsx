@@ -1,5 +1,5 @@
 import { Editor, OnMount, useMonaco } from "@monaco-editor/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import CodeTab from "./codeTab";
 
 import "../../../styles/webIDE/codeContainer.css";
@@ -11,9 +11,6 @@ import {
   saveCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 import { useParams } from "react-router-dom";
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
-import { MonacoBinding } from "y-monaco";
 
 // theme enum
 enum EditorTheme {
