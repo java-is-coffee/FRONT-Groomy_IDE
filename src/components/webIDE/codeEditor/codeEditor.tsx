@@ -1,5 +1,5 @@
-import { Editor, useMonaco } from "@monaco-editor/react";
-import React, { useCallback, useEffect, useRef } from "react";
+import { Editor, OnMount, useMonaco } from "@monaco-editor/react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import CodeTab from "./codeTab";
 
 import "../../../styles/webIDE/codeContainer.css";
@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import * as monaco from "monaco-editor";
 import {
-  FileItem,
-  saveItem,
-} from "../../../redux/reducers/ide/fileSystemReducer";
-import {
   CodeDetails,
   saveCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
+import { useParams } from "react-router-dom";
+import * as Y from "yjs";
+import { WebsocketProvider } from "y-websocket";
+import { MonacoBinding } from "y-monaco";
 
 // theme enum
 enum EditorTheme {
@@ -23,7 +23,26 @@ enum EditorTheme {
   xcode = "xcode",
 }
 
+interface CodeDTO {
+  action: string;
+  memberId: number;
+  fileId: string;
+  codeEdit: CodeEdit;
+}
+
+interface CodeEdit {
+  memberName: string;
+  range: {
+    startLineNumber: number;
+    startColumn: number;
+    endLineNumber: number;
+    endColumn: number;
+  };
+  text: string;
+}
+
 const CodeEditor = () => {
+  const { projectId } = useParams();
   const theme = EditorTheme.iplastic;
   // 테마 변경 기능시 사용할 state
   //const [theme, setTheme] = useState<EditorTheme>(EditorTheme.xcode);
@@ -38,17 +57,18 @@ const CodeEditor = () => {
   );
   const monacoInstance = useMonaco();
   const dispatch = useDispatch();
+  const member = useSelector((state: RootState) => state.member.member);
 
   // 저장 메서드
   const saveDocument = useCallback(() => {
     const value = editorRef.current!.getValue();
-    const item: FileItem = {
-      id: curFile.id,
-      name: curFile.name,
-      type: "file",
-      content: value,
-    };
-    dispatch(saveItem(item));
+    // const item: FileItem = {
+    //   id: curFile.id,
+    //   name: curFile.name,
+    //   type: "FILE",
+    //   content: value,
+    // };
+    // dispatch(saveItem(item));
 
     const code: CodeDetails = {
       id: curFile.id,
@@ -67,16 +87,16 @@ const CodeEditor = () => {
       const disposable = editorRef.current.onKeyDown((e) => {
         if ((e.metaKey || e.ctrlKey) && e.keyCode === monaco.KeyCode.KeyS) {
           e.preventDefault();
-          saveDocument();
+          // saveDocument();
         }
       });
 
       return () => disposable.dispose();
     }
-  }, [curFile, dispatch, saveDocument]);
+  }, [curFile, dispatch]);
 
-  // monaco editor 저장시 ref 세팅
-  const handleEditorDidMount = (
+  // 커서 위치 보내기
+  const handleEditorDidMount: OnMount = (
     editor: monaco.editor.IStandaloneCodeEditor,
     monaco: any
   ) => {
@@ -92,25 +112,11 @@ const CodeEditor = () => {
       value: string | undefined,
       event: monaco.editor.IModelContentChangedEvent
     ) => {
-      if (value !== undefined && curFile) {
-        // Create a new FileItem object with the updated content
-        const updateFile: FileItem = {
-          id: curFile.id,
-          name: curFile.name,
-          type: "file", // Assuming the type is 'file' since you're editing content
-          content: value,
-        };
-
-        // Dispatch an action to update the current file content in the store
-        dispatch(saveItem(updateFile));
-
-        // You might also want to update the code details in the store
-        // (Assuming you have a function to determine the language from the filename)
+      if (value) {
         const updatedCodeDetails: CodeDetails = {
           ...curFile,
           content: value,
         };
-
         dispatch(saveCode(updatedCodeDetails));
       }
     },
@@ -129,7 +135,7 @@ const CodeEditor = () => {
         });
     }
   }, [monacoInstance, theme]);
-  console.log(editFiles.length);
+
   return (
     <div className="code-container">
       <CodeTab />

@@ -8,12 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
 import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
-import {
-  WebsocketProvider,
-  useWebSocketContext,
-} from "../context/webSocketContext";
-import useWebSocket from "../hooks/useWebSocket";
-import { useLocation } from "react-router-dom";
 
 const WebIDE = () => {
   const isResizing = useRef(false);
@@ -21,7 +15,6 @@ const WebIDE = () => {
   const [sideContainerWidth, setSideContainerWidth] = useState(280); // 너비 상태 관리
   const resizeHandle = useRef<HTMLDivElement>(null); // 리사이징 핸들에 대한 참조
   const dispatch = useDispatch();
-  const { connect, disconnect } = useWebSocketContext();
   const isOpenSide = useSelector(
     (state: RootState) => state.ideSideContainer.open
   );
