@@ -6,15 +6,21 @@ import {
   ProjectDetails,
   patchProjectList,
 } from "../../api/project/patchProjectList";
+import { useDispatch, useSelector } from "react-redux";
+import { patchProjects } from "../../redux/reducers/projectReducer";
+import { RootState } from "../../redux/store/store";
 
 const ProjectListContainer = () => {
-  const [projects, setProjects] = useState<ProjectDetails[] | null>();
+  const projects = useSelector((state: RootState) => state.projects.projects);
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchProjectListData = async () => {
       try {
         const storedProjects: ProjectDetails[] | null =
           await patchProjectList();
-        setProjects(storedProjects);
+        if (storedProjects) {
+          dispatch(patchProjects(storedProjects));
+        }
       } catch (error) {
         console.log("api 에러");
       }
