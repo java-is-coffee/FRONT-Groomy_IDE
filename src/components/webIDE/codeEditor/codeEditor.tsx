@@ -10,7 +10,6 @@ import {
   CodeDetails,
   saveCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
-import { useParams } from "react-router-dom";
 
 // theme enum
 enum EditorTheme {
