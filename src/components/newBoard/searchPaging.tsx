@@ -15,18 +15,32 @@ import {
 } from "../../redux/reducers/boardReducer";
 import { getBoardList, PageNumber } from "../../api/board/getBoardList";
 import { patchBoardList } from "../../redux/reducers/boardReducer";
+import { getSearchMax } from "../../api/board/getSearchMax";
+import { SearchCompleted } from "./boardList";
+import { searchBoardList } from "../../api/board/searchBoardList";
 
-function Paging() {
+function SeachPaging({
+  searchData,
+  searchIsCompleted,
+}: {
+  searchData: string;
+  searchIsCompleted: SearchCompleted;
+}) {
   const pageList = useSelector((state: RootState) => state.board.page);
   const maxPage = useSelector((state: RootState) => state.board.maxPage);
   const pageOffset = useSelector((state: RootState) => state.board.pageOffset);
+  const isSearch = useSelector((state: RootState) => state.board.isSearch);
   const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchPageData = async () => {
+      console.log("검색 페이징");
       try {
-        const storedPages: number | null = await patchPageNumber();
+        const storedPages: number | null = await getSearchMax(
+          searchData,
+          searchIsCompleted
+        );
         if (storedPages) {
           const tempList = setList(storedPages, 0);
           dispatch(patchPage(tempList));
@@ -41,7 +55,7 @@ function Paging() {
     if (!pageList) {
       fetchPageData();
     }
-  }, [accessToken, pageList, maxPage, dispatch]);
+  }, [accessToken, pageList, maxPage, dispatch, isSearch]);
 
   const setList = (lastPage: number, start: number) => {
     const newList: number[] = [];
@@ -55,10 +69,14 @@ function Paging() {
   const movePage = async (e: React.MouseEvent<HTMLDivElement>) => {
     const page = parseInt(e.currentTarget.id);
 
-    const Page: PageNumber = {
-      page: page,
-    };
-    const storedBoard: BoardDetails[] | null = await getBoardList(Page);
+    // const Page: PageNumber = {
+    //   page: page,
+    // };
+    const storedBoard: BoardDetails[] | null = await searchBoardList(
+      page,
+      searchData,
+      searchIsCompleted
+    );
     if (storedBoard) {
       dispatch(patchBoardList(storedBoard));
       dispatch(patchCurrentPage(page));
@@ -149,4 +167,4 @@ function Paging() {
   );
 }
 
-export default Paging;
+export default SeachPaging;

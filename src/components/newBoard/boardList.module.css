@@ -1,0 +1,14 @@
+.copmpleted-select-box {
+  border: 2px solid black;
+  margin: 10px 10px 0px 0px;
+  padding: 10px;
+}
+
+.search-box {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.selected {
+  background-color: white;
+}

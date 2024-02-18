@@ -9,4 +9,13 @@
   padding: 5px 5px 15px 5px;
   width: 10vh;
   text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-item:nth-child(2) {
+  color: red;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(218, 218, 218);
 }

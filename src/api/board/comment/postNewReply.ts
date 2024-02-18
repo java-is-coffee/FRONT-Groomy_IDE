@@ -1,6 +1,6 @@
 import axios from "axios";
-import { patchAccessToken } from "../auth/patchAccessToken";
-import { CommentDetails } from "./patchCommentList";
+import { patchAccessToken } from "../../auth/patchAccessToken";
+import { CommentDetails } from "../getCommentList";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/comment/write";
@@ -19,8 +19,9 @@ interface CommentDTO {
 
 //prop으로 넘기기
 // projectList 가져오는 메서드
-export const newComment = async (
-  commentDTO: CommentDetail
+export const newReply = async (
+  commentDTO: CommentDetail,
+  originCommentId: number
 ): Promise<CommentDetail | null> => {
   const storedToken = localStorage.getItem("accessToken");
 
@@ -28,7 +29,7 @@ export const newComment = async (
     boardId: commentDTO.boardId,
     content: commentDTO.content,
     nickname: commentDTO.nickname,
-    originComment: null,
+    originComment: originCommentId,
     memberId: commentDTO.memberId,
   };
 
@@ -53,6 +54,7 @@ export const newComment = async (
     );
 
     if (response.status === 200) {
+      console.log("대댓글 작성");
       return response.data;
     } else {
       console.error(
@@ -67,7 +69,7 @@ export const newComment = async (
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return newComment(commentDTO);
+          return newReply(commentDTO, originCommentId);
         }
       }
     } else {

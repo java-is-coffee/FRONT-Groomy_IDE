@@ -15,7 +15,11 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
     // 게시글 상단 미해결 과 제목
     <div className="board-item box-border p-15" id={`${BoardDetails.boardId}`}>
       <div className="board-item-top mt-15">
-        <span className="board-item-completed-box">미해결</span>
+        {BoardDetails.completed ? (
+          <span className="board-item-completed-box">해결됨</span>
+        ) : (
+          <span className="board-item-completed-box">미해결</span>
+        )}
         <span>{BoardDetails.title}</span>
       </div>
 

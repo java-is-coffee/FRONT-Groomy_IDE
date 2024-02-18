@@ -1,12 +1,12 @@
 import axios from "axios";
-import { patchAccessToken } from "../auth/patchAccessToken";
-const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board";
+import { patchAccessToken } from "../../auth/patchAccessToken";
 
-// projectList 가져오는 메서드
-export const patchPageNumber = async (): Promise<number | null> => {
-  console.log("페이지 불러오기?");
+const USER_API_URL =
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/comment/delete";
+
+export const removeComment = async (commentId: number) => {
   const storedToken = localStorage.getItem("accessToken");
+
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
     return null;
@@ -17,15 +17,15 @@ export const patchPageNumber = async (): Promise<number | null> => {
     },
   };
   try {
-    const response = await axios.get<number>(
-      `${USER_API_URL}/page-number`,
-      config
-    );
+    const response = await axios.delete(`${USER_API_URL}/${commentId}`, config);
+    console.log("삭제 절차 실행");
+
     if (response.status === 200) {
+      console.log("댓글 삭제");
       return response.data;
     } else {
       console.error(
-        "Failed to fetch board Number with status code:",
+        "Failed to fetch project list with status code:",
         response.status
       );
       return null;
@@ -36,13 +36,14 @@ export const patchPageNumber = async (): Promise<number | null> => {
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return patchPageNumber();
+          return;
         }
       }
     } else {
-      console.error("게시판 갯수 세기 실패", error);
+      console.error("게시판 로드 실패", error);
     }
 
     return null;
   }
 };
+//

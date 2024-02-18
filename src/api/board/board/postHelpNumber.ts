@@ -1,21 +1,15 @@
 import axios from "axios";
-import { patchAccessToken } from "../auth/patchAccessToken";
-import { BoardId } from "./patchCommentList";
-import { BoardDetails } from "../../redux/reducers/boardReducer";
+import { patchAccessToken } from "../../auth/patchAccessToken";
+import { BoardDetails } from "../../../redux/reducers/boardReducer";
 
-const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board";
+const USER_API_URL_BOARD =
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board/content/good";
 
-//prop으로 넘기기
-// projectList 가져오는 메서드
-export const patchBoardContent = async ({
-  boardId,
-}: BoardId): Promise<BoardDetails | null> => {
+export const postHelpNumber = async (
+  ID: number,
+  memberId: number
+): Promise<BoardDetails | null> => {
   const storedToken = localStorage.getItem("accessToken");
-
-  const content: BoardId = {
-    boardId: boardId,
-  };
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
     return null;
@@ -26,14 +20,14 @@ export const patchBoardContent = async ({
     },
   };
   try {
-    const response = await axios.get<BoardDetails>(
-      `${USER_API_URL}/content/${boardId}`,
+    const response = await axios.post<BoardDetails>(
+      `${USER_API_URL_BOARD}/${ID}`,
+      {},
       config
     );
 
-    console.log(`${USER_API_URL}/content/${boardId}`);
-
     if (response.status === 200) {
+      console.log("통신 성공");
       return response.data;
     } else {
       console.error(
@@ -44,11 +38,14 @@ export const patchBoardContent = async ({
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error("Error fetching project list:", error.response?.data);
+      console.error("Error fetching data:", error.response?.data);
+      if (error.response?.status === 400) {
+        return null;
+      }
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return patchBoardContent(content);
+          return postHelpNumber(ID, memberId);
         }
       }
     } else {
@@ -58,3 +55,4 @@ export const patchBoardContent = async ({
     return null;
   }
 };
+//

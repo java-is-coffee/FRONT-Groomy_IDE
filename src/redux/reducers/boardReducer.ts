@@ -1,10 +1,10 @@
 // projectsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CommentDetails } from "../../api/board/patchCommentList";
+import { CommentDetails } from "../../api/board/getCommentList";
 
 // 초기 상태의 타입 정의
 interface BoardStaus {
-  boards: BoardDetails[] | null;
+  boardList: BoardDetails[] | null;
   content: BoardDetails | null;
   page: number[] | null;
   maxPage: number | null;
@@ -12,7 +12,9 @@ interface BoardStaus {
   currentPage: number | null;
   pageOffset: number | null;
   commentList: CommentDetails[] | null;
+  comment: CommentDetails | null;
   isEdited: boolean;
+  isSearch: boolean;
 }
 
 export interface BoardDetails {
@@ -26,12 +28,13 @@ export interface BoardDetails {
   scrapNumber: number;
   createdTime: string;
   helpNumber: number;
-  isCompleted: boolean;
+  comment: CommentDetails;
+  completed: boolean;
 }
 
 // 초기 상태
 const initialState: BoardStaus = {
-  boards: null,
+  boardList: null,
   content: null,
   page: null, // 페이지 리스트
   maxPage: null, // 최대 몇페이지 있는지
@@ -39,17 +42,19 @@ const initialState: BoardStaus = {
   currentPage: null, //현재 페이지가 몇페이지 인지 나타냄
   pageOffset: null, // 현재 몇페이지 까지 offset인지. (페이지 넘길때 필요)
   commentList: null,
+  comment: null,
   isEdited: false,
+  isSearch: false,
 };
 
 const BoardReducer = createSlice({
   name: "boards",
   initialState,
   reducers: {
-    patchBoard: (state, action: PayloadAction<BoardDetails[]>) => {
-      state.boards = action.payload;
+    patchBoardList: (state, action: PayloadAction<BoardDetails[] | null>) => {
+      state.boardList = action.payload;
     },
-    patchPage: (state, action: PayloadAction<number[]>) => {
+    patchPage: (state, action: PayloadAction<number[] | null>) => {
       state.page = action.payload;
     },
     patchMaxPage: (state, action: PayloadAction<number>) => {
@@ -58,7 +63,7 @@ const BoardReducer = createSlice({
     patchContentId: (state, action: PayloadAction<number>) => {
       state.contentId = action.payload;
     },
-    patchContent: (state, action: PayloadAction<BoardDetails>) => {
+    patchContent: (state, action: PayloadAction<BoardDetails | null>) => {
       state.content = action.payload;
     },
     patchIsEdited: (state, action: PayloadAction<boolean>) => {
@@ -70,23 +75,21 @@ const BoardReducer = createSlice({
     patchCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    patchComment: (state, action: PayloadAction<CommentDetails[]>) => {
+    patchCommentList: (state, action: PayloadAction<CommentDetails[]>) => {
       state.commentList = action.payload;
     },
-    removeBoard: (state, action: PayloadAction<number>) => {
-      if (state.boards) {
-        state.boards = state.boards.filter(
-          (board) => board.boardId !== action.payload
-        );
-      }
+    patchComment: (state, action: PayloadAction<CommentDetails | null>) => {
+      state.comment = action.payload;
+    },
+    patchIsSeacrh: (state, action: PayloadAction<boolean>) => {
+      state.isSearch = action.payload;
     },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
 export const {
-  patchBoard,
-  removeBoard,
+  patchBoardList,
   patchPage,
   patchMaxPage,
   patchContentId,
@@ -94,6 +97,8 @@ export const {
   patchCurrentPage,
   patchPageOffset,
   patchIsEdited,
+  patchCommentList,
   patchComment,
+  patchIsSeacrh,
 } = BoardReducer.actions;
 export default BoardReducer.reducer;

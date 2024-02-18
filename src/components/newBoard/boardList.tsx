@@ -1,27 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../styles/project/projectListContainer.css";
 import "../../styles/board/board.css";
 import BoardItem from "./boardItem";
 import { ContentType } from "../../routes/home";
-import { patchBoardList, PageNumber } from "../../api/board/patchBoardList";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import {
   BoardDetails,
-  patchBoard,
-  patchComment,
+  patchBoardList,
   patchContent,
   patchContentId,
-  patchIsEdited,
+  patchIsSeacrh,
+  patchPage,
 } from "../../redux/reducers/boardReducer";
 import { FaClipboardQuestion } from "react-icons/fa6";
+import { SlMagnifier } from "react-icons/sl";
 import Paging from "./paging";
-import { patchBoardContent } from "../../api/board/patchBoardContent";
-import {
-  BoardId,
-  CommentDetails,
-  patchCommentList,
-} from "../../api/board/patchCommentList";
+import styles from "./boardList.module.css";
+import { searchBoardList } from "../../api/board/searchBoardList";
+import useBoardHooks from "../../hooks/board/boardHook";
+import SeachPaging from "./searchPaging";
+
+export enum SearchCompleted {
+  All = "all",
+  Completed = "completed",
+  NoCompleted = "no-completed",
+}
 
 const BoardListContainer = ({
   onSelectContents,
@@ -29,90 +33,169 @@ const BoardListContainer = ({
   onSelectContents: (content: ContentType) => void;
 }) => {
   const accessToken = localStorage.getItem("accessToken");
-  const boardList = useSelector((state: RootState) => state.board.boards);
-  // const test = useSelector((state: RootState) => state.board.content);
+  const boardList = useSelector((state: RootState) => state.board.boardList);
+  const isEdited = useSelector((state: RootState) => state.board.isEdited);
+  const isSearch = useSelector((state: RootState) => state.board.isSearch);
+  const [searchData, setSearchData] = useState("");
+  const [searchIsCompleted, setsearchIsCompleted] = useState(
+    SearchCompleted.All
+  );
+
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(patchIsEdited(false));
-    const fetchBoardistData = async () => {
-      try {
-        const Page: PageNumber = {
-          page: 1,
-        };
-        console.log("보드 패치 시작");
-        const storedBoard: BoardDetails[] | null = await patchBoardList(Page);
+  const boardHooks = useBoardHooks();
 
-        if (storedBoard) {
-          dispatch(patchBoard(storedBoard));
-        }
-      } catch (error) {
-        console.log("api 에러");
-      }
+  useEffect(() => {
+    console.log("보드 리스트 업데이트 ");
+    const fetchBoardList = async () => {
+      await boardHooks.updateBoardList(1);
     };
     if (!boardList) {
-      fetchBoardistData();
+      fetchBoardList();
     }
-  }, [accessToken, boardList, dispatch]);
-
-  //누르는 보드 아이디 기반으로 보드 정보 가져오기
-  const fetchBoardData = async (id: number) => {
-    try {
-      const content: BoardId = {
-        boardId: id,
-      };
-      const storedContent: BoardDetails | null = await patchBoardContent(
-        content
-      );
-      console.log(storedContent);
-      if (storedContent) {
-        dispatch(patchContent(storedContent));
-      }
-    } catch (error) {
-      console.log("api 에러");
-    }
-  };
-
-  const fetchCommentList = async (id: number) => {
-    try {
-      const content: BoardId = {
-        boardId: id,
-      };
-      const storedContent: CommentDetails[] | null = await patchCommentList(
-        content
-      );
-      if (storedContent) {
-        dispatch(patchComment(storedContent));
-      }
-    } catch (error) {
-      console.log("api 에러");
-    }
-  };
+  }, [accessToken, boardList, boardHooks]);
 
   const chageComponent = (event: React.MouseEvent<HTMLDivElement>) => {
     const targetId = event.currentTarget.id;
 
     if (targetId) {
       const fetchContentId = parseInt(targetId);
-
-      fetchBoardData(fetchContentId);
-      fetchCommentList(fetchContentId);
-
-      //진입하는 컨텐츠의 아이디
       dispatch(patchContentId(fetchContentId));
+      boardHooks.updateCommentList(fetchContentId);
+
       onSelectContents(ContentType.BoardContent);
-    } else {
+    }
+    //타겟 id가 존재하지 않는다면 새로운 게시글 이라는뜻.
+    else {
+      dispatch(patchContent(null));
+      console.log(isEdited);
       onSelectContents(ContentType.BoardWrite);
-      console.log("글쓰기");
     }
   };
 
+  const searchForm = () => {
+    if (searchModalOpen === true) {
+      setSearchModalOpen(false);
+    } else {
+      setSearchModalOpen(true);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const inputData = searchData.replace(" ", "+");
+
+    const response = await searchBoardList(1, inputData, searchIsCompleted);
+    if (response) {
+      dispatch(patchBoardList(response));
+      dispatch(patchIsSeacrh(true));
+      dispatch(patchPage(null));
+    }
+  };
+
+  const searchDataSet = (event: React.FormEvent<HTMLInputElement>) => {
+    setSearchData(event.currentTarget.value);
+  };
+
+  const handleSeacrhComplete = (event: React.MouseEvent<HTMLSpanElement>) => {
+    const value = event.currentTarget.getAttribute("id");
+
+    switch (value) {
+      case SearchCompleted.All:
+        setsearchIsCompleted(SearchCompleted.All);
+        break;
+      case SearchCompleted.Completed:
+        setsearchIsCompleted(SearchCompleted.Completed);
+        break;
+      case SearchCompleted.NoCompleted:
+        setsearchIsCompleted(SearchCompleted.NoCompleted);
+        break;
+      default:
+        setsearchIsCompleted(SearchCompleted.All);
+        break;
+    }
+  };
+
+  //초기화 버튼
+  const resetBoadList = () => {
+    dispatch(patchBoardList(null));
+    dispatch(patchIsSeacrh(false));
+    dispatch(patchContent(null));
+    dispatch(patchPage(null));
+  };
+
   return (
-    <div className="w-50 p-15 test box-border">
-      <div className="board-top  line-bottom display-flex-start">
-        <FaClipboardQuestion className="mr-15" size={25} />
+    <div className="w-80 p-15 test box-border">
+      <div className="board-top  line-bottom display-flex-space-between">
+        <FaClipboardQuestion
+          className="mr-15"
+          size={25}
+          onClick={resetBoadList}
+        />
         질문 게시판
+        <span className="float-right">
+          <SlMagnifier size={25} onClick={searchForm} />
+        </span>
       </div>
+      {/* 검색 파트 */}
+      <div id="searchForm" className={searchModalOpen ? "" : "hidden"}>
+        <form onSubmit={handleSubmit} className={styles["search-box"]}>
+          <div>
+            <span
+              id="all"
+              className={`${styles["copmpleted-select-box"]} ${
+                styles[
+                  searchIsCompleted === SearchCompleted.All ? "selected" : " "
+                ]
+              }`}
+              onClick={handleSeacrhComplete}
+            >
+              전부
+            </span>
+            <span
+              id="completed"
+              className={`${styles["copmpleted-select-box"]} ${
+                styles[
+                  searchIsCompleted === SearchCompleted.Completed
+                    ? "selected"
+                    : " "
+                ]
+              }`}
+              onClick={handleSeacrhComplete}
+            >
+              해결됨
+            </span>
+            <span
+              id="no-completed"
+              className={`${styles["copmpleted-select-box"]} ${
+                styles[
+                  searchIsCompleted === SearchCompleted.NoCompleted
+                    ? "selected"
+                    : " "
+                ]
+              }`}
+              onClick={handleSeacrhComplete}
+            >
+              미해결됨
+            </span>
+          </div>
+
+          <input
+            style={{ width: "calc(1% * 98)" }}
+            className="input-box"
+            value={searchData}
+            required
+            onChange={searchDataSet}
+          />
+          <button className="float-right" type="submit">
+            검색
+          </button>
+        </form>
+      </div>
+
+      {/* 게시글 리스트 부분 */}
       {boardList &&
         boardList.map((item: BoardDetails) => (
           <div
@@ -128,9 +211,18 @@ const BoardListContainer = ({
       <div className="board-writing-btn" onClick={chageComponent}>
         글쓰기
       </div>
-      <div className="display-flex-justify-center">
-        <Paging />
-      </div>
+      {isSearch ? (
+        <div className="display-flex-justify-center">
+          <SeachPaging
+            searchData={searchData}
+            searchIsCompleted={searchIsCompleted}
+          />
+        </div>
+      ) : (
+        <div className="display-flex-justify-center">
+          <Paging />
+        </div>
+      )}
     </div>
   );
 };
