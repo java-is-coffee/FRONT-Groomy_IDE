@@ -112,7 +112,7 @@ const RenderTree = () => {
   // edit 할 파일 선택시 code space에 추가
   const handleFileEditing = async (items: FileItem) => {
     const file: string[] = items.name.split(".");
-    // api 패치 추가예정
+    // api 불러오기
     const content = await fetchFileContent(items.path);
     const editingCode: CodeDetails = {
       id: items.id,
@@ -120,7 +120,7 @@ const RenderTree = () => {
       lang: getLangExtension(file[1]),
       content: content,
     };
-    sessionStorage.setItem("curCode", JSON.stringify(editingCode));
+    console.log(editingCode);
     dispatch(setCurEditingCode(editingCode));
     dispatch(addCodeTab(editingCode));
   };

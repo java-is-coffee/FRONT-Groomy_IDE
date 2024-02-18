@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../../styles/project/projectListContainer.css";
 import ProjectCard from "./projectCard";
 
@@ -28,7 +28,7 @@ const ProjectListContainer = () => {
     if (!projects) {
       fetchProjectListData();
     }
-  }, [projects]);
+  }, [projects, dispatch]);
   return (
     <div className="project-list">
       {projects &&

@@ -1,5 +1,5 @@
 import { Editor, OnMount, useMonaco } from "@monaco-editor/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import CodeTab from "./codeTab";
 
 import "../../../styles/webIDE/codeContainer.css";
@@ -11,11 +11,12 @@ import {
   saveCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 import { useParams } from "react-router-dom";
+import useWebSocket from "../../../hooks/useWebSocket";
+import useContentWidget from "../../../hooks/useCotentWidget";
 // import * as Y from "yjs";
 // import { WebsocketProvider } from "y-websocket";
 // import { MonacoBinding } from "y-monaco";
-import useWebSocket from "../../../hooks/useWebSocket";
-import useContentWidget from "../../../hooks/useCotentWidget";
+// import { getTempToken } from "../../../api/auth/getTempToken";
 
 // theme enum
 enum EditorTheme {
@@ -61,6 +62,8 @@ const CodeEditor = () => {
   const monacoInstance = useMonaco();
   const dispatch = useDispatch();
   const member = useSelector((state: RootState) => state.member.member);
+
+  //const [tempToken, setTempToken] = useState<string>("");
   // 저장 메서드
   // const saveDocument = useCallback(() => {
   //   const value = editorRef.current!.getValue();
@@ -103,6 +106,23 @@ const CodeEditor = () => {
     monaco: any
   ) => {
     editorRef.current = editor;
+    // const model = editor.getModel();
+    // if (projectId && model !== null) {
+    //   // yjs doc 설정
+    //   const ydoc = new Y.Doc();
+    //   console.log(tempToken);
+    //  const provider = new WebsocketProvider(
+    //     `ws://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/YJS/`,
+    //     projectId,
+    //     ydoc,
+    //     { params: { ["tempToken"]: tempToken } }
+    //   );
+    //   const ytext = ydoc.getText("monaco");
+
+    //   // Ensure model is passed correctly to MonacoBinding
+    //   new MonacoBinding(ytext, model, new Set([editor]), provider.awareness);
+    // }
+
     editor.onDidChangeCursorPosition((e) => {
       const position = e.position;
       const storedCode = sessionStorage.getItem("curCode");
@@ -115,10 +135,10 @@ const CodeEditor = () => {
           codeEdit: {
             memberName: member?.nickname,
             range: {
-              startLineNumber: e.position.lineNumber,
-              startColumn: e.position.column,
-              endLineNumber: e.position.lineNumber,
-              endColumn: e.position.column,
+              startLineNumber: position.lineNumber,
+              startColumn: position.column,
+              endLineNumber: position.lineNumber,
+              endColumn: position.column,
             },
             text: "",
           },
@@ -131,6 +151,7 @@ const CodeEditor = () => {
   // const handleTheme = () => {
   //   setTheme(EditorTheme.xcode);
   // };
+
   const handleEditorChange = useCallback(
     (
       value: string | undefined,
@@ -173,9 +194,22 @@ const CodeEditor = () => {
         }
       }
     });
-  }, [stompClient, subscribe, connect]);
+  }, [stompClient, subscribe, connect, manageWidget, member, projectId]);
+
   // monaco code editor theme setting
   useEffect(() => {
+    // 임시토큰 발급
+    // const fetchTempToken = async () => {
+    //   const token = await getTempToken();
+    //   if (token !== null) {
+    //     setTempToken(token);
+    //   } else {
+    //     console.log("권한 오류입니다.");
+    //   }
+    // };
+
+    // fetchTempToken();
+
     if (monacoInstance) {
       // 테마 정의
       fetch(`./theme/ide/${theme}.json`)
@@ -186,6 +220,7 @@ const CodeEditor = () => {
         });
     }
   }, [monacoInstance, theme]);
+
   return (
     <div className="code-container">
       <CodeTab />

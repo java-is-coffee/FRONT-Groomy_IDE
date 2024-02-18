@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import { useRef } from "react";
 import * as monaco from "monaco-editor";
 
 interface WidgetProps {

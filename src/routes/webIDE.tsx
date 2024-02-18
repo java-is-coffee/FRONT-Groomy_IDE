@@ -37,7 +37,7 @@ const WebIDE = () => {
     return () => {
       disconnect();
     };
-  }, [member, dispatch]);
+  }, [member, dispatch, connect, disconnect, stompClient]);
   return <IdePage />;
 };
 
