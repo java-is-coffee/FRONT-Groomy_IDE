@@ -20,26 +20,26 @@ enum EditorTheme {
   xcode = "xcode",
 }
 
-interface CodeDTO {
-  action: string;
-  memberId: number;
-  fileId: string;
-  codeEdit: CodeEdit;
-}
+// interface CodeDTO {
+//   action: string;
+//   memberId: number;
+//   fileId: string;
+//   codeEdit: CodeEdit;
+// }
 
-interface CodeEdit {
-  memberName: string;
-  range: {
-    startLineNumber: number;
-    startColumn: number;
-    endLineNumber: number;
-    endColumn: number;
-  };
-  text: string;
-}
+// interface CodeEdit {
+//   memberName: string;
+//   range: {
+//     startLineNumber: number;
+//     startColumn: number;
+//     endLineNumber: number;
+//     endColumn: number;
+//   };
+//   text: string;
+// }
 
 const CodeEditor = () => {
-  const { projectId } = useParams();
+  // const { projectId } = useParams();
   const theme = EditorTheme.iplastic;
   // 테마 변경 기능시 사용할 state
   //const [theme, setTheme] = useState<EditorTheme>(EditorTheme.xcode);
@@ -54,29 +54,29 @@ const CodeEditor = () => {
   );
   const monacoInstance = useMonaco();
   const dispatch = useDispatch();
-  const member = useSelector((state: RootState) => state.member.member);
+  // const member = useSelector((state: RootState) => state.member.member);
 
   // 저장 메서드
-  const saveDocument = useCallback(() => {
-    const value = editorRef.current!.getValue();
-    // const item: FileItem = {
-    //   id: curFile.id,
-    //   name: curFile.name,
-    //   type: "FILE",
-    //   content: value,
-    // };
-    // dispatch(saveItem(item));
+  // const saveDocument = useCallback(() => {
+  //   const value = editorRef.current!.getValue();
+  //   const item: FileItem = {
+  //     id: curFile.id,
+  //     name: curFile.name,
+  //     type: "FILE",
+  //     content: value,
+  //   };
+  //   dispatch(saveItem(item));
 
-    const code: CodeDetails = {
-      id: curFile.id,
-      name: curFile.name,
-      lang: curFile.name.split(".")[1],
-      content: value,
-    };
-    dispatch(saveCode(code));
+  //   const code: CodeDetails = {
+  //     id: curFile.id,
+  //     name: curFile.name,
+  //     lang: curFile.name.split(".")[1],
+  //     content: value,
+  //   };
+  //   dispatch(saveCode(code));
 
-    // 코드 저장 api 추가 예정
-  }, [curFile, dispatch]);
+  //   // 코드 저장 api 추가 예정
+  // }, [curFile, dispatch]);
 
   // cmd + c || ctrl + c 입력시 저장 메서드 호출
   useEffect(() => {
