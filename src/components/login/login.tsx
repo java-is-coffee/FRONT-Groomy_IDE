@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import "../../styles/loginPage/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 
 interface LoginData {
   email: string;
