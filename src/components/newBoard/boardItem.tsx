@@ -1,11 +1,12 @@
 import React from "react";
 
 import "../../styles/board/board.css";
-
+// import styles from "./boardList.module.css";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { GrView } from "react-icons/gr";
 import { FaRegCommentDots } from "react-icons/fa";
 import { BoardDetails } from "../../redux/reducers/boardReducer";
+
 type boardProps = {
   BoardDetails: BoardDetails;
 };
@@ -24,7 +25,10 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
       </div>
 
       {/* 내용  */}
-      <div className="board-item-content">{BoardDetails.content}</div>
+      <div
+        className="board-item-content"
+        dangerouslySetInnerHTML={{ __html: BoardDetails.content }}
+      ></div>
 
       {/* 멤버 아이디 */}
       <div className="board-item-bottom">

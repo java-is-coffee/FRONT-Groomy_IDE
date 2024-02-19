@@ -13,7 +13,7 @@ import {
   patchPageOffset,
   BoardDetails,
 } from "../../redux/reducers/boardReducer";
-import { getBoardList, PageNumber } from "../../api/board/getBoardList";
+// import { getBoardList, PageNumber } from "../../api/board/getBoardList";
 import { patchBoardList } from "../../redux/reducers/boardReducer";
 import { getSearchMax } from "../../api/board/getSearchMax";
 import { SearchCompleted } from "./boardList";
@@ -29,7 +29,7 @@ function SeachPaging({
   const pageList = useSelector((state: RootState) => state.board.page);
   const maxPage = useSelector((state: RootState) => state.board.maxPage);
   const pageOffset = useSelector((state: RootState) => state.board.pageOffset);
-  const isSearch = useSelector((state: RootState) => state.board.isSearch);
+  // const isSearch = useSelector((state: RootState) => state.board.isSearch);
   const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
@@ -55,7 +55,7 @@ function SeachPaging({
     if (!pageList) {
       fetchPageData();
     }
-  }, [accessToken, pageList, maxPage, dispatch, isSearch]);
+  }, [accessToken, pageList, dispatch, searchData, searchIsCompleted]);
 
   const setList = (lastPage: number, start: number) => {
     const newList: number[] = [];

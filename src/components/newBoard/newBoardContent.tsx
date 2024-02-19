@@ -4,6 +4,8 @@ import { FaClipboard } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { NewBoard, postNewBoard } from "../../api/board/postNewBoard";
+import "react-quill/dist/quill.snow.css";
+import MDEditor from "@uiw/react-md-editor";
 import {
   UpdateBoard,
   updateBoardContent,
@@ -13,6 +15,7 @@ import {
   patchBoardList,
   patchContent,
   patchCurrentPage,
+  patchIsEdited,
 } from "../../redux/reducers/boardReducer";
 
 function BoardWritePage({
@@ -22,7 +25,9 @@ function BoardWritePage({
 }) {
   const savedContent = useSelector((state: RootState) => state.board.content);
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string | undefined>(
+    savedContent ? savedContent.content : ""
+  );
   const [isCompleted, setIsCompleted] = useState(
     savedContent?.completed ? true : false
   );
@@ -40,19 +45,16 @@ function BoardWritePage({
   const backList = () => {
     //수정 중이면 해당 게시글로
     if (isEdit) {
+      dispatch(patchIsEdited(false));
       onSelectContents(ContentType.BoardContent);
     }
     //수정이 아니다 > 새로운 게시글 > 바로 게시글 리스트로
-    onSelectContents(ContentType.BoardList);
+    else onSelectContents(ContentType.BoardList);
   };
-
-  function onChangeContent(event: React.FormEvent<HTMLTextAreaElement>): void {
-    const value = event.currentTarget.value;
-    setContent(value);
-  }
 
   function checkCompleted(event: React.FormEvent<HTMLInputElement>): void {
     const value = event.currentTarget.checked;
+    console.log(isEdit + "수정");
     console.log(value);
     setIsCompleted(value);
   }
@@ -65,7 +67,7 @@ function BoardWritePage({
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (user) {
+    if (user && content) {
       const requestDTO: NewBoard = {
         memberId: user.memberId,
         nickname: isAnony ? "익명" : user.nickname,
@@ -88,7 +90,7 @@ function BoardWritePage({
   const handleEdit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     //중간 삼항연산자는 onChange가 동작안했을 경우. 해당 내용은 수정되지 않았기에 이전 내용을 가져와야함.
-    if (user && savedContent) {
+    if (user && savedContent && content) {
       const requestDTO: UpdateBoard = {
         memberId: user.memberId,
         nickname: isAnony ? "익명" : user.nickname,
@@ -151,23 +153,25 @@ function BoardWritePage({
 
           <div className="mt-15">
             <span className="font-bold">내용</span>
+            <div className="float-right mr-15">
+              <button
+                className="mr-15 board-write-btn bg-white"
+                onClick={backList}
+              >
+                취소
+              </button>
+              <button className="board-write-btn bg-sub-color" type="submit">
+                작성
+              </button>
+            </div>
             <div className="mt-15">
-              <textarea
-                required
-                name="content"
-                className="input-box board-write-content"
-                rows={20}
-                onChange={onChangeContent}
-                defaultValue={savedContent.content}
+              <MDEditor
+                height={500}
+                value={content}
+                preview="edit"
+                onChange={(val) => setContent(val)}
               />
             </div>
-          </div>
-
-          <div className="float-right mr-15">
-            <button className="mr-15 board-write-btn bg-white">취소</button>
-            <button className="board-write-btn bg-sub-color" type="submit">
-              작성
-            </button>
           </div>
         </form>
       </div>
@@ -206,24 +210,29 @@ function BoardWritePage({
 
         <div className="mt-15">
           <span className="font-bold">내용</span>
-          <div className="mt-15">
-            <textarea
-              required
-              name="content"
-              className="input-box board-write-content"
-              rows={20}
-              onChange={onChangeContent}
-            />
+          <div className="float-right mr-15">
+            <button
+              className="mr-15 board-write-btn bg-white"
+              onClick={backList}
+            >
+              취소
+            </button>
+            <button className="board-write-btn bg-sub-color" type="submit">
+              작성
+            </button>
           </div>
-        </div>
-
-        <div className="float-right mr-15">
-          <button className="mr-15 board-write-btn bg-white" onClick={backList}>
-            취소
-          </button>
-          <button className="board-write-btn bg-sub-color" type="submit">
-            작성
-          </button>
+          <div className="mt-15">
+            <MDEditor
+              height={500}
+              value={content}
+              preview="edit"
+              onChange={(val) => setContent(val)}
+            />
+            {/* <MDEditor.Markdown
+              source={content}
+              style={{ whiteSpace: "pre-wrap" }}
+            /> */}
+          </div>
         </div>
       </form>
     </div>
@@ -231,6 +240,3 @@ function BoardWritePage({
 }
 
 export default BoardWritePage;
-
-//https://leego.tistory.com/entry/React-%EC%97%90%EB%94%94%ED%84%B0%EB%A1%9C-TOAST-UI-Editor-%EC%82%AC%EC%9A%A9%ED%95%B4%EB%B3%B4%EA%B8%B0
-//토스트ui

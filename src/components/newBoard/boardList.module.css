@@ -1,7 +1,8 @@
 .copmpleted-select-box {
-  border: 2px solid black;
-  margin: 10px 10px 0px 0px;
+  /* border: 2px solid black; */
+  margin: 10px 10px 20px 0px;
   padding: 10px;
+  color: rgb(166, 166, 166);
 }
 
 .search-box {
@@ -10,5 +11,18 @@
 }
 
 .selected {
-  background-color: white;
+  color: black;
+  font-weight: 700;
+  border-bottom: 3px solid black;
+}
+
+.search-btn {
+  float: right;
+  margin-left: 15px;
+  background-color: aqua;
+}
+
+.board-card-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -20,6 +20,7 @@ import styles from "./boardList.module.css";
 import { searchBoardList } from "../../api/board/searchBoardList";
 import useBoardHooks from "../../hooks/board/boardHook";
 import SeachPaging from "./searchPaging";
+// import { Pagination } from "@mui/material";
 
 export enum SearchCompleted {
   All = "all",
@@ -34,7 +35,7 @@ const BoardListContainer = ({
 }) => {
   const accessToken = localStorage.getItem("accessToken");
   const boardList = useSelector((state: RootState) => state.board.boardList);
-  const isEdited = useSelector((state: RootState) => state.board.isEdited);
+  // const isEdited = useSelector((state: RootState) => state.board.isEdited);
   const isSearch = useSelector((state: RootState) => state.board.isSearch);
   const [searchData, setSearchData] = useState("");
   const [searchIsCompleted, setsearchIsCompleted] = useState(
@@ -56,6 +57,7 @@ const BoardListContainer = ({
     }
   }, [accessToken, boardList, boardHooks]);
 
+  //타겟 아이디가 존재한다 > 게시글 입장. 타겟 아이디가 없다. 새로운 게시글 작성
   const chageComponent = (event: React.MouseEvent<HTMLDivElement>) => {
     const targetId = event.currentTarget.id;
 
@@ -69,16 +71,7 @@ const BoardListContainer = ({
     //타겟 id가 존재하지 않는다면 새로운 게시글 이라는뜻.
     else {
       dispatch(patchContent(null));
-      console.log(isEdited);
       onSelectContents(ContentType.BoardWrite);
-    }
-  };
-
-  const searchForm = () => {
-    if (searchModalOpen === true) {
-      setSearchModalOpen(false);
-    } else {
-      setSearchModalOpen(true);
     }
   };
 
@@ -136,7 +129,10 @@ const BoardListContainer = ({
         />
         질문 게시판
         <span className="float-right">
-          <SlMagnifier size={25} onClick={searchForm} />
+          <SlMagnifier
+            size={25}
+            onClick={() => setSearchModalOpen(!searchModalOpen)}
+          />
         </span>
       </div>
       {/* 검색 파트 */}
@@ -152,7 +148,7 @@ const BoardListContainer = ({
               }`}
               onClick={handleSeacrhComplete}
             >
-              전부
+              전체
             </span>
             <span
               id="completed"
@@ -178,18 +174,19 @@ const BoardListContainer = ({
               }`}
               onClick={handleSeacrhComplete}
             >
-              미해결됨
+              미해결
             </span>
           </div>
 
           <input
             style={{ width: "calc(1% * 98)" }}
-            className="input-box"
+            className="input-box mt-30"
             value={searchData}
             required
             onChange={searchDataSet}
+            placeholder="작성자 / 제목 / 내용 과 관련된 검색어를 입력해주세요."
           />
-          <button className="float-right" type="submit">
+          <button className={styles["search-btn"]} type="submit">
             검색
           </button>
         </form>

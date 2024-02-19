@@ -15,6 +15,7 @@ import {
 } from "../../redux/reducers/boardReducer";
 import { getBoardList, PageNumber } from "../../api/board/getBoardList";
 import { patchBoardList } from "../../redux/reducers/boardReducer";
+// import { Pagination, Stack } from "@mui/material";
 
 function Paging() {
   const pageList = useSelector((state: RootState) => state.board.page);

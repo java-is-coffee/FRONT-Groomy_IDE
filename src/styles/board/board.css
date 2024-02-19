@@ -125,9 +125,13 @@
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
+  max-width: 100vh;
   font-size: 15px;
   line-height: 18px;
   color: #000000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .user-name {

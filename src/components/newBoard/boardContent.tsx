@@ -17,6 +17,10 @@ import Comment from "./comment/comment";
 import { removeBoard } from "../../api/board/removeBoard";
 import useBoardUpdate from "../../hooks/board/boardHook";
 import { postHelpNumber } from "../../api/board/board/postHelpNumber";
+import { FaBookmark } from "react-icons/fa";
+import { postScrapToggle } from "../../api/board/board/postScrapToggle";
+import MDEditor from "@uiw/react-md-editor";
+// import { CiBookmarkPlus } from "react-icons/ci";
 
 const BoardContent = ({
   onSelectContents,
@@ -49,7 +53,7 @@ const BoardContent = ({
   //컨텐츠 비우기
   const backList = () => {
     if (beforePageIndex) {
-      // boardHooks.updateBoardList(beforePageIndex);
+      boardHooks.updateBoardList(beforePageIndex);
       dispatch(patchContent(null));
       onSelectContents(ContentType.BoardList);
     }
@@ -71,6 +75,16 @@ const BoardContent = ({
         dispatch(patchContent(null));
         dispatch(patchBoardList(null));
         onSelectContents(ContentType.BoardList);
+      }
+    }
+  };
+
+  const handleScrap = async (event: React.MouseEvent<SVGAElement>) => {
+    event.preventDefault();
+    if (curContent) {
+      const result = await postScrapToggle(curContent.boardId);
+      if (result) {
+        dispatch(patchContent(result));
       }
     }
   };
@@ -124,6 +138,7 @@ const BoardContent = ({
             </div>
           </div>
         ) : null}
+        <FaBookmark className="float-right" size={36} onClick={handleScrap} />
       </div>
 
       <h1>{curContent?.title}</h1>
@@ -134,11 +149,22 @@ const BoardContent = ({
       </div>
       <hr />
 
-      <div className="board-content-content">{curContent?.content}</div>
+      {curContent ? (
+        <MDEditor.Markdown
+          style={{ padding: 30 }}
+          source={curContent.content}
+        />
+      ) : (
+        " "
+      )}
+
       <h3 className="display-flex-justify-center display-flex-center">
         <FaThumbsUp size={36} className="mr-15" onClick={handleHelp} />
         도움됐어요! : {curContent?.helpNumber}
       </h3>
+      <h5 className="display-flex-justify-center display-flex-center">
+        스크랩 : {curContent?.scrapNumber}
+      </h5>
       <h2>답변 {curContent?.commentNumber}</h2>
       <hr />
       <Comment />
