@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import "../../styles/loginPage/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 interface LoginData {
   email: string;
@@ -101,6 +101,8 @@ function LoginComponent() {
     flow: "auth-code",
   });
 
+  // const googleLoginOnSuccess = useGoogleLoginSe
+
   return (
     <div className="login-page">
       {/* 로고  */}
@@ -116,6 +118,10 @@ function LoginComponent() {
             <></>
           </button>
         </div>
+        <GoogleLogin
+          onSuccess={(result) => console.log(result)}
+          onError={() => console.log("실패")}
+        />
         {/* 중앙 분리대 */}
         <div className="line-separator">
           <span className="mid-line"></span>

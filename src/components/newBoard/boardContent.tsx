@@ -104,6 +104,19 @@ const BoardContent = ({
     }
   };
 
+  function test(date: string | undefined): string {
+    console.log(date);
+    // 2024-02-19T14:41:59.630666Z
+    if (date) {
+      let editDate = date.substring(0, 19);
+      let sliceDate = editDate.split("T");
+
+      const result = sliceDate[0] + " " + sliceDate[1];
+      return result;
+    }
+    return "null";
+  }
+
   return (
     <div className="w-80 p-15 test box-border">
       <div className="relative flex-space-betwwen">
@@ -144,7 +157,7 @@ const BoardContent = ({
       <h1>{curContent?.title}</h1>
 
       <div>
-        {curContent?.nickname} | {curContent?.createdTime} | 조회수 :{" "}
+        {curContent?.nickname} | {test(curContent?.createdTime)} | 조회수 :{" "}
         {curContent?.viewNumber}
       </div>
       <hr />
