@@ -36,10 +36,10 @@
     "yjs": "^13.6.12"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts --max-old-space-size=4096 build",
-    "test": "jest",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired --max-old-space-size=4096 build",
+    "test": "react-app-rewired jest",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -66,6 +66,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
+    "react-app-rewired": "^2.2.1",
     "ts-jest": "^29.1.2"
   },
   "transformIgnorePatterns": [
