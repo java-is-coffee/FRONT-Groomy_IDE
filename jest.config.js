@@ -28,14 +28,14 @@ module.exports = {
   testEnvironment: "jsdom",
   transform: {
     "^.+\\.(ts|tsx|js|jsx)$": "babel-jest", // JS와 JSX 파일도 변환하도록 설정을 추가합니다.
+    [`(${esModules}).+\\.js$`]: '<rootDir>/config/jest/babelTransform.js', 
   },
   transformIgnorePatterns: [
     "node_modules/(?!(@uiw/react-markdown-preview|@uiw/react-md-editor|react-markdown)/)",
-    [`(${esModules}).+\\.js$`]: '<rootDir>/config/jest/babelTransform.js', 
+    `[/\\\\]node_modules[/\\\\](?!${esModules}).+\\.(js|jsx|mjs|cjs|ts|tsx)$`,
   ],
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "^monaco-editor": "<rootDir>/node_modules/monaco-editor",
-    `[/\\\\]node_modules[/\\\\](?!${esModules}).+\\.(js|jsx|mjs|cjs|ts|tsx)$`,
   },
 };
