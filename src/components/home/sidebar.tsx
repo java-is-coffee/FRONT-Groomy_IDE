@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { addMember } from "../../redux/reducers/memberReducer";
 import { ContentType } from "../../routes/home";
+import { IoIosLogOut } from "react-icons/io";
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;
@@ -47,6 +48,12 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     if (target === "project") onSelectContents(ContentType.ProjectList);
     if (target === "board") onSelectContents(ContentType.BoardList);
+  };
+
+  //로그아웃 버튼
+  const logOut = () => {
+    localStorage.clear();
+    window.location.reload();
   };
 
   // member 정보 불러오기
@@ -110,7 +117,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-      <div className="menu-container"></div>
+      <div className="menu-container">
+        <div className="icon float-right">
+          <IoIosLogOut size={"32px"} onClick={logOut} />
+        </div>
+      </div>
     </div>
   );
 };

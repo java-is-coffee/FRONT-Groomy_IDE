@@ -30,6 +30,7 @@ export interface BoardDetails {
   helpNumber: number;
   comment: CommentDetails;
   completed: boolean;
+  memberScrapped: boolean;
 }
 
 // 초기 상태

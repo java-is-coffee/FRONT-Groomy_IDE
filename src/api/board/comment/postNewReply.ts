@@ -7,7 +7,7 @@ const USER_API_URL =
 
 export interface CommentDetail {
   boardId: number;
-  content: string;
+  content: string | undefined;
   nickname: string;
   originComment: number | null;
   memberId: number;

@@ -11,6 +11,13 @@ type boardProps = {
   BoardDetails: BoardDetails;
 };
 
+const deleteTag = (origin: string): string => {
+  const extractTextPattern = /(<([^>]+)>)/gi;
+
+  const fixContent = origin.replace(extractTextPattern, "");
+  return fixContent;
+};
+
 const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
   return (
     // 게시글 상단 미해결 과 제목
@@ -25,10 +32,9 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
       </div>
 
       {/* 내용  */}
-      <div
-        className="board-item-content"
-        dangerouslySetInnerHTML={{ __html: BoardDetails.content }}
-      ></div>
+      <div className="board-item-content">
+        {deleteTag(BoardDetails.content)}
+      </div>
 
       {/* 멤버 아이디 */}
       <div className="board-item-bottom">

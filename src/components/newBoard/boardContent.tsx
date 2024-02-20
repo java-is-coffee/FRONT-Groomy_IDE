@@ -17,10 +17,10 @@ import Comment from "./comment/comment";
 import { removeBoard } from "../../api/board/removeBoard";
 import useBoardUpdate from "../../hooks/board/boardHook";
 import { postHelpNumber } from "../../api/board/board/postHelpNumber";
-import { FaBookmark } from "react-icons/fa";
 import { postScrapToggle } from "../../api/board/board/postScrapToggle";
 import MDEditor from "@uiw/react-md-editor";
-// import { CiBookmarkPlus } from "react-icons/ci";
+import { CiBookmarkPlus } from "react-icons/ci";
+import { CiBookmarkMinus } from "react-icons/ci";
 
 const BoardContent = ({
   onSelectContents,
@@ -97,7 +97,7 @@ const BoardContent = ({
         userInfo.memberId
       );
       if (fixContent === null) {
-        alert("동일인은 추천 불가능 합니다.");
+        alert("자신의 게시글은 추천 불가능 합니다.");
       } else {
         dispatch(patchContent(fixContent));
       }
@@ -105,8 +105,6 @@ const BoardContent = ({
   };
 
   function test(date: string | undefined): string {
-    console.log(date);
-    // 2024-02-19T14:41:59.630666Z
     if (date) {
       let editDate = date.substring(0, 19);
       let sliceDate = editDate.split("T");
@@ -150,8 +148,19 @@ const BoardContent = ({
               </div>
             </div>
           </div>
-        ) : null}
-        <FaBookmark className="float-right" size={36} onClick={handleScrap} />
+        ) : curContent?.memberScrapped ? (
+          <CiBookmarkMinus
+            className="float-right"
+            size={48}
+            onClick={handleScrap}
+          />
+        ) : (
+          <CiBookmarkPlus
+            className="float-right"
+            size={48}
+            onClick={handleScrap}
+          />
+        )}
       </div>
 
       <h1>{curContent?.title}</h1>
@@ -164,12 +173,13 @@ const BoardContent = ({
 
       {curContent ? (
         <MDEditor.Markdown
-          style={{ padding: 30 }}
+          style={{ padding: 30, backgroundColor: "unset" }}
           source={curContent.content}
         />
       ) : (
         " "
       )}
+      {/* <div>{curContent?.content}</div> */}
 
       <h3 className="display-flex-justify-center display-flex-center">
         <FaThumbsUp size={36} className="mr-15" onClick={handleHelp} />

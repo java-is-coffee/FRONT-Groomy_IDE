@@ -131,7 +131,7 @@ function RegisterComponent() {
     }
   };
   return (
-    <div className="register-page">
+    <div className="register-component">
       <div className="logo-position">
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>

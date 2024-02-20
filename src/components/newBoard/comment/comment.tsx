@@ -12,9 +12,10 @@ import Reply from "./reply";
 import { FaThumbsUp } from "react-icons/fa";
 import { postHelpNumber } from "../../../api/board/comment/postHelpNumber";
 import { patchComment } from "../../../redux/reducers/boardReducer";
+import MDEditor from "@uiw/react-md-editor";
 
 function Comment() {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string | undefined>("");
   const boardHooks = useBoardHooks();
 
   const userInfo = useSelector((state: RootState) => state.member.member);
@@ -51,9 +52,9 @@ function Comment() {
     }
   };
 
-  function onChangeContent(event: React.FormEvent<HTMLTextAreaElement>): void {
-    setContent(event.currentTarget.value);
-  }
+  // function onChangeContent(event: React.FormEvent<HTMLTextAreaElement>): void {
+  //   setContent(event.currentTarget.value);
+  // }
 
   const handleHelp = async (event: React.MouseEvent<SVGAElement>) => {
     event.preventDefault();
@@ -66,7 +67,7 @@ function Comment() {
         userInfo.memberId
       );
       if (fixContent === null) {
-        alert("동일인은 추천 불가능 합니다.");
+        alert("자신의 댓글은 추천 불가능 합니다.");
       } else {
         boardHooks.updateCommentList(curId);
         dispatch(patchComment(fixContent));
@@ -78,12 +79,12 @@ function Comment() {
     // 댓글 목록
     <div className="">
       <form onSubmit={handleSubmit}>
-        <textarea
-          rows={3}
-          className="comment-input"
+        <MDEditor
+          height={200}
           value={content}
-          onChange={onChangeContent}
-        ></textarea>
+          preview="edit"
+          onChange={(val) => setContent(val)}
+        />
         <button type="submit">댓글 달기</button>
       </form>
       {/* 댓글 출력 */}
@@ -122,9 +123,10 @@ function Comment() {
               </>
             )}
 
-            <div className="comment-content">
-              <div id={`${comment.commentId}comment`}>{comment.content}</div>
-            </div>
+            <MDEditor.Markdown
+              style={{ padding: 15, backgroundColor: "unset" }}
+              source={comment.content}
+            />
 
             {comment.originComment === null ? (
               <Reply originComment={comment} />

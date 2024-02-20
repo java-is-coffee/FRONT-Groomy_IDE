@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import "../../styles/loginPage/login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
 
 interface LoginData {
   email: string;
@@ -84,24 +83,10 @@ function LoginComponent() {
     }
   };
 
-  // const redirect_url = "http://localhost:8080/auth/google/callback";
-
-  const googleSocialLogin = useGoogleLogin({
-    scope: "email profile",
-    onSuccess: async ({ code }) => {
-      axios
-        .post("http://localhost:8080/auth/google/callback", { code })
-        .then(({ data }) => {
-          console.log(data);
-        });
-    },
-    onError: (errorResponse) => {
-      console.error(errorResponse);
-    },
-    flow: "auth-code",
-  });
-
-  // const googleLoginOnSuccess = useGoogleLoginSe
+  const handleLogin = async () => {
+    window.location.href =
+      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/auth/google";
+  };
 
   return (
     <div className="login-page">
@@ -113,15 +98,11 @@ function LoginComponent() {
       <div className="login-component">
         Oauth 로그인 버튼
         <div>
-          <button className="oauth-loginBtn" onClick={googleSocialLogin}>
+          <button className="oauth-loginBtn" onClick={handleLogin}>
             구글로 로그인
             <></>
           </button>
         </div>
-        <GoogleLogin
-          onSuccess={(result) => console.log(result)}
-          onError={() => console.log("실패")}
-        />
         {/* 중앙 분리대 */}
         <div className="line-separator">
           <span className="mid-line"></span>
