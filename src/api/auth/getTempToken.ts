@@ -45,7 +45,6 @@ export const getTempToken = async (): Promise<string | null> => {
     const newToken: ResponseTokenDTO = response.data;
     // 토큰 리프레쉬 완료
     console.log("get Temp token successfully");
-    console.log(newToken);
     return newToken.accessToken;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
