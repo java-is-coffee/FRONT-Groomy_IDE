@@ -4,29 +4,44 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { patchPageNumber } from "../../api/board/patchPageNumber";
+import { RootState } from "../../../redux/store/store";
+import { patchPageNumber } from "../../../api/board/patchPageNumber";
 import {
   patchPage,
   patchCurrentPage,
   patchMaxPage,
   patchPageOffset,
   BoardDetails,
-} from "../../redux/reducers/boardReducer";
-import { patchBoardList, PageNumber } from "../../api/board/patchBoardList";
-import { patchBoard } from "../../redux/reducers/boardReducer";
+} from "../../../redux/reducers/boardReducer";
+// import { getBoardList, PageNumber } from "../../api/board/getBoardList";
+import { patchBoardList } from "../../../redux/reducers/boardReducer";
+import { getSearchMax } from "../../../api/board/getSearchMax";
+import { SearchCompleted } from "./boardList";
+import { searchBoardList } from "../../../api/board/searchBoardList";
+import styled from "./paging.module.css";
 
-function Paging() {
+function SeachPaging({
+  searchData,
+  searchIsCompleted,
+}: {
+  searchData: string;
+  searchIsCompleted: SearchCompleted;
+}) {
   const pageList = useSelector((state: RootState) => state.board.page);
   const maxPage = useSelector((state: RootState) => state.board.maxPage);
   const pageOffset = useSelector((state: RootState) => state.board.pageOffset);
+  // const isSearch = useSelector((state: RootState) => state.board.isSearch);
   const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchPageData = async () => {
+      console.log("검색 페이징");
       try {
-        const storedPages: number | null = await patchPageNumber();
+        const storedPages: number | null = await getSearchMax(
+          searchData,
+          searchIsCompleted
+        );
         if (storedPages) {
           const tempList = setList(storedPages, 0);
           dispatch(patchPage(tempList));
@@ -41,7 +56,7 @@ function Paging() {
     if (!pageList) {
       fetchPageData();
     }
-  }, [accessToken, pageList, dispatch]);
+  }, [accessToken, pageList, dispatch, searchData, searchIsCompleted]);
 
   const setList = (lastPage: number, start: number) => {
     const newList: number[] = [];
@@ -54,21 +69,28 @@ function Paging() {
 
   const movePage = async (e: React.MouseEvent<HTMLDivElement>) => {
     const page = parseInt(e.currentTarget.id);
-    try {
-      const Page: PageNumber = {
-        page: page,
-      };
-      const storedBoard: BoardDetails[] | null = await patchBoardList(Page);
-      if (storedBoard) {
-        dispatch(patchBoard(storedBoard));
-        dispatch(patchCurrentPage(page));
-      }
-    } catch (error) {
-      console.log("api 에러");
+
+    // const Page: PageNumber = {
+    //   page: page,
+    // };
+    const storedBoard: BoardDetails[] | null = await searchBoardList(
+      page,
+      searchData,
+      searchIsCompleted
+    );
+    if (storedBoard) {
+      dispatch(patchBoardList(storedBoard));
+      dispatch(patchCurrentPage(page));
     }
   };
 
-  const backList = () => {
+  const backList = async () => {
+    //이걸 해둔 이유는 만약 게시글이 삭제되었을 경우, 해당 max값이 변동됨을 감지해야하기 떄문.
+    const storedPages: number | null = await patchPageNumber();
+    if (storedPages) {
+      dispatch(patchMaxPage(storedPages));
+    }
+
     if (maxPage !== null && pageOffset !== null) {
       if (pageOffset - 5 < 0) return;
       else {
@@ -78,9 +100,15 @@ function Paging() {
       }
     }
   };
-  const frontList = () => {
+  const frontList = async () => {
+    //이걸 해둔 이유는 만약 게시글이 삭제되었을 경우, 해당 max값이 변동됨을 감지해야하기 떄문.
+    const storedPages: number | null = await patchPageNumber();
+    if (storedPages) {
+      dispatch(patchMaxPage(storedPages));
+    }
+
     if (maxPage !== null && pageOffset !== null) {
-      if (pageOffset + 5 <= maxPage) {
+      if (pageOffset + 5 < maxPage) {
         const tempList = setList(maxPage, pageOffset + 5);
         console.log(tempList);
         dispatch(patchPage(tempList));
@@ -92,6 +120,7 @@ function Paging() {
   const fullBackList = () => {
     if (maxPage !== null && pageOffset !== null) {
       const tempList = setList(maxPage, 0);
+
       dispatch(patchPage(tempList));
       dispatch(patchPageOffset(0));
     }
@@ -101,8 +130,10 @@ function Paging() {
     if (maxPage !== null && pageOffset !== null) {
       const max = Math.floor(maxPage / 5);
       const tempList = setList(maxPage, max * 5);
-      dispatch(patchPage(tempList));
-      dispatch(patchPageOffset(max * 5));
+      if (tempList.length !== 0) {
+        dispatch(patchPage(tempList));
+        dispatch(patchPageOffset(max * 5));
+      }
     }
   };
 
@@ -111,7 +142,7 @@ function Paging() {
       <MdKeyboardDoubleArrowLeft onClick={fullBackList} size={36} />
       <MdKeyboardArrowLeft
         onClick={backList}
-        className="board-page"
+        className={styled.page}
         size={36}
       />
       {pageList &&
@@ -120,7 +151,7 @@ function Paging() {
             key={number}
             id={`${number}`}
             onClick={movePage}
-            className="board-page"
+            className={styled.page}
           >
             {number}
           </div>
@@ -129,7 +160,7 @@ function Paging() {
       {/* {pageList.map((number) => number)} */}
       <MdKeyboardArrowRight
         onClick={frontList}
-        className="board-page"
+        className={styled.page}
         size={36}
       />
       <MdKeyboardDoubleArrowRight onClick={fullFrontList} size={36} />
@@ -137,4 +168,4 @@ function Paging() {
   );
 }
 
-export default Paging;
+export default SeachPaging;

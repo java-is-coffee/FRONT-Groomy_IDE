@@ -64,10 +64,6 @@ function LoginComponent() {
     try {
       const response = await axios.post(baseUrl, request);
 
-      //아직 풀리퀘하면 안됩니다 이거
-      // const result = response.data.data;
-      // const code = response.data.status.code;
-
       const code = response.status;
       const result = response.data;
 
@@ -87,6 +83,11 @@ function LoginComponent() {
     }
   };
 
+  const handleLogin = async () => {
+    window.location.href =
+      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/auth/google";
+  };
+
   return (
     <div className="login-page">
       {/* 로고  */}
@@ -95,18 +96,17 @@ function LoginComponent() {
       </div>
 
       <div className="login-component">
-        {/* Oauth 로그인 버튼 */}
         <div>
-          <button className="oauth-loginBtn"> 구글로 로그인 </button>
+          <button className="oauth-loginBtn" onClick={handleLogin}>
+            구글로 로그인
+          </button>
         </div>
-
         {/* 중앙 분리대 */}
         <div className="line-separator">
           <span className="mid-line"></span>
           <span className="or">or</span>
           <span className="mid-line"></span>
         </div>
-
         {/* 로그인칸 */}
         <div>
           <form onSubmit={handleSubmit}>
@@ -138,7 +138,6 @@ function LoginComponent() {
             <span>회원가입</span>
           </button>
         </div>
-
         {/* 컴포넌트 하단 */}
         <div>
           <span onClick={goResetPassword} className="resetPassword">

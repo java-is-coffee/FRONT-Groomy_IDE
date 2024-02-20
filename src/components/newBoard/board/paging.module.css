@@ -1,0 +1,10 @@
+.page {
+  margin: 0px 5px 0px 5px;
+  padding: 0px 10px 0px 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.page:hover {
+  background-color: rgb(232, 225, 172);
+}

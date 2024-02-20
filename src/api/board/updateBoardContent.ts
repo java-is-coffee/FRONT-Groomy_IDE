@@ -1,43 +1,41 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
-import { CommentDetails } from "./patchCommentList";
+import { BoardDetails } from "../../redux/reducers/boardReducer";
 
 const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/comment/write";
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board/edit";
 
-export interface CommentDetail {
-  boardId: number;
-  content: string;
-  nickname: string;
-  originComment: number | null;
+export interface UpdateBoard {
   memberId: number;
+  nickname: string;
+  title: string;
+  content: string;
+  completed: boolean;
 }
 
-interface CommentDTO {
-  data: CommentDetail;
+interface UpdateBoardDTO {
+  data: UpdateBoard;
 }
 
-//prop으로 넘기기
-// projectList 가져오는 메서드
-export const newComment = async (
-  commentDTO: CommentDetail
-): Promise<CommentDetail | null> => {
+export const updateBoardContent = async (
+  inputDTO: UpdateBoard,
+  boardId: number
+): Promise<BoardDetails | null> => {
   const storedToken = localStorage.getItem("accessToken");
+  console.log("수정 시작");
 
-  const inputData: CommentDetail = {
-    boardId: commentDTO.boardId,
-    content: commentDTO.content,
-    nickname: commentDTO.nickname,
-    originComment: null,
-    memberId: commentDTO.memberId,
+  const inputData: UpdateBoard = {
+    memberId: inputDTO.memberId,
+    nickname: inputDTO.nickname,
+    title: inputDTO.title,
+    content: inputDTO.content,
+    completed: inputDTO.completed,
   };
 
-  const requestDTO: CommentDTO = {
+  const requestDTO: UpdateBoardDTO = {
     data: inputData,
   };
 
-  console.log(`${USER_API_URL}/${commentDTO.boardId}`);
-  console.log(requestDTO);
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
     return null;
@@ -48,13 +46,14 @@ export const newComment = async (
     },
   };
   try {
-    const response = await axios.post<CommentDetails>(
-      `${USER_API_URL}/${commentDTO.boardId}`,
+    const response = await axios.patch<BoardDetails>(
+      `${USER_API_URL}/${boardId}`,
       requestDTO,
       config
     );
 
     if (response.status === 200) {
+      console.log(response);
       return response.data;
     } else {
       console.error(
@@ -69,7 +68,7 @@ export const newComment = async (
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return newComment(commentDTO);
+          return updateBoardContent(inputData, boardId);
         }
       }
     } else {
@@ -79,3 +78,4 @@ export const newComment = async (
     return null;
   }
 };
+//
