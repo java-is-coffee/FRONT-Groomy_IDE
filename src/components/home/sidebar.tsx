@@ -7,8 +7,12 @@ import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { addMember } from "../../redux/reducers/memberReducer";
 import { ContentType } from "../../routes/home";
+
+import { IoIosLogOut } from "react-icons/io";
+import { ConnectWithoutContact } from "@mui/icons-material";
+import { setMember } from "../../redux/reducers/memberReducer";
+
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;
@@ -30,30 +34,42 @@ const Sidebar: React.FC<SidebarProps> = ({
   //sidebar 스크롤 따라가게 하기
   window.addEventListener("scroll", function () {
     const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    if (sidebar) {
+      const scrollPosition =
+        window.scrollY || document.documentElement.scrollTop;
 
-    const topPosition = scrollPosition;
-    if (topPosition > 0) {
-      sidebar.style.top = `${topPosition}px`;
-    } else {
-      sidebar.style.top = `0px`;
+      const topPosition = scrollPosition;
+      if (topPosition > 0) {
+        sidebar.style.top = `${topPosition}px`;
+      } else {
+        sidebar.style.top = `0px`;
+      }
     }
   });
 
   // main contents handler
   const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target;
+    const target = event.currentTarget.id;
     console.log(target);
-    onSelectContents(ContentType.ProjectList);
+
+    if (target === "project") onSelectContents(ContentType.ProjectList);
+    if (target === "invited-project")
+      onSelectContents(ContentType.InvitedProjectList);
+    if (target === "board") onSelectContents(ContentType.BoardList);
+  };
+
+  //로그아웃 버튼
+  const logOut = () => {
+    localStorage.clear();
+    window.location.reload();
   };
 
   // member 정보 불러오기
   useEffect(() => {
     const fetchMemberData = async () => {
       const hasMemberInfo = await getMemberInfo();
-      console.log(hasMemberInfo);
       if (hasMemberInfo) {
-        dispatch(addMember(hasMemberInfo));
+        dispatch(setMember(hasMemberInfo));
       } else {
         console.log("정보 불러오기 오류");
       }
@@ -90,16 +106,28 @@ const Sidebar: React.FC<SidebarProps> = ({
           )}
         </div>
         <div className="nav-menu">
-          <div className="menu" onClick={handleMainContent}>
-            <div className="menu-container" id="project">
+          <div className="menu" id="project" onClick={handleMainContent}>
+            <div className="menu-container">
               <div className="icon">
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
             </div>
           </div>
-          <div className="menu" onClick={handleMainContent}>
-            <div className="menu-container" id="board">
+          <div
+            className="menu"
+            id="invited-project"
+            onClick={handleMainContent}
+          >
+            <div className="menu-container">
+              <div className="icon">
+                <ConnectWithoutContact />
+              </div>
+              <span>프로젝트 초대</span>
+            </div>
+          </div>
+          <div className="menu" id="board" onClick={handleMainContent}>
+            <div className="menu-container">
               <div className="icon">
                 <FaWpforms size={"32px"} />
               </div>
@@ -108,7 +136,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-      <div className="menu-container"></div>
+      <div className="menu-container">
+        <div className="icon float-right">
+          <IoIosLogOut size={"32px"} onClick={logOut} />
+        </div>
+      </div>
     </div>
   );
 };

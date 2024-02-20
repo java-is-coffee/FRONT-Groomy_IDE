@@ -1,0 +1,45 @@
+.completed-box {
+  background: #ccf0fe;
+  border-radius: 50px;
+  margin-right: 15px;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.board-item {
+  background-color: white;
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  border: 2px solid black;
+  overflow-y: auto;
+}
+
+.board-item:hover {
+  background-color: var(--main-theme-color);
+  transition: background-color 0.5s ease;
+}
+
+.board-item-content {
+  margin: 20px 0px 15px 10px; /*위 오른 아래 왼*/
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  max-width: 100vh;
+  font-size: 15px;
+  line-height: 18px;
+  color: #000000;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bottom-icon {
+  margin-left: 10px;
+}
+.bottom-icon-number {
+  margin-left: 5px;
+}
