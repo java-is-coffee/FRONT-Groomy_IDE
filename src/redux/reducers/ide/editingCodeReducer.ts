@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface CodeDetails {
   id: string;
   name: string;
+  path: string;
   lang: string;
   content: string; // 파일일 경우의 내용 (선택적)
 }
@@ -18,6 +19,7 @@ const initialState: CodeState = {
     id: "",
     name: "",
     lang: "",
+    path: "",
     content: "",
   },
   codeTabs: [],
@@ -30,7 +32,6 @@ const curEditingCode = createSlice({
     // 현재 수정중인 파일 설정
     setCurEditingCode: (state, action: PayloadAction<CodeDetails>) => {
       state.editingCode = action.payload;
-      sessionStorage.setItem("curCode", JSON.stringify(action.payload));
     },
     // 새로 선택된 파일 코드 탭에 추가
     addCodeTab: (state, action: PayloadAction<CodeDetails>) => {
