@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/project/projectListContainer.css";
-import "../../styles/board/board.css";
+import "../../../styles/project/projectListContainer.css";
+import "../../../styles/board/board.css";
 import BoardItem from "./boardItem";
-import { ContentType } from "../../routes/home";
+import { ContentType } from "../../../routes/home";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { RootState } from "../../../redux/store/store";
 import {
   BoardDetails,
   patchBoardList,
@@ -12,13 +12,13 @@ import {
   patchContentId,
   patchIsSeacrh,
   patchPage,
-} from "../../redux/reducers/boardReducer";
+} from "../../../redux/reducers/boardReducer";
 import { FaClipboardQuestion } from "react-icons/fa6";
 import { SlMagnifier } from "react-icons/sl";
 import Paging from "./paging";
-import styles from "./boardList.module.css";
-import { searchBoardList } from "../../api/board/searchBoardList";
-import useBoardHooks from "../../hooks/board/boardHook";
+import styled from "./boardList.module.css";
+import { searchBoardList } from "../../../api/board/searchBoardList";
+import useBoardHooks from "../../../hooks/board/boardHook";
 import SeachPaging from "./searchPaging";
 // import { Pagination } from "@mui/material";
 
@@ -120,8 +120,8 @@ const BoardListContainer = ({
   };
 
   return (
-    <div className="w-80 p-15 test box-border">
-      <div className="board-top  line-bottom display-flex-space-between">
+    <div className={styled["list-container"]}>
+      <div className={styled["header"]}>
         <FaClipboardQuestion
           className="mr-15"
           size={25}
@@ -137,12 +137,12 @@ const BoardListContainer = ({
       </div>
       {/* 검색 파트 */}
       <div id="searchForm" className={searchModalOpen ? "" : "hidden"}>
-        <form onSubmit={handleSubmit} className={styles["search-box"]}>
+        <form onSubmit={handleSubmit} className={styled["search-box"]}>
           <div>
             <span
               id="all"
-              className={`${styles["copmpleted-select-box"]} ${
-                styles[
+              className={`${styled["copmpleted-select-box"]} ${
+                styled[
                   searchIsCompleted === SearchCompleted.All ? "selected" : " "
                 ]
               }`}
@@ -152,8 +152,8 @@ const BoardListContainer = ({
             </span>
             <span
               id="completed"
-              className={`${styles["copmpleted-select-box"]} ${
-                styles[
+              className={`${styled["copmpleted-select-box"]} ${
+                styled[
                   searchIsCompleted === SearchCompleted.Completed
                     ? "selected"
                     : " "
@@ -165,8 +165,8 @@ const BoardListContainer = ({
             </span>
             <span
               id="no-completed"
-              className={`${styles["copmpleted-select-box"]} ${
-                styles[
+              className={`${styled["copmpleted-select-box"]} ${
+                styled[
                   searchIsCompleted === SearchCompleted.NoCompleted
                     ? "selected"
                     : " "
@@ -180,13 +180,13 @@ const BoardListContainer = ({
 
           <input
             style={{ width: "calc(1% * 98)" }}
-            className="input-box mt-30"
+            className={styled.input}
             value={searchData}
             required
             onChange={searchDataSet}
             placeholder="작성자 / 제목 / 내용 과 관련된 검색어를 입력해주세요."
           />
-          <button className={styles["search-btn"]} type="submit">
+          <button className={styled["search-btn"]} type="submit">
             검색
           </button>
         </form>
@@ -205,18 +205,18 @@ const BoardListContainer = ({
         ))}
 
       {/* 글쓰기 버튼 */}
-      <div className="board-writing-btn" onClick={chageComponent}>
+      <div className={styled["writing-btn"]} onClick={chageComponent}>
         글쓰기
       </div>
       {isSearch ? (
-        <div className="display-flex-justify-center">
+        <div className={styled["paging"]}>
           <SeachPaging
             searchData={searchData}
             searchIsCompleted={searchIsCompleted}
           />
         </div>
       ) : (
-        <div className="display-flex-justify-center">
+        <div className={styled["paging"]}>
           <Paging />
         </div>
       )}

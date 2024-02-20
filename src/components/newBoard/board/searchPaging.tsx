@@ -4,20 +4,21 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { patchPageNumber } from "../../api/board/patchPageNumber";
+import { RootState } from "../../../redux/store/store";
+import { patchPageNumber } from "../../../api/board/patchPageNumber";
 import {
   patchPage,
   patchCurrentPage,
   patchMaxPage,
   patchPageOffset,
   BoardDetails,
-} from "../../redux/reducers/boardReducer";
+} from "../../../redux/reducers/boardReducer";
 // import { getBoardList, PageNumber } from "../../api/board/getBoardList";
-import { patchBoardList } from "../../redux/reducers/boardReducer";
-import { getSearchMax } from "../../api/board/getSearchMax";
+import { patchBoardList } from "../../../redux/reducers/boardReducer";
+import { getSearchMax } from "../../../api/board/getSearchMax";
 import { SearchCompleted } from "./boardList";
-import { searchBoardList } from "../../api/board/searchBoardList";
+import { searchBoardList } from "../../../api/board/searchBoardList";
+import styled from "./paging.module.css";
 
 function SeachPaging({
   searchData,
@@ -141,7 +142,7 @@ function SeachPaging({
       <MdKeyboardDoubleArrowLeft onClick={fullBackList} size={36} />
       <MdKeyboardArrowLeft
         onClick={backList}
-        className="board-page"
+        className={styled.page}
         size={36}
       />
       {pageList &&
@@ -150,7 +151,7 @@ function SeachPaging({
             key={number}
             id={`${number}`}
             onClick={movePage}
-            className="board-page"
+            className={styled.page}
           >
             {number}
           </div>
@@ -159,7 +160,7 @@ function SeachPaging({
       {/* {pageList.map((number) => number)} */}
       <MdKeyboardArrowRight
         onClick={frontList}
-        className="board-page"
+        className={styled.page}
         size={36}
       />
       <MdKeyboardDoubleArrowRight onClick={fullFrontList} size={36} />

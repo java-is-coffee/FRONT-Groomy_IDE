@@ -96,11 +96,9 @@ function LoginComponent() {
       </div>
 
       <div className="login-component">
-        Oauth 로그인 버튼
         <div>
           <button className="oauth-loginBtn" onClick={handleLogin}>
             구글로 로그인
-            <></>
           </button>
         </div>
         {/* 중앙 분리대 */}

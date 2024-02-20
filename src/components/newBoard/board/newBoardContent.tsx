@@ -1,22 +1,23 @@
 import React, { useState } from "react";
-import "../../styles/board/board.css";
+import "../../../styles/board/board.css";
 import { FaClipboard } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
-import { NewBoard, postNewBoard } from "../../api/board/postNewBoard";
+import { RootState } from "../../../redux/store/store";
+import { NewBoard, postNewBoard } from "../../../api/board/postNewBoard";
 import "react-quill/dist/quill.snow.css";
 import MDEditor from "@uiw/react-md-editor";
 import {
   UpdateBoard,
   updateBoardContent,
-} from "../../api/board/updateBoardContent";
-import { ContentType } from "../../routes/home";
+} from "../../../api/board/updateBoardContent";
+import { ContentType } from "../../../routes/home";
 import {
   patchBoardList,
   patchContent,
   patchCurrentPage,
   patchIsEdited,
-} from "../../redux/reducers/boardReducer";
+} from "../../../redux/reducers/boardReducer";
+import styled from "./newBoardContent.module.css";
 
 function BoardWritePage({
   onSelectContents,
@@ -112,8 +113,8 @@ function BoardWritePage({
   //수정 중일 경우
   if (isEdit && savedContent) {
     return (
-      <div className="w-80 p-15 test box-border">
-        <div className="board-top  line-bottom display-flex-start">
+      <div className={styled["write-container"]}>
+        <div className={styled["header"]}>
           <FaClipboard className="mr-15" size={25} />
           질문 작성
         </div>
@@ -143,7 +144,7 @@ function BoardWritePage({
               <input
                 type="text"
                 name="title"
-                className="input-box"
+                className={styled.input}
                 required
                 onChange={onChangeTitle}
                 defaultValue={savedContent.title}
@@ -154,13 +155,10 @@ function BoardWritePage({
           <div className="mt-15">
             <span className="font-bold">내용</span>
             <div className="float-right mr-15">
-              <button
-                className="mr-15 board-write-btn bg-white"
-                onClick={backList}
-              >
+              <button className={styled.btn} onClick={backList}>
                 취소
               </button>
-              <button className="board-write-btn bg-sub-color" type="submit">
+              <button className={styled.btn} type="submit">
                 작성
               </button>
             </div>
@@ -180,8 +178,8 @@ function BoardWritePage({
 
   //새로운 게시글 작성
   return (
-    <div className="w-80 p-15 test box-border">
-      <div className="board-top  line-bottom display-flex-start">
+    <div className={styled["write-container"]}>
+      <div className={styled["header"]}>
         <FaClipboard className="mr-15" size={25} />
         질문 작성
       </div>
@@ -201,7 +199,7 @@ function BoardWritePage({
             <input
               type="text"
               name="title"
-              className="input-box"
+              className={styled.input}
               required
               onChange={onChangeTitle}
             />
@@ -211,13 +209,10 @@ function BoardWritePage({
         <div className="mt-15">
           <span className="font-bold">내용</span>
           <div className="float-right mr-15">
-            <button
-              className="mr-15 board-write-btn bg-white"
-              onClick={backList}
-            >
+            <button className={styled.btn} onClick={backList}>
               취소
             </button>
-            <button className="board-write-btn bg-sub-color" type="submit">
+            <button className={styled.btn} type="submit">
               작성
             </button>
           </div>
@@ -228,10 +223,6 @@ function BoardWritePage({
               preview="edit"
               onChange={(val) => setContent(val)}
             />
-            {/* <MDEditor.Markdown
-              source={content}
-              style={{ whiteSpace: "pre-wrap" }}
-            /> */}
           </div>
         </div>
       </form>

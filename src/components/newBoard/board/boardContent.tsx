@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/project/projectListContainer.css";
-import "../../styles/board/board.css";
-import "../../styles/board/boardDropBox.css";
-import { ContentType } from "../../routes/home";
+import "../../../styles/project/projectListContainer.css";
+import "../../../styles/board/board.css";
+import "../../../styles/board/boardDropBox.css";
+import { ContentType } from "../../../routes/home";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+import { RootState } from "../../../redux/store/store";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { FaThumbsUp } from "react-icons/fa";
 import {
   patchBoardList,
   patchContent,
   patchIsEdited,
-} from "../../redux/reducers/boardReducer";
+} from "../../../redux/reducers/boardReducer";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
-import Comment from "./comment/comment";
-import { removeBoard } from "../../api/board/removeBoard";
-import useBoardUpdate from "../../hooks/board/boardHook";
-import { postHelpNumber } from "../../api/board/board/postHelpNumber";
-import { postScrapToggle } from "../../api/board/board/postScrapToggle";
+import Comment from "../comment/comment";
+import { removeBoard } from "../../../api/board/removeBoard";
+import useBoardUpdate from "../../../hooks/board/boardHook";
+import { postHelpNumber } from "../../../api/board/board/postHelpNumber";
+import { postScrapToggle } from "../../../api/board/board/postScrapToggle";
 import MDEditor from "@uiw/react-md-editor";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { CiBookmarkMinus } from "react-icons/ci";
+import styled from "./boardContent.module.css";
 
 const BoardContent = ({
   onSelectContents,
@@ -104,7 +105,7 @@ const BoardContent = ({
     }
   };
 
-  function test(date: string | undefined): string {
+  function dateFormat(date: string | undefined): string {
     if (date) {
       let editDate = date.substring(0, 19);
       let sliceDate = editDate.split("T");
@@ -116,7 +117,7 @@ const BoardContent = ({
   }
 
   return (
-    <div className="w-80 p-15 test box-border">
+    <div className={styled["content-container"]}>
       <div className="relative flex-space-betwwen">
         <MdKeyboardArrowLeft
           className="hori-dot"
@@ -124,50 +125,42 @@ const BoardContent = ({
           onClick={backList}
         />
         {curContent && curContent.completed ? (
-          <span className="board-item-completed-box">해결됨</span>
+          <span className={styled["completed-box"]}>해결됨</span>
         ) : (
-          <span className="board-item-completed-box">미해결</span>
+          <span className={styled["completed-box"]}>미해결</span>
         )}
         {checkOwner ? (
-          <div className="float-right project-card-dropdown">
+          <div className={styled["dropdown"]}>
             <HiOutlineDotsHorizontal
               className="hori-dot"
               size={48}
               onClick={() => setBoardOptionCheck((prev) => !prev)}
             />
             <div
-              className={`project-card-dropdown-menu ${
+              className={`${styled["dropdown-menu"]} ${
                 boardOptionCheck ? " " : "hidden"
               }`}
             >
-              <div className="dropdown-item" onClick={handleEdit}>
+              <div className={styled["dropdown-item"]} onClick={handleEdit}>
                 Edit
               </div>
-              <div className="dropdown-item" onClick={hadleDelete}>
+              <div className={styled["dropdown-item"]} onClick={hadleDelete}>
                 Delete
               </div>
             </div>
           </div>
         ) : curContent?.memberScrapped ? (
-          <CiBookmarkMinus
-            className="float-right"
-            size={48}
-            onClick={handleScrap}
-          />
+          <CiBookmarkMinus size={48} onClick={handleScrap} />
         ) : (
-          <CiBookmarkPlus
-            className="float-right"
-            size={48}
-            onClick={handleScrap}
-          />
+          <CiBookmarkPlus size={48} onClick={handleScrap} />
         )}
       </div>
 
       <h1>{curContent?.title}</h1>
 
       <div>
-        {curContent?.nickname} | {test(curContent?.createdTime)} | 조회수 :{" "}
-        {curContent?.viewNumber}
+        {curContent?.nickname} | {dateFormat(curContent?.createdTime)} | 조회수
+        : {curContent?.viewNumber}
       </div>
       <hr />
 
