@@ -20,9 +20,34 @@ export interface BoardId {
   boardId: number | null;
 }
 
-export const patchCommentList = async ({
+function sortByHierarchy(arr: CommentDetails[]) {
+  const sortedArr: CommentDetails[] = [];
+
+  // 부모가 null인 객체를 먼저 정렬
+  const parents = arr.filter((item) => item.originComment === null);
+
+  parents.forEach((parent) => {
+    sortedArr.push(parent);
+
+    // 부모에 해당하는 자손을 찾아서 정렬
+    const children = arr.filter(
+      (item) => item.originComment === parent.commentId
+    );
+    // console.log("아이 출");
+    // console.log(children);
+    children.forEach((child) => {
+      sortedArr.push(child);
+    });
+    // console.log(sortedArr);
+  });
+
+  return sortedArr;
+}
+
+export const getCommentList = async ({
   boardId,
 }: BoardId): Promise<CommentDetails[] | null> => {
+  console.log("코멘트 리스트확인");
   const storedToken = localStorage.getItem("accessToken");
   const tempBoardId: BoardId = {
     boardId: boardId,
@@ -43,7 +68,11 @@ export const patchCommentList = async ({
       config
     );
     if (response.status === 200) {
-      return response.data;
+      const setUp = sortByHierarchy(response.data);
+      console.log(response.data);
+      console.log(setUp);
+
+      return setUp;
     } else {
       console.error(
         "Failed to fetch project list with status code:",
@@ -57,7 +86,7 @@ export const patchCommentList = async ({
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return patchCommentList(tempBoardId);
+          return getCommentList(tempBoardId);
         }
       }
     } else {

@@ -1,10 +1,13 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
 const USER_API_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board";
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/board/search/page-number";
 
 // projectList 가져오는 메서드
-export const patchPageNumber = async (): Promise<number | null> => {
+export const getSearchMax = async (
+  searchData: string,
+  completed: string
+): Promise<number | null> => {
   console.log("페이지 불러오기?");
   const storedToken = localStorage.getItem("accessToken");
   if (!storedToken) {
@@ -17,10 +20,14 @@ export const patchPageNumber = async (): Promise<number | null> => {
     },
   };
   try {
-    const response = await axios.get<number>(
-      `${USER_API_URL}/page-number`,
-      config
-    );
+    const completedSet = completed === "completed" ? true : false;
+
+    const reqeustUrl =
+      completed === "all"
+        ? `${USER_API_URL}?search_keyword=${searchData}`
+        : `${USER_API_URL}?search_keyword=${searchData}&completed=${completedSet}`;
+
+    const response = await axios.get<number>(reqeustUrl, config);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -36,7 +43,7 @@ export const patchPageNumber = async (): Promise<number | null> => {
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return patchPageNumber();
+          return getSearchMax(searchData, completed);
         }
       }
     } else {

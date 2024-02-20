@@ -1,0 +1,96 @@
+.content-container {
+  width: 80%;
+  padding: 15px;
+  background-color: var(--main-theme-color);
+  max-height: 92.5vh;
+  min-height: 92.5vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  border: 2px solid black;
+  overflow-y: auto;
+}
+
+.completed-box {
+  background: #ccf0fe;
+  border-radius: 50px;
+  margin-right: 15px;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* 드롭다운 버튼 스타일링 */
+.dropdown button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  position: relative; /* 버튼을 기준으로 드롭다운 메뉴를 위치시킵니다. */
+}
+
+/* 드롭다운 버튼에 마우스를 올렸을 때의 스타일링 */
+.dropdown button:hover {
+  background-color: #f2f2f2;
+}
+
+/* 드롭다운 메뉴 스타일링 */
+.dropdown-menu {
+  position: absolute; /* 상대적 위치 지정된 버튼에 대해 절대적 위치 지정 */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100; /* 다른 요소 위에 나타나도록 z-index 설정 */
+}
+
+/* 드롭다운 메뉴 내부의 버튼 스타일링 */
+.dropdown-menu button {
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: bold;
+}
+
+.dropdown-menu button:last-child {
+  border-bottom: none;
+  color: tomato;
+}
+
+.dropdown-menu button:last-child:hover {
+  border-bottom: none;
+  background-color: rgb(230, 114, 94);
+  color: white;
+}
+
+/* 드롭다운 메뉴 내부의 버튼에 마우스를 올렸을 때의 스타일링 */
+.dropdown-menu button:hover {
+  background-color: var(--sub-theme-color);
+  color: white;
+}
+
+.dropdown-item {
+  border: 0.5px solid black;
+  padding: 5px 5px 15px 5px;
+  width: 10vh;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-item:nth-child(2) {
+  color: red;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(218, 218, 218);
+}

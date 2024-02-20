@@ -71,7 +71,7 @@ function ResetPasswordComponent() {
   };
 
   return (
-    <div>
+    <div className="login-page">
       <div className="logoPosition">
         <img src="icon/Logo.png" alt="logo" />
       </div>

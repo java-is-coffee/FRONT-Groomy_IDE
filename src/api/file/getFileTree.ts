@@ -17,7 +17,6 @@ interface requestFileTree {
 export const getFileTree = async (
   projectId: string
 ): Promise<FileItem[] | null> => {
-  console.log(projectId);
   const storedToken = localStorage.getItem("accessToken");
   if (!storedToken) {
     console.error("token token not found. Please login again.");

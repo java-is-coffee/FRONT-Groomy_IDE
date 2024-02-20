@@ -9,13 +9,7 @@
   width: 70%;
 }
 
-.logo-position {
-  margin-bottom: 20px; /* 로고와 다음 요소 사이의 간격 */
-  text-align: center;
-  width: 100%;
-}
-
-.oauth-loginBtn {
+.oauth-login-btn {
   display: block;
   width: 100%;
 
