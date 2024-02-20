@@ -4,6 +4,7 @@
   position: fixed;
   z-index: 2;
 }
+
 .container {
   display: flex;
   flex-direction: row;
@@ -30,7 +31,7 @@
 
 .main-content {
   margin-top: 52px;
-  padding: 0px;
+  padding: 20px;
   height: 100%;
   flex-grow: 1;
   transition: width 0.3s ease-in-out;

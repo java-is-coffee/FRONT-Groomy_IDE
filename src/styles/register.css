@@ -121,18 +121,10 @@
   display: inline-block;
 }
 
-.login {
-  margin-right: auto;
-  display: inline-block;
-  color: #7f7f7f;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.check-text {
-  color: red;
-}
-
-.display-none {
-  display: none;
-}
+  .login {
+    margin-right: auto;
+    display: inline-block; 
+    color: #7f7f7f;
+    text-decoration: underline;
+    cursor: pointer; 
+  }
