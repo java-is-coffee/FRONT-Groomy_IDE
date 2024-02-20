@@ -17,6 +17,8 @@ type SidebarProps = {
   sideClose: boolean;
 };
 
+
+
 const Sidebar: React.FC<SidebarProps> = ({
   onSelectContents,
   onChange,
@@ -43,9 +45,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   // main contents handler
   const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target;
+    const target = event.currentTarget.id;
     console.log(target);
-    onSelectContents(ContentType.ProjectList);
+    if (target === "project") onSelectContents(ContentType.ProjectList);
+    if (target === "board") onSelectContents(ContentType.Board);
+    if (target === "chat") onSelectContents(ContentType.Chat);
   };
 
   // member 정보 불러오기
@@ -65,6 +69,9 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
     console.log(member);
   }, [accessToken, dispatch, member]);
+
+  
+
   return (
     <div className="sidebar-menu">
       <div className="button-container">
@@ -93,7 +100,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         
         {/* 프로젝트 */}
         <div className="nav-menu">
-          <div className="menu" onClick={handleMainContent}>
+          <div className="menu" id="project" onClick={handleMainContent}>
             <div className="menu-container" id="project">
               <div className="icon">
                 <VscProject size={"32px"} />
@@ -111,13 +118,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
           
           {/* 채팅 */}
-          <div
-            className="menu"
-            onClick={() => {
-              navigate("/chat");
-            }}
-          >
-            <div className="menu-container">
+          <div className="menu" id="chat" onClick={handleMainContent}>
+            <div className="menu-container" id="chat">
               <div className="icon">
                 <IoIosChatbubbles size={"32px"} />
               </div>

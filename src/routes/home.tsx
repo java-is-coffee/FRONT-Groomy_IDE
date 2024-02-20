@@ -41,6 +41,12 @@ const Home: React.FC = () => {
   const handleCloseModal = () => {
     setIsProjectModalOpen(false);
   };
+
+  // 채팅
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+
+  const toggleChatModal = () => setIsChatModalOpen(!isChatModalOpen);
+  
   return (
     <div>
       <nav className="nav">

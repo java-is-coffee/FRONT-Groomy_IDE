@@ -63,9 +63,8 @@ function LoginComponent() {
 
     try {
       const response = await axios.post(baseUrl, request);
-
-      const result = response.data.data;
-      const code = response.data.status.code;
+      const code = response.status;
+      const result = response.data;
 
       if (code === 200) {
         if (localStorage.getItem("accessToken") === null) {
