@@ -38,6 +38,18 @@ const NewItemInput = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onCancel]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onCancel();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onCancel]);
+
   return (
     <TreeItem
       nodeId="input"

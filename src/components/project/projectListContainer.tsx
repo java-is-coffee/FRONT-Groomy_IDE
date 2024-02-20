@@ -7,16 +7,14 @@ import {
   patchProjectList,
 } from "../../api/project/patchProjectList";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
 import { patchProjects } from "../../redux/reducers/projectReducer";
+import { RootState } from "../../redux/store/store";
 
-const ProjectListContainer: React.FC = () => {
-  const accessToken = localStorage.getItem("accessToken");
+const ProjectListContainer = () => {
   const projects = useSelector((state: RootState) => state.projects.projects);
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchProjectListData = async () => {
-      console.log("test중입니다.");
       try {
         const storedProjects: ProjectDetails[] | null =
           await patchProjectList();
@@ -30,12 +28,16 @@ const ProjectListContainer: React.FC = () => {
     if (!projects) {
       fetchProjectListData();
     }
-  }, [accessToken, projects, dispatch]);
+  }, [projects, dispatch]);
   return (
     <div className="project-list">
       {projects &&
         projects.map((project) => (
-          <ProjectCard key={project.projectId} projectDetails={project} />
+          <ProjectCard
+            key={project.projectId}
+            projectDetails={project}
+            type="project"
+          />
         ))}
     </div>
   );

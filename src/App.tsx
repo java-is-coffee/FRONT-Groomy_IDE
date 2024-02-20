@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/code-editor" element={<WebIDE />}></Route>
+          <Route path="/code-editor/:projectId" element={<WebIDE />}></Route>
         </Routes>
       </Router>
     </div>

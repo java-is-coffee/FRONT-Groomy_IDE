@@ -8,52 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
 import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
-import { FileItem, setItems } from "../redux/reducers/ide/fileSystemReducer";
 
 const WebIDE = () => {
-  const data: FileItem[] = [
-    {
-      id: "1",
-      name: "Root",
-      type: "folder",
-      children: [
-        {
-          id: "2",
-          name: "SubFolder",
-          type: "folder",
-          children: [
-            {
-              id: "3",
-              name: "FileInSubFolder.txt",
-              type: "file",
-            },
-            {
-              id: "4",
-              name: "test.ts",
-              type: "file",
-              content: "function ex",
-            },
-          ],
-        },
-        {
-          id: "5",
-          name: "FileInRoot.c",
-          type: "file",
-        },
-        {
-          id: "6",
-          name: "FileInRoot.cpp",
-          type: "file",
-        },
-      ],
-    },
-  ];
   const isResizing = useRef(false);
   const [resizing, setResizing] = useState(false);
   const [sideContainerWidth, setSideContainerWidth] = useState(280); // 너비 상태 관리
   const resizeHandle = useRef<HTMLDivElement>(null); // 리사이징 핸들에 대한 참조
   const dispatch = useDispatch();
-
   const isOpenSide = useSelector(
     (state: RootState) => state.ideSideContainer.open
   );
@@ -100,8 +61,6 @@ const WebIDE = () => {
       }
     };
   }, [dispatch]); // isResizing을 의존성 배열에서 제거
-  // test 폴더 구조 주입
-  dispatch(setItems(data));
   return (
     <div className="ide">
       <div className="composite-bar">

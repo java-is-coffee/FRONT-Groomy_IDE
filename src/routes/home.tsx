@@ -7,6 +7,7 @@ import NewProjectModal from "../components/project/newProjectModal";
 
 export enum ContentType {
   ProjectList = "project-list",
+  InvitedProjectList = "invited-project",
   BoardList = "board-list",
   BoardContent = "board-content",
   BoardWrite = "board-write",
