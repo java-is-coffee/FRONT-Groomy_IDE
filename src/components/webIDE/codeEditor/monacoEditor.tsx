@@ -13,7 +13,7 @@ import useContentWidget from "../../../hooks/useCotentWidget";
 import {
   ISaveItem,
   postFileDetails,
-} from "../../../api/\bfile/postFileDetails";
+} from "../../../api/codeFile/postFileDetails";
 
 // 웹소켓 통신 DTO
 interface CodeDTO {

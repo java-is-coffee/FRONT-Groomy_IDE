@@ -18,10 +18,10 @@ import {
   addCodeTab,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
-import { getFileTree } from "../../../api/\bfile/getFileTree";
+import { getFileTree } from "../../../api/codeFile/getFileTree";
+
 import { useParams } from "react-router-dom";
 import useTree from "../../../hooks/useTree";
-import { getFileContent } from "../../../api/\bfile/getFileContent";
 import useWebSocket from "../../../hooks/useWebSocket";
 import { Input } from "@mui/material";
 import { TiDocumentDelete } from "react-icons/ti";
@@ -30,6 +30,7 @@ import { FaFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { IoSyncSharp } from "react-icons/io5";
+import { getFileContent } from "../../../api/codeFile/getFileContent";
 
 // 언어에 맞는 로고 가져오기
 const setLabel = (name: string) => {
