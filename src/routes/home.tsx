@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export enum ContentType {
   ProjectList = "project-list",
+  InvitedProjectList = "invited-project",
   BoardList = "board-list",
   BoardContent = "board-content",
   BoardWrite = "board-write",

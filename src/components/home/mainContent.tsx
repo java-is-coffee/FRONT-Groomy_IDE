@@ -1,8 +1,11 @@
 import BoardList from "../newBoard/board/boardList";
 import { ContentType } from "../../routes/home";
 import ProjectListContainer from "../project/projectListContainer";
+
 import BoardContent from "../newBoard/board/boardContent";
 import BoardWrite from "../newBoard/board/newBoardContent";
+import InvitedProjectListContainer from "../project/invitedProjectLIstContainer";
+
 
 interface MainContentProps {
   curContent: ContentType;
@@ -16,6 +19,8 @@ const MainContent: React.FC<MainContentProps> = ({
   switch (curContent) {
     case ContentType.ProjectList:
       return <ProjectListContainer />;
+    case ContentType.InvitedProjectList:
+      return <InvitedProjectListContainer />;
     case ContentType.BoardList:
       return <BoardList onSelectContents={onSelectContents} />;
     case ContentType.BoardContent:

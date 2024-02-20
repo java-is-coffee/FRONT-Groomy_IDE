@@ -1,25 +1,15 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
+import { ProjectDetails } from "./patchProjectList";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/ide";
 
-interface NewProjectDTO {
-  data: NewProject;
-}
-
-export interface NewProject {
-  projectName: string;
-  memberId: number;
-  language: string;
-  description: string;
-  inviteMembers: number[];
-}
-
 // projectList 가져오는 메서드
-export const postNewProject = async (
-  newProject: NewProject
-): Promise<NewProject | null> => {
+export const getInvitedProjects = async (): Promise<
+  ProjectDetails[] | null
+> => {
+  console.log("projectList fetching...");
   const storedToken = localStorage.getItem("accessToken");
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
@@ -30,15 +20,12 @@ export const postNewProject = async (
       Authorization: `Bearer ${storedToken}`,
     },
   };
-  const request: NewProjectDTO = {
-    data: newProject,
-  };
   try {
-    const response = await axios.post(
-      `${USER_API_URL}/create`,
-      request,
+    const response = await axios.get<ProjectDetails[]>(
+      `${USER_API_URL}/invited-list`,
       config
     );
+    console.log(response.data);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -50,15 +37,18 @@ export const postNewProject = async (
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.log(error);
+      console.error("Error fetching project list:", error.response?.data);
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return postNewProject(newProject);
+          return getInvitedProjects();
         }
       }
     } else {
-      console.error("유효하지 않은 접근입니다. 로그인을 진행해 주세요", error);
+      console.error(
+        "An unexpected error occurred while fetching project list:",
+        error
+      );
     }
 
     return null;

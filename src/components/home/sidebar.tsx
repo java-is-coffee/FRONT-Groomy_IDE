@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { addMember } from "../../redux/reducers/memberReducer";
 import { ContentType } from "../../routes/home";
+
 import { IoIosLogOut } from "react-icons/io";
+import { ConnectWithoutContact } from "@mui/icons-material";
+
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;
@@ -31,13 +34,16 @@ const Sidebar: React.FC<SidebarProps> = ({
   //sidebar 스크롤 따라가게 하기
   window.addEventListener("scroll", function () {
     const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
-    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    if (sidebar) {
+      const scrollPosition =
+        window.scrollY || document.documentElement.scrollTop;
 
-    const topPosition = scrollPosition;
-    if (topPosition > 0) {
-      sidebar.style.top = `${topPosition}px`;
-    } else {
-      sidebar.style.top = `0px`;
+      const topPosition = scrollPosition;
+      if (topPosition > 0) {
+        sidebar.style.top = `${topPosition}px`;
+      } else {
+        sidebar.style.top = `0px`;
+      }
     }
   });
 
@@ -47,6 +53,8 @@ const Sidebar: React.FC<SidebarProps> = ({
     console.log(target);
 
     if (target === "project") onSelectContents(ContentType.ProjectList);
+    if (target === "invited-project")
+      onSelectContents(ContentType.InvitedProjectList);
     if (target === "board") onSelectContents(ContentType.BoardList);
   };
 
@@ -60,7 +68,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   useEffect(() => {
     const fetchMemberData = async () => {
       const hasMemberInfo = await getMemberInfo();
-      console.log(hasMemberInfo);
       if (hasMemberInfo) {
         dispatch(addMember(hasMemberInfo));
       } else {
@@ -105,6 +112,18 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
+            </div>
+          </div>
+          <div
+            className="menu"
+            id="invited-project"
+            onClick={handleMainContent}
+          >
+            <div className="menu-container">
+              <div className="icon">
+                <ConnectWithoutContact />
+              </div>
+              <span>프로젝트 초대</span>
             </div>
           </div>
           <div className="menu" id="board" onClick={handleMainContent}>
