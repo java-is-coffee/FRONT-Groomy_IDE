@@ -15,7 +15,7 @@
   width: 100%;
 }
 
-.oauth-loginBtn {
+.oauth-login-btn {
   display: block;
   width: 100%;
 
@@ -86,7 +86,7 @@
   cursor: pointer;
 }
 
-.resetPassword {
+.reset-password {
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;

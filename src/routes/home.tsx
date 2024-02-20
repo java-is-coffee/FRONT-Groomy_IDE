@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../components/home/sidebar";
-import "../styles/home/home.css";
+import styles from "../styles/home/home.module.css";
 import Nav from "../components/home/navigator";
 import MainContent from "../components/home/mainContent";
 import NewProjectModal from "../components/project/newProjectModal";
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
   };
   return (
     <div>
-      <nav className="nav">
+      <nav className={styles.nav}>
         <Nav
           onChange={handleSidebarToggle}
           sideClose={sideClose}
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
         />
       </nav>
       <NewProjectModal isOpen={isProjectModalOpen} onClose={handleCloseModal} />
-      <div className="container">
+      <div className={styles.container}>
         <aside className={`sidebar ${sideClose ? "closed" : ""}`}>
           <Sidebar
             onSelectContents={handleContentChange}

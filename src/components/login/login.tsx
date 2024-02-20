@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import "../../styles/loginPage/login.css";
+import styles from "../../styles/loginPage/login.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -88,23 +88,23 @@ function LoginComponent() {
   };
 
   return (
-    <div className="login-page">
+    <div className={styles["login-page"]}>
       {/* 로고  */}
-      <div className="logo-position">
+      <div className={styles["logo-position"]}>
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <div className="login-component">
+      <div className={styles["login-component"]}>
         {/* Oauth 로그인 버튼 */}
         <div>
-          <button className="oauth-loginBtn"> 구글로 로그인 </button>
+          <button className={styles["oauth-login-btn"]}> 구글로 로그인 </button>
         </div>
 
         {/* 중앙 분리대 */}
-        <div className="line-separator">
-          <span className="mid-line"></span>
-          <span className="or">or</span>
-          <span className="mid-line"></span>
+        <div className={styles["line-separator"]}>
+          <span className={styles["mid-line"]}></span>
+          <span className={styles["or"]}>or</span>
+          <span className={styles["mid-line"]}></span>
         </div>
 
         {/* 로그인칸 */}
@@ -112,7 +112,7 @@ function LoginComponent() {
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              className="input-box"
+              className={styles["input-box"]}
               name="email"
               id="email"
               placeholder="이메일을 입력하세요."
@@ -123,25 +123,25 @@ function LoginComponent() {
             <br />
             <input
               type="password"
-              className="input-box"
+              className={styles["input-box"]}
               required
               name="password"
               id="password"
               placeholder="비밀번호를 입력하세요."
               onChange={onChangePassword}
             />
-            <button className="basic-btn" type="submit">
+            <button className={styles["basic-btn"]} type="submit">
               <span>로그인</span>
             </button>
           </form>
-          <button className="basic-btn" onClick={goRegister}>
+          <button className={styles["basic-btn"]} onClick={goRegister}>
             <span>회원가입</span>
           </button>
         </div>
 
         {/* 컴포넌트 하단 */}
         <div>
-          <span onClick={goResetPassword} className="resetPassword">
+          <span onClick={goResetPassword} className={styles["reset-password"]}>
             비밀번호 재설정
           </span>
         </div>

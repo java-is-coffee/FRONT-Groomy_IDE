@@ -3,7 +3,7 @@ import CodeEditor from "../components/webIDE/codeEditor/codeEditor";
 import StatusBar from "../components/webIDE/statusBar";
 import CompositeBar from "../components/webIDE/compositeBar";
 
-import "../styles/webIDE/webIDE.css";
+import styles from "../styles/webIDE/webIDE.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
 import SideContainer from "../components/webIDE/sideContainer/sideContainer";
@@ -103,8 +103,8 @@ const WebIDE = () => {
   // test 폴더 구조 주입
   dispatch(setItems(data));
   return (
-    <div className="ide">
-      <div className="composite-bar">
+    <div className={styles.ide}>
+      <div className={styles["composite-bar"]}>
         <CompositeBar />
       </div>
       <div
@@ -127,7 +127,7 @@ const WebIDE = () => {
         />
       )}
       <div
-        className="code-editor"
+        className={styles["code-editor"]}
         style={
           isOpenSide
             ? { width: `calc(100% - ${sideContainerWidth}px - 52px)` }
@@ -136,7 +136,7 @@ const WebIDE = () => {
       >
         <CodeEditor />
       </div>
-      <div className="status-bar">
+      <div className={styles["status-bar"]}>
         <StatusBar />
       </div>
     </div>
