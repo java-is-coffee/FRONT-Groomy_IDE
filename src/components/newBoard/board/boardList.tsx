@@ -86,6 +86,14 @@ const BoardListContainer = ({
       dispatch(patchIsSeacrh(true));
       dispatch(patchPage(null));
     }
+    if (response === null) {
+      dispatch(patchBoardList([]));
+      return (
+        <>
+          <div>검색 결과가 없습니다.</div>
+        </>
+      );
+    }
   };
 
   const searchDataSet = (event: React.FormEvent<HTMLInputElement>) => {

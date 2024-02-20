@@ -41,10 +41,6 @@ export const searchBoardList = async (
       console.log("검색 페이지 불러오기");
       return response.data;
     } else {
-      console.error(
-        "Failed to fetch project list with status code:",
-        response.status
-      );
       return null;
     }
   } catch (error) {
