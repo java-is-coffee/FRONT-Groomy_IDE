@@ -10,6 +10,6 @@ module.exports = {
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "^monaco-editor": "<rootDir>/node_modules/monaco-editor",
-    "react-markdown": "<rootDir>/node_modules/react-markdown",
+   "react-markdown": "react-markdown/react-markdown.min.js",
   },
 };
