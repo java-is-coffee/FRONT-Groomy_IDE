@@ -118,12 +118,12 @@ const WebIDE = () => {
       {isOpenSide ? (
         <div
           ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle${resizing ? " active" : ""}`}
+          className={`resize-handle ${resizing ? "active" : ""}`}
         />
       ) : (
         <div
           ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle closed${resizing ? " active" : ""}`}
+          className={`resize-handle closed ${resizing ? "active" : ""}`}
         />
       )}
       <div
