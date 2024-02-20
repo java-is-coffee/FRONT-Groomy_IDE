@@ -15,6 +15,8 @@ interface WidgetProps {
   };
 }
 
+// Monaco editor contentWidget 커스텀
+// 유저 정보 보이는 위젯
 class ContentWidget implements monaco.editor.IContentWidget {
   private domNode: HTMLElement;
 
@@ -26,7 +28,9 @@ class ContentWidget implements monaco.editor.IContentWidget {
     this.domNode.style.padding = "2px 6px";
     this.domNode.style.borderRadius = "4px";
     this.domNode.style.whiteSpace = "nowrap";
+    this.domNode.style.zIndex = "100"; // 다른 요소 위에 나타나도록 z-index 설정
     this.domNode.style.border = "1px solid #ccc";
+    this.domNode.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
     this.domNode.style.animation = "fadeInOut 1s ease-in-out forwards";
   }
 
@@ -45,7 +49,6 @@ class ContentWidget implements monaco.editor.IContentWidget {
         column: this.props.codeEdit.range.startColumn,
       },
       preference: [
-        //monaco.editor.ContentWidgetPositionPreference.EXACT,
         monaco.editor.ContentWidgetPositionPreference.ABOVE,
         monaco.editor.ContentWidgetPositionPreference.BELOW,
       ],
@@ -66,6 +69,7 @@ class ContentWidget implements monaco.editor.IContentWidget {
   }
 }
 
+// 커서 위치 보여주는 커스텀 위젯
 class CursorWidget implements monaco.editor.IContentWidget {
   private domNode: HTMLElement;
 
@@ -75,11 +79,11 @@ class CursorWidget implements monaco.editor.IContentWidget {
     this.domNode.style.height = "1em"; // Height to match the font size
     this.domNode.style.background = color; // Cursor color
     this.domNode.style.position = "absolute"; // Positioning must be absolute
-    this.domNode.style.whiteSpace = "nowrap";
+    this.domNode.style.zIndex = "100"; // 다른 요소 위에 나타나도록 z-index 설정
   }
 
   getId(): string {
-    return `overlay-user-${this.props.memberId}`;
+    return `overlay-cursor-${this.props.memberId}`;
   }
 
   getDomNode(): HTMLElement {
@@ -101,6 +105,7 @@ class CursorWidget implements monaco.editor.IContentWidget {
   }
 }
 
+// 유저 랜덤색상 부여 메서드
 const getRandomColor = (): string => {
   let color = "#";
   for (let i = 0; i < 3; i++) {
@@ -130,17 +135,20 @@ const useContentWidget = () => {
     props: WidgetProps
   ) => {
     const widgetId: string = `${props.memberId}`;
+    // 위젯 생성된게 없는 경우 빈 위젯 생성
     if (!widgetsRef.current[widgetId]) {
       widgetsRef.current[widgetId] = {
         contentWidget: undefined,
         cursorWidget: undefined,
       };
     }
-    const userNameWidget = widgetsRef.current[widgetId].contentWidget;
-    const curSorWidget = widgetsRef.current[widgetId].cursorWidget;
+
+    const { contentWidget, cursorWidget } = widgetsRef.current[widgetId];
+    // 랜덤 색상
     const color = getRandomColor();
-    if (!userNameWidget || !curSorWidget) {
-      // 위젯 인스턴스가 존재하지 않으면 새로 생성합니다.
+    // 위젯이 undefine인 경우
+    // 위젯 생성후 에디터 인스턴스에 적용
+    if (!contentWidget || !cursorWidget) {
       const newUser = new ContentWidget(props, color);
       const newCursor = new CursorWidget(props, color);
       widgetsRef.current[widgetId].contentWidget = newUser;
@@ -148,19 +156,30 @@ const useContentWidget = () => {
       editorInstance.addContentWidget(newUser);
       editorInstance.addContentWidget(newCursor);
     } else {
-      userNameWidget.updatePosition(props);
-      curSorWidget.updatePosition(props);
-      editorInstance.layoutContentWidget(userNameWidget);
-      editorInstance.layoutContentWidget(curSorWidget);
+      // 위젯이 있는 경우 원래 위젯 삭제
+      editorInstance.removeContentWidget(contentWidget);
+      editorInstance.removeContentWidget(cursorWidget); // Corrected to remove cursor widget
+      // 원래 위젯 위치 업데이트 후
+      contentWidget.updatePosition(props);
+      cursorWidget.updatePosition(props);
+      // 새로운 위젯 적용
+      editorInstance.addContentWidget(contentWidget);
+      editorInstance.addContentWidget(cursorWidget);
     }
 
+    // 언마운트시에 위젯 삭제
     return () => {
-      // 위젯을 제거합니다.
-      if (userNameWidget && curSorWidget) {
-        userNameWidget.updatePosition(props);
-        curSorWidget.updatePosition(props);
-        editorInstance.layoutContentWidget(userNameWidget);
-        editorInstance.layoutContentWidget(curSorWidget);
+      console.log(`Cleaning up widgets for ID: ${widgetId}`);
+      const { contentWidget, cursorWidget } = widgetsRef.current[widgetId];
+
+      if (contentWidget) {
+        editorInstance.removeContentWidget(contentWidget);
+        widgetsRef.current[widgetId].contentWidget = undefined;
+      }
+
+      if (cursorWidget) {
+        editorInstance.removeContentWidget(cursorWidget);
+        widgetsRef.current[widgetId].cursorWidget = undefined;
       }
     };
   };
