@@ -7,11 +7,11 @@ import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { addMember } from "../../redux/reducers/memberReducer";
 import { ContentType } from "../../routes/home";
 
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
+import { setMember } from "../../redux/reducers/memberReducer";
 
 
 type SidebarProps = {
@@ -69,7 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     const fetchMemberData = async () => {
       const hasMemberInfo = await getMemberInfo();
       if (hasMemberInfo) {
-        dispatch(addMember(hasMemberInfo));
+        dispatch(setMember(hasMemberInfo));
       } else {
         console.log("정보 불러오기 오류");
       }

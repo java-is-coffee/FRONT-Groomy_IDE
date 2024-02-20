@@ -5,7 +5,6 @@ import getLanguageIcon from "./language";
 import {
   CodeDetails,
   removeCodeTab,
-  resetCurEditingCode,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 
@@ -21,9 +20,12 @@ const CodeTab = () => {
     (state: RootState) => state.editingCode.codeTabs
   );
   // 선택한 탭 닫기
-  const closeTab = (id: string) => {
+  const closeTab = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: string
+  ) => {
+    event.stopPropagation(); // 버블링을 막기 위해 호출
     dispatch(removeCodeTab(id));
-    dispatch(resetCurEditingCode());
   };
   // 탭 클릭으로 전환
   const handleTabSelect = (code: CodeDetails) => {
@@ -40,7 +42,10 @@ const CodeTab = () => {
           >
             {getLanguageIcon(tab.name.split(".")[1])}
             <span>{`${tab.name}`}</span>
-            <div className="tab-close" onClick={() => closeTab(tab.id)}>
+            <div
+              className="tab-close"
+              onClick={(event) => closeTab(event, tab.id)}
+            >
               <Close />
             </div>
           </div>

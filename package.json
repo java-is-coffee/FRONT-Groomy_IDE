@@ -31,14 +31,19 @@
     "react-router-dom": "^6.22.0",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "y-monaco": "^0.1.5",
+    "y-websocket": "^1.5.3",
+    "yjs": "^13.6.12"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts --max-old-space-size=4096 build",
-    "test": "jest",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired --max-old-space-size=4096 build",
+    "test": "react-app-rewired jest",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -60,8 +65,12 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/sockjs-client": "^1.5.4",
+    "@types/stompjs": "^2.3.9",
     "identity-obj-proxy": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
+    "monaco-editor-webpack-plugin": "^7.1.0",
+    "react-app-rewired": "^2.2.1",
     "ts-jest": "^29.1.2"
   },
   "transformIgnorePatterns": [

@@ -1,4 +1,5 @@
 import { VscFiles } from "react-icons/vsc";
+import { SiSlideshare } from "react-icons/si";
 import { GoCommentDiscussion } from "react-icons/go";
 import { GiBlackBook } from "react-icons/gi";
 import "../../../styles/webIDE/compositeBar.css";
@@ -31,6 +32,9 @@ const ActionContainer = () => {
         break;
       case "chat":
         dispatchOptions(IdeOptionType.Chat);
+        break;
+      case "live-share":
+        dispatchOptions(IdeOptionType.LiveShare);
         break;
       default:
         dispatchOptions(IdeOptionType.File);
@@ -73,6 +77,15 @@ const ActionContainer = () => {
         onClick={changeOption}
       >
         <GoCommentDiscussion size={"24px"} />
+      </div>
+      <div
+        className={`action-option ${
+          selectedOption === IdeOptionType.LiveShare ? "selected" : ""
+        }`}
+        id="live-share"
+        onClick={changeOption}
+      >
+        <SiSlideshare size={"24px"} />
       </div>
     </div>
   );
