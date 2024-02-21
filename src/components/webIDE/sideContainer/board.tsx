@@ -1,4 +1,3 @@
-import BoardContent from "../../newBoard/board/boardContent";
 import BoardListContainer from "../../newBoard/board/boardList";
 
 const Board = () => {

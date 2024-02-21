@@ -1,5 +1,4 @@
 import axios from "axios";
-import React from "react";
 
 const BASE_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/email/verify";
