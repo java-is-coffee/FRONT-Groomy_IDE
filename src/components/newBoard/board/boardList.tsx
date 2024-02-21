@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../../../styles/project/projectListContainer.css";
 import "../../../styles/board/board.css";
 import BoardItem from "./boardItem";
 import { ContentType } from "../../../pages/homePage";

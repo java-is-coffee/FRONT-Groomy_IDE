@@ -1,6 +1,4 @@
 import React from "react";
-
-import "../../styles/project/projectCard.css";
 import { ProjectDetails } from "../../api/project/patchProjectList";
 import ProjectCardDropdown from "./dropdown/projectCardDropdown";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +8,8 @@ import {
 } from "../../api/project/postPerticipateProject";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
+
+import projectCardStyles from "./projectCard.module.css";
 
 type projectProps = {
   projectDetails: ProjectDetails;
@@ -49,25 +49,40 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
     fetchAcceptProject();
   };
   return (
-    <div className="project-card" id={projectDetails.projectId.toString()}>
-      <div className="project-header">
-        <span className="project-title">{projectDetails.projectName}</span>
+    <div
+      className={projectCardStyles[`project-card`]}
+      id={projectDetails.projectId.toString()}
+    >
+      <div className={projectCardStyles[`project-header`]}>
+        <span className={projectCardStyles[`project-title`]}>
+          {projectDetails.projectName}
+        </span>
         <ProjectCardDropdown projectId={projectDetails.projectId} />
       </div>
-      <span className="project-language" style={{ backgroundColor: color }}>
+      <span
+        className={projectCardStyles[`project-language`]}
+        style={{ backgroundColor: color }}
+      >
         {projectDetails.language}
       </span>
-      <div className="project-description">{projectDetails.description}</div>
-      <div className="project-created-time">{projectDetails.createdDate}</div>
+      <div className={projectCardStyles[`project-description`]}>
+        {projectDetails.description}
+      </div>
+      <div className={projectCardStyles[`project-created-time`]}>
+        {projectDetails.createdDate}
+      </div>
       {type === "project" ? (
         <button
-          className="project-action"
+          className={projectCardStyles[`project-action`]}
           onClick={() => nav(`/code-editor/${projectDetails.projectId}`)}
         >
           <span>이동하기</span>
         </button>
       ) : (
-        <button className="project-action" onClick={handleAcceptInvite}>
+        <button
+          className={projectCardStyles[`project-action`]}
+          onClick={handleAcceptInvite}
+        >
           <span>참여하기</span>
         </button>
       )}

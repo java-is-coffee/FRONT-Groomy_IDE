@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/project/projectListContainer.css";
 import ProjectCard from "./projectCard";
-
 import { ProjectDetails } from "../../api/project/patchProjectList";
 import { getInvitedProjects } from "../../api/project/getInvitedProjectList";
+
+import projectListStyles from "./projectListContainer.module.css";
 
 const InvitedProjectListContainer: React.FC = () => {
   const [invitedProjects, setInvitedProjects] = useState<
@@ -28,7 +28,7 @@ const InvitedProjectListContainer: React.FC = () => {
     console.log();
   }, [invitedProjects]);
   return (
-    <div className="project-list">
+    <div className={projectListStyles[`project-list`]}>
       {invitedProjects &&
         invitedProjects.map((project) => (
           <ProjectCard
