@@ -1,7 +1,8 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
-import "../../../styles/project/dropdown/stackDropdown.css";
+
+import stackDropdownStyles from "./stackDropdown.module.css";
 
 interface Option {
   lang: string;
@@ -49,16 +50,16 @@ const StackDropdown: React.FC<StackDropdownProps> = ({
   };
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className={stackDropdownStyles.dropdown} ref={dropdownRef}>
       <button
-        className="dropdown-button"
+        className={stackDropdownStyles[`dropdown-button`]}
         onClick={toggleDropdown}
         type="button"
       >
         {selectedOption ? (
-          <div className="stack-container">
+          <div className={stackDropdownStyles[`stack-container`]}>
             <div
-              className="stack-icon"
+              className={stackDropdownStyles[`stack-icon`]}
               style={{ color: "white", backgroundColor: selectedOption.color }}
             >
               {selectedOption.icon}
@@ -68,7 +69,7 @@ const StackDropdown: React.FC<StackDropdownProps> = ({
         ) : (
           "스택을 선택하세요"
         )}
-        <span className="dropdown-arrow">
+        <span className={stackDropdownStyles[`dropdown-arrow`]}>
           {isOpen ? (
             <IoIosArrowUp size={"20px"} />
           ) : (
@@ -77,18 +78,18 @@ const StackDropdown: React.FC<StackDropdownProps> = ({
         </span>
       </button>
       {isOpen && (
-        <ul className="dropdown-menu">
+        <ul className={stackDropdownStyles[`dropdown-menu`]}>
           {stackOptions.map((option) => (
             <div
               key={option.lang}
-              className="stack-item-container"
+              className={stackDropdownStyles[`stack-item-container`]}
               onClick={() => {
                 handleOptionClick(option);
                 onSelectStack(option.lang);
               }}
             >
               <div
-                className="stack-icon"
+                className={stackDropdownStyles[`stack-icon`]}
                 style={{ color: "white", backgroundColor: option.color }}
               >
                 {option.icon}
