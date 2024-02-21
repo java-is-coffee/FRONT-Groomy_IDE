@@ -5,15 +5,7 @@ import Nav from "../components/home/navigator";
 import MainContent from "../components/home/mainContent";
 import NewProjectModal from "../components/project/newProjectModal";
 import { useNavigate } from "react-router-dom";
-
-export enum ContentType {
-  ProjectList = "project-list",
-  InvitedProjectList = "invited-project",
-  BoardList = "board-list",
-  BoardContent = "board-content",
-  BoardWrite = "board-write",
-  Chat = "chat",
-}
+import { ContentType } from "../enum/mainOptionType";
 
 const Home: React.FC = () => {
   const move = useNavigate();
@@ -27,6 +19,7 @@ const Home: React.FC = () => {
   const [curContent, setCurContent] = useState<ContentType>(
     ContentType.ProjectList
   );
+
   // 메인 컨텐츠 handler
   const handleContentChange = (content: ContentType) => {
     setCurContent((prevContent) => {
@@ -85,10 +78,7 @@ const Home: React.FC = () => {
           />
         </aside>
         <div className={`main-content ${sideClose ? "wide" : ""}`}>
-          <MainContent
-            curContent={curContent}
-            onSelectContents={handleContentChange}
-          />
+          <MainContent curContent={curContent} />
         </div>
       </div>
     </div>

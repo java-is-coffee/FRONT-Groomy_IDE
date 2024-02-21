@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../styles/project/projectListContainer.css";
 import "../../../styles/board/board.css";
 import BoardItem from "./boardItem";
-import { ContentType } from "../../../routes/home";
+import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import {
@@ -20,6 +20,9 @@ import styled from "./boardList.module.css";
 import { searchBoardList } from "../../../api/board/searchBoardList";
 import useBoardHooks from "../../../hooks/board/boardHook";
 import SeachPaging from "./searchPaging";
+import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
+import IdeOptionType from "../../../enum/ideOptionType";
+import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 // import { Pagination } from "@mui/material";
 
 export enum SearchCompleted {
@@ -28,11 +31,7 @@ export enum SearchCompleted {
   NoCompleted = "no-completed",
 }
 
-const BoardListContainer = ({
-  onSelectContents,
-}: {
-  onSelectContents: (content: ContentType) => void;
-}) => {
+const BoardListContainer = () => {
   const accessToken = localStorage.getItem("accessToken");
   const boardList = useSelector((state: RootState) => state.board.boardList);
   // const isEdited = useSelector((state: RootState) => state.board.isEdited);
@@ -66,12 +65,14 @@ const BoardListContainer = ({
       dispatch(patchContentId(fetchContentId));
       boardHooks.updateCommentList(fetchContentId);
 
-      onSelectContents(ContentType.BoardContent);
+      dispatch(setIdeOption(IdeOptionType.BoardContent));
+      dispatch(setMainOption(ContentType.BoardContent));
     }
     //타겟 id가 존재하지 않는다면 새로운 게시글 이라는뜻.
     else {
       dispatch(patchContent(null));
-      onSelectContents(ContentType.BoardWrite);
+      dispatch(setIdeOption(IdeOptionType.BoardWrite));
+      dispatch(setMainOption(ContentType.BoardWrite));
     }
   };
 

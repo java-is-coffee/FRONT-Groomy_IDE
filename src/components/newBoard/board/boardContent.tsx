@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../../styles/project/projectListContainer.css";
 import "../../../styles/board/board.css";
 import "../../../styles/board/boardDropBox.css";
-import { ContentType } from "../../../routes/home";
+import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -22,12 +22,11 @@ import MDEditor from "@uiw/react-md-editor";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { CiBookmarkMinus } from "react-icons/ci";
 import styled from "./boardContent.module.css";
+import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
+import IdeOptionType from "../../../enum/ideOptionType";
+import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 
-const BoardContent = ({
-  onSelectContents,
-}: {
-  onSelectContents: (content: ContentType) => void;
-}) => {
+const BoardContent = () => {
   const curContent = useSelector((state: RootState) => state.board.content);
   const userInfo = useSelector((state: RootState) => state.member.member);
   const beforePageIndex = useSelector(
@@ -56,14 +55,18 @@ const BoardContent = ({
     if (beforePageIndex) {
       boardHooks.updateBoardList(beforePageIndex);
       dispatch(patchContent(null));
-      onSelectContents(ContentType.BoardList);
+      dispatch(setIdeOption(IdeOptionType.BoardList));
+      dispatch(setMainOption(ContentType.BoardList));
+      // onSelectContents(ContentType.BoardList);
     }
   };
 
   const handleEdit = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     dispatch(patchIsEdited(true));
-    onSelectContents(ContentType.BoardWrite);
+    dispatch(setIdeOption(IdeOptionType.BoardWrite));
+    dispatch(setMainOption(ContentType.BoardWrite));
+    // onSelectContents(ContentType.BoardWrite);
   };
 
   const hadleDelete = async (event: React.MouseEvent<HTMLDivElement>) => {
@@ -75,7 +78,7 @@ const BoardContent = ({
         await removeBoard(curContent.boardId);
         dispatch(patchContent(null));
         dispatch(patchBoardList(null));
-        onSelectContents(ContentType.BoardList);
+        // onSelectContents(ContentType.BoardList);
       }
     }
   };
