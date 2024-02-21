@@ -20,7 +20,7 @@ const chatReducer = createSlice({
     },
     removeChat(state, action: PayloadAction<number>) {
       if (state.chat) { // Handle missing chat gracefully
-        state.chat = state.chat.filter((chat) => chat.id !== action.payload);
+        //state.chat = state.chat.filter((chat) => chat.id !== action.payload);
       }
     },
   },

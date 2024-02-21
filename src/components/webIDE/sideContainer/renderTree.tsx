@@ -75,7 +75,7 @@ const RenderTree = () => {
     openNode,
   } = useTree(); // 커스텀 훅 사용
 
-  const { stompClient, connect, subscribe, unsubscribe, sendMessage } =
+  const { globalStompClient, connect, subscribe, unsubscribe, sendMessage } =
     useWebSocket();
 
   // 파일 추가 취소 메서드
@@ -340,9 +340,8 @@ const RenderTree = () => {
 
   // 구독된 주소로부터 받은 메세지 처리
   useEffect(() => {
-    if (!stompClient) {
-      console.log("code editor connection");
-      connect("ws/project");
+    if(!globalStompClient){
+      return;
     }
 
     const subDestination = `/projectws/${projectId}/files`;
@@ -367,7 +366,7 @@ const RenderTree = () => {
     return () => {
       unsubscribe(subDestination);
     };
-  }, [stompClient, projectId, connect, subscribe, unsubscribe, dispatch]);
+  }, [globalStompClient, projectId, connect, subscribe, unsubscribe, dispatch]);
 
   return (
     <div ref={treeViewRef}>

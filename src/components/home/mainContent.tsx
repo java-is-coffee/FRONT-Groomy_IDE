@@ -20,8 +20,8 @@ const MainContent: React.FC<MainContentProps> = ({
   switch (curContent) {
     case ContentType.ProjectList:
       return <ProjectListContainer />;
-    case ContentType.Chat:
-      return <ChatComponents projectId={""} token={""} />
+    // case ContentType.Chat:
+    //   return <ChatComponents projectId={""} token={""} />
     case ContentType.InvitedProjectList:
       return <InvitedProjectListContainer />;
     case ContentType.BoardList:

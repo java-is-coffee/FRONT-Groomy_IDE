@@ -9,7 +9,7 @@ import { RootState } from "../redux/store/store";
 const WebIDE = () => {
   const dispatch = useDispatch();
   const member = useSelector((state: RootState) => state.member.member);
-  const { stompClient, connect, disconnect } = useWebSocket();
+  const { globalStompClient, connect, disconnect } = useWebSocket();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
@@ -30,14 +30,17 @@ const WebIDE = () => {
       fetchMemberInfo();
     }
     // 웹소켓 연결이 안되어있는 경우 연결
-    if (!stompClient) {
-      connect("ws/project");
+     if(!globalStompClient){
+      const getConnection = async() => {
+        await connect("ws/project");
+      }
+      getConnection();
     }
 
     return () => {
       disconnect();
     };
-  }, [member, dispatch, connect, disconnect, stompClient]);
+  }, [member, dispatch, connect, disconnect, globalStompClient]);
   return <IdePage />;
 };
 

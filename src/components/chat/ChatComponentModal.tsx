@@ -3,6 +3,13 @@ import "../../styles/chat/chat.css";
 
 import { IoIosSend, IoIosContact } from "react-icons/io";
 import { fetchChatLogs } from "../../api/chat/fetchChatLogs";
+import { Input, IconButton } from "@mui/material";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
+import chatStyles from "./chat.module.css"
+import SendIcon from '@mui/icons-material/Send';
+import useWebSocket from "../../hooks/useWebSocket";
+import { FaCircleArrowUp } from "react-icons/fa6";
 
 type Message = {
   id: number;
@@ -13,41 +20,47 @@ type Message = {
 };
 
 type ChatComponentsProps = {
-  projectId: string;
-  token: string;
+  projectId: string | undefined;
 }
 
 
-interface ChatLog {
-  id: number; 
+interface IChatDTO {
+  memberId: number;
+  name?: string;
+  email: string;
   message: string;
+  createdTime?: string;
+}
+
+interface IChatDetail {
+  user_icon: JSX.Element;
+  id: string;
   name: string;
   email: string;
+  message: string;
+  createdTime: string;
 }
 
 const ChatComponentModal: React.FC<ChatComponentsProps> = ({
   projectId, 
-  token, 
 }) => {
-  const [newMessage, setNewMessage] = useState<string>("");
+  const curMember = useSelector((state:RootState) => state.member.member);
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [messages, setMessages] = useState<Message[]>([]);
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
+  const {globalStompClient, connect, subscribe, unsubscribe, sendMessage} = useWebSocket();
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    async function loadChatLogs() {
+    const loadChatLogs = async() => {
       try {
-        const response = await fetchChatLogs(projectId, 0);
+        if(!projectId)
+          return;
+        const response = await fetchChatLogs(projectId, 1);
         if (response) {
-          const formattedLogs = response.map((log: ChatLog) => ({
-            id: Math.random(),
-            text: log.message,
-            user_name: log.name,
-            user_icon: <IoIosContact size={32} />,
-            is_mine: log.email === "your.email@example.com",
-          }));
-          setMessages(formattedLogs);
+          console.log(response);
+          //setMessages(formattedLogs);
         } else {
           console.log("No chat logs were fetched.");
         }
@@ -56,106 +69,202 @@ const ChatComponentModal: React.FC<ChatComponentsProps> = ({
       }
     }
     loadChatLogs();
-  }, [projectId, token]);
+  }, [projectId]);
   
 
   // 채팅 메시지 전송
-  const handleSendMessage = async () => {
-    if (!newMessage.trim()) return; 
-    try {
-      const updatedMessages = [...messages, {
-        id: Date.now(), 
-        text: newMessage,
-        user_name: "나", 
-        user_icon: <IoIosContact size={32} />, 
-        is_mine: true 
-      }];
-      setMessages(updatedMessages); 
-      setNewMessage(''); 
-      endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' }); 
-    } catch (error) {
-      console.error("Failed to send message:", error);
-    }
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
   };
 
-  // Enter 키 이벤트 처리
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+  const handleSendMessage = () => {
+    console.log("message send");
+    if(!curMember){
+      console.log("새로고침 진행해주세요");
+      return;
     }
-  };
+    const sendMsg : IChatDTO = {
+      memberId : curMember.memberId,
+      email : curMember.email,
+      message : inputValue,
+    }
 
-  if (!isModalOpen) return null;
+    const message = {
+      data : sendMsg,
+    }
+    
+    const dst = `/app/project-chat/${projectId}/send`;
+    console.log(message);
+
+    sendMessage(dst, message);
+
+    setInputValue("");
+  }
+
+  // // Enter 키 이벤트 처리
+  // const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  //   if (e.key === 'Enter' && !e.shiftKey) {
+  //     e.preventDefault();
+  //     handleSendMessage();
+  //   }
+  // };
+
+  // if (!isModalOpen) return null;
 
   // 자동 스크롤
   // useEffect(() => {
   //   endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
   // }, [messages]);
 
-  const messageList = (
-    <div className="chat_messages_container">
-      {messages.map((message) => (
-        <div key={message.id} className={`chat_message ${message.is_mine ? 'mine' : 'others'}`}>
-          <div className="chat_user_info">
-            {message.is_mine ? (
-              <>
-                <div className="chat_user_name">{message.user_name}</div>
-                <div className="chat_user_icon">{message.user_icon}</div>
-              </>
-            ) : (
-              <>
-                <div className="chat_user_icon">{message.user_icon}</div>
-                <div className="chat_user_name">{message.user_name}</div>
-              </>
-            )}
-          </div>
-          <div className="chat_message_content">
-            <p className="chat_text">{message.text}</p>
-          </div>
-        </div>
-        ))}
-      <div ref={endOfMessagesRef} />
-    </div>
-  );
+  // const messageList = (
+  //   <div className={chatStyles.modal}>
+  //     {messages.map((message) => (
+  //       <div key={message.id} className={`{chatStyles.chat_message} ${message.is_mine ? 'mine' : 'others'}`}>
+  //         <div className="chat_user_info">
+  //           {message.is_mine ? (
+  //             <>
+  //               <div className={chatStyles.chat}>{message.user_name}</div>
+  //               <div className={chatStyles.}>{message.user_icon}</div>
+  //             </>
+  //           ) : (
+  //             <>
+  //               <div className={chatStyles.}>{message.user_icon}</div>
+  //               <div className={chatStyles.chat_user_name}>{message.user_name}</div>
+  //             </>
+  //           )}
+  //         </div>
+  //         <div className={chatStyles.chat_message_content}>
+  //           <p className={chatStyles.chat_text}>{message.text}</p>
+  //         </div>
+  //       </div>
+  //       ))}
+  //     <div ref={endOfMessagesRef} />
+  //   </div>
+  // );
 
-  const handleCloseModal = () => setIsModalOpen(false);
+  // const handleCloseModal = () => setIsModalOpen(false);
 
+const test = [
+  {
+    id: 1,
+      "name": "박상현",
+      "email": "aaa@naver.com",
+      "message": "테스트",
+      "createdTime": "2024-02-07T18:16:50.388295"
+  },
+  {
+    id: 2,
+      "name": "박상현",
+      "email": "aaa@naver.com",
+      "message": "테스트",
+      "createdTime": "2024-02-07T18:16:49.794555"
+  },
+  {
+    id: 3,
+      "name": "박상현",
+      "email": "aaa@naver.com",
+      "message": "테스트",
+      "createdTime": "2024-02-07T18:16:49.196229"
+  },
+  {
+    id: 4,
+      "name": "박상현",
+      "email": "aaa@naver.com",
+      "message": "테스트",
+      "createdTime": "2024-02-07T18:16:48.35639"
+  },
+  {
+    id: 5,
+      "name": "박상현",
+      "email": "aaa@naver.com",
+      "message": "테스트",
+      "createdTime": "2024-02-07T18:16:28.313195"
+  }
+]
 
+  useEffect(() => {
+    if(!globalStompClient){
+      return;
+    }
+
+    const subUrl = `/projectws/${projectId}/messages`;
+    console.log(projectId);
+    subscribe(subUrl, (message) => {
+      console.log(message);
+    })
+
+    return () => {unsubscribe(subUrl);}
+
+  },[projectId, subscribe, globalStompClient]);
 
   return (
-    <div className="modal">
-      <div className="all">
-        <div className="chat_header_container">
-          <div className="chat_project_name">프로젝트 - A</div>
-          <button className="chat_close_button" onClick={handleCloseModal}>&times;</button>
+    <div className={chatStyles.modal}>
+      <div className={chatStyles.chat_header_container}>
+          <div className={chatStyles.chat_project_name}>프로젝트 - A</div>
+          {/* <button className={chatStyles.chat_close_button} onClick={handleCloseModal}>&times;</button> */}
         </div>
-        <div className="chat_messages_container">
-          {messages.map((message) => (
-            <div key={message.id} className={`chat_message ${message.is_mine ? 'mine' : 'others'}`}>
-              <div className="chat_user_info">
-                <div className="chat_user_name">{message.user_name}</div>
-                <div className="chat_user_icon">{message.user_icon}</div>
-              </div>
-              <div className="chat_message_content">
-                <p className="chat_text">{message.text}</p>
-              </div>
-            </div>
-          ))}
+        <div className={chatStyles.chat_messages_container}>
+        {curMember ? (
+            test.map((message) => (
+                <div
+                  key={message.id}
+                  className={`${chatStyles.chat_message} ${
+                    curMember.name === message.name ? "mine" : "others"
+                  }`}
+                >
+                  <div className={chatStyles.chat_user_info}>
+                    <span className={chatStyles.chat_user_name}>
+                      {message.name}
+                    </span>
+                    <span className={chatStyles.chat_user_email}>
+                      {message.email}
+                    </span>
+                    {/* <div className={chatStyles.chat_user_icon}>{message.user_icon}</div> */}
+                  </div>
+                  <div className={chatStyles.chat_message_content}>
+                    <p className={chatStyles.chat_text}>{message.message}</p>
+                  </div>
+                  <div>
+                    <span className={chatStyles.chat_user_message}>
+                      {message.message}
+                    </span>
+                  </div>
+                  <div>
+                    <span className={chatStyles.chat_user_createdTime}>
+                      {message.createdTime}
+                    </span>
+                  </div>
+                </div>
+            ))
+          ) : (
+            <div>멤버 불러오기 오류</div>
+          )}
           <div ref={endOfMessagesRef} />
         </div>
-        <div className="chat_input_container">
-          <textarea
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="메시지를 입력하세요"
+        <form
+          className={chatStyles.chat_input_container}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSendMessage();
+          }}
+        >
+          <Input
+            size="small"
+            placeholder={"채팅을 입력하세요"}
+            autoFocus
+            required
+            value={inputValue}
+            onChange={handleInputChange}
+            style={{
+              width: "100%",
+              fontSize: "14px", // 글꼴 크기를 줄입니다.
+            }}
           />
-          <button className="chat_input_button" onClick={handleSendMessage}>
-            <IoIosSend />
-          </button>
-        </div>
-      </div>
+          <IconButton aria-label="send-btn" type="submit">
+            <FaCircleArrowUp />
+          </IconButton>
+        </form>
     </div>
   );
 };

@@ -15,7 +15,7 @@
 }
 
 /* 전체 */
-.all{
+.all {
   width: 100%;
   background-color: #F0F6FB;
   overflow: auto; 
@@ -37,21 +37,21 @@
   border: 1px solid #d1cfcf;
   justify-content: space-between; 
   align-items: center; 
-  padding: 10px; 
+  padding: 15px; 
   background-color: white;
   margin: 0 auto;
 }
 
 .chat_project_name {
-  font-size: 1em; 
-  font-weight: 600;
-  margin-left: 10px;
-  margin-right: 10px;
+  font-size: 1.5em; 
+  font-weight: bold;
+  margin-left: 15px;
+  margin-right: 15px;
   color: rgb(0, 0, 0);
 }
 
 .chat_close_button { 
-  font-size: 1em; 
+  font-size: 1.5em; 
   cursor: pointer;
   border: none;
   background: none;
@@ -70,7 +70,7 @@
   width: 100%;
   height: 100vh;
   text-align: justify;
-  padding: 30px 10px 10px 10px; 
+  padding: 15px 20px 15px 20px; 
   border-right: 1px solid #d1cfcf;
   border-left: 1px solid #d1cfcf;
   box-sizing: border-box;
@@ -162,11 +162,11 @@
   bottom: 0; 
   left: 0;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #F0F6FB;
   border: 1px solid #d1cfcf; 
   box-sizing: border-box;
   z-index: 100; 
-  text-align: flex-end;
+  text-align: center
 }
 
 .chat_input_button{

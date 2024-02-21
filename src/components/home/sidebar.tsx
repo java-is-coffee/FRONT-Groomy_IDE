@@ -40,7 +40,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     if (sidebar) {
       const scrollPosition =
         window.scrollY || document.documentElement.scrollTop;
-
       const topPosition = scrollPosition;
       if (topPosition > 0) {
         sidebar.style.top = `${topPosition}px`;

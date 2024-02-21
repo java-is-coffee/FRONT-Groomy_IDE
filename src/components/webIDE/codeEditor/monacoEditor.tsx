@@ -46,7 +46,7 @@ const MonacoEditor = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // 웹소켓 커스텀 훅 사용
-  const { stompClient, connect, subscribe, sendMessage } = useWebSocket();
+  const { globalStompClient, connect, subscribe, sendMessage } = useWebSocket();
   const { manageWidget } = useContentWidget();
 
   // yjs pair editing
@@ -202,8 +202,8 @@ const MonacoEditor = () => {
 
   // code 주소 구독(cursor & user Widget) 메세지 적용
   useEffect(() => {
-    if (!stompClient) {
-      connect("ws/project");
+    if(!globalStompClient){
+      return;
     }
 
     if (!curFile || !editorInstance) {
@@ -226,7 +226,6 @@ const MonacoEditor = () => {
       }
     });
   }, [
-    stompClient,
     projectId,
     curFile,
     editorInstance,
@@ -234,6 +233,7 @@ const MonacoEditor = () => {
     manageWidget,
     member,
     subscribe,
+    globalStompClient
   ]);
 
   return (

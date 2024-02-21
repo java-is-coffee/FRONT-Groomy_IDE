@@ -7,6 +7,8 @@ import ideOptionReducer from "../reducers/ide/ideOptionReducer";
 import ideSideContainerReducer from "../reducers/ide/ideSideContainerReducer";
 import fileSystemReducer from "../reducers/ide/fileSystemReducer";
 import editingCodeReducer from "../reducers/ide/editingCodeReducer";
+import socketReducer from "../reducers/socketReducer";
+
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +19,7 @@ export const store = configureStore({
     ideSideContainer: ideSideContainerReducer,
     fileSystem: fileSystemReducer,
     editingCode: editingCodeReducer,
+    socket: socketReducer
   },
 });
 

@@ -2,89 +2,109 @@ import { useState, useCallback, useRef } from "react";
 import SockJS from "sockjs-client";
 import Stomp, { Client, Subscription } from "stompjs";
 import { patchAccessToken } from "../api/auth/patchAccessToken";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from './../redux/store/store';
+import { setSocket } from "../redux/reducers/socketReducer";
 
-let globalStompClient: Client | null = null;
+
+
 let connectionCount = 0;
 
+const fetchToken = async() => {
+  const result = await patchAccessToken();
+  if(!result){
+    console.log("커낵션 에러 재로그인이 필요합니다.");
+    return false;
+  }else{
+    console.log("토큰 패치" + result);
+    return true;
+  }
+}
+
 const useWebSocket = () => {
-  const [stompClient, setStompClient] = useState<Client | null>(
-    globalStompClient
-  );
-
+  const isStampClient = useSelector((state:RootState) => state.socket.socketConnect);
   const subscriptions = useRef(new Map()).current;
+  const dispatch = useDispatch();
 
-  const connect = useCallback((url: string) => {
-    connectionCount++; // 연결을 설정할 때마다 카운트 증가
+  const connect = useCallback(async(url: string) => {
+    connectionCount++; 
     // 이미 연결된 클라이언트가 있으면 재사용
-    if (globalStompClient && globalStompClient.connected) {
-      setStompClient(globalStompClient);
+    const tokenUpdated : boolean = await fetchToken();
+    if (!tokenUpdated) {
       return;
     }
+
+    const storedToken = localStorage.getItem("accessToken")?.trim();
+    const config = {
+      Authorization: storedToken
+    }
+    
     const BaseUrl =
       "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";
     const socket = new SockJS(`${BaseUrl}/${url}`);
     const client = Stomp.over(socket);
+    
     // client.debug = () => {};
-    patchAccessToken();
-    const storedToken = localStorage.getItem("accessToken")?.trim();
     client.connect(
-      { Authorization: `${storedToken}` },
+      config,
       (frame) => {
         console.log("Connected: " + frame);
-        globalStompClient = client; // 전역 변수에 저장
-        setStompClient(client);
+        dispatch(setSocket(false)) ;
       },
       (error) => {
         console.log(error);
+        connect(url);
       }
     );
   }, []);
 
   const disconnect = useCallback(() => {
     connectionCount--;
-    if (connectionCount === 0 && stompClient) {
-      stompClient.disconnect(() => {
+    if (connectionCount === 0 && globalStompClient) {
+      globalStompClient.disconnect(() => {
         console.log("Disconnected");
-        globalStompClient = null;
+        dispatch(setSocket(false));
       });
     }
-    if (stompClient) {
-      stompClient.disconnect(() => {
+    if (globalStompClient) {
+      globalStompClient.disconnect(() => {
         console.log("Disconnected");
-        globalStompClient = null; // 전역 변수를 null로 설정
-        setStompClient(null);
+        dispatch(setSocket(false)); // 전역 변수를 null로 설정
       });
     }
-  }, [stompClient]);
+  }, [globalStompClient]);
 
   const subscribe = useCallback(
     (
       destination: string,
       callback: (message: any) => void
     ): Subscription | null => {
-      if (!stompClient) return null;
-
-      // 이미 존재하는 구독 확인
-      if (subscriptions.has(destination)) {
-        return subscriptions.get(destination);
+      if(!globalStompClient){
+        return null;
       }
-      const subscription = stompClient.subscribe(destination, (message) => {
-        callback(message);
-      });
-      // 구독 객체 생성
-      const subscriptionObject = {
-        id: subscription.id,
-        unsubscribe: () => {
-          subscription.unsubscribe();
-          subscriptions.delete(destination); // 구독 해제 시 맵에서 제거
-        },
-      };
+        console.log("sub" + destination);
+        // 이미 존재하는 구독 확인
+        if (subscriptions.has(destination)) {
+          console.log("이미 존재");
+          return subscriptions.get(destination);
+        }
+        const subscription = globalStompClient.subscribe(destination, (message) => {
+          callback(message);
+        });
+        // 구독 객체 생성
+        const subscriptionObject = {
+          id: subscription.id,
+          unsubscribe: () => {
+            subscription.unsubscribe();
+            subscriptions.delete(destination); // 구독 해제 시 맵에서 제거
+          },
+        };
 
-      subscriptions.set(destination, subscriptionObject);
-
+        subscriptions.set(destination, subscriptionObject);
+  
       return subscriptionObject;
     },
-    [stompClient, subscriptions]
+    [globalStompClient, subscriptions]
   );
 
   const unsubscribe = useCallback(
@@ -105,16 +125,16 @@ const useWebSocket = () => {
 
   const sendMessage = useCallback(
     (destination: string, body: any, headers = {}) => {
-      if (!stompClient) {
+      if (!globalStompClient) {
         return;
       }
-      stompClient.send(destination, headers, JSON.stringify(body));
+      globalStompClient.send(destination, headers, JSON.stringify(body));
     },
-    [stompClient]
+    [globalStompClient]
   );
 
   return {
-    stompClient,
+    globalStompClient,
     connect,
     disconnect,
     subscribe,

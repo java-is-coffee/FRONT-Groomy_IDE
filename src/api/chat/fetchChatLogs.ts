@@ -7,7 +7,6 @@ const BaseURL = "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:80
 
 // 채팅 로그 데이터 인터페이스
 export interface ChatLog {
-  id: number;
   name: string;
   email: string;
   message: string;
@@ -16,9 +15,7 @@ export interface ChatLog {
 
 // 채팅 로그를 가져오는 비동기 함수
 export const fetchChatLogs = async (
-
   projectId: string,
-
   paging: number,
 ): Promise<ChatLog[] | null> => {
   try {
@@ -33,9 +30,9 @@ export const fetchChatLogs = async (
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
+  const chatLog: ChatLog[] = response.data;
   if (response.status === 200 && response.data) {
-    return response.data as ChatLog[];
+    return chatLog;
     } else {
       return null;
     } 
@@ -45,6 +42,7 @@ export const fetchChatLogs = async (
       if(error.response?.status === 401){
         console.log("Access token expired. Attempting to refresh...");
         const isTokenRefeshed = await patchAccessToken();
+        fetchChatLogs(projectId, paging);
         if(isTokenRefeshed){
           fetchChatLogs(projectId, paging);
         }

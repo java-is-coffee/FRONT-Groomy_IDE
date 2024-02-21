@@ -1,7 +1,7 @@
 
 
 import React, { useState } from 'react';
-import ChatComponents from '../components/chat/ChatComponentModal'; 
+import ChatComponentModal from '../components/chat/ChatComponentModal'; 
 import './chat.css';
 
 const Chat: React.FC = () => {
@@ -12,7 +12,7 @@ const Chat: React.FC = () => {
   return (
     <div>
       <button onClick={toggleModal}>채팅</button>
-      {showModal && <ChatComponents projectId={''} token={''} />}
+      {showModal && <ChatComponentModal projectId={''} />}
     </div>
   );
 };
