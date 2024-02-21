@@ -10,7 +10,7 @@ import {
   UpdateBoard,
   updateBoardContent,
 } from "../../../api/board/updateBoardContent";
-import { ContentType } from "../../../routes/home";
+import { ContentType } from "../../../pages/homePage";
 import {
   patchBoardList,
   patchContent,

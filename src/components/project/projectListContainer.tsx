@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import "../../styles/project/projectListContainer.css";
 import ProjectCard from "./projectCard";
-
 import {
   ProjectDetails,
   patchProjectList,
@@ -9,6 +7,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { patchProjects } from "../../redux/reducers/projectReducer";
 import { RootState } from "../../redux/store/store";
+
+import projectListStyles from "./projectListContainer.module.css";
 
 const ProjectListContainer = () => {
   const projects = useSelector((state: RootState) => state.projects.projects);
@@ -30,7 +30,7 @@ const ProjectListContainer = () => {
     }
   }, [projects, dispatch]);
   return (
-    <div className="project-list">
+    <div className={projectListStyles[`project-list`]}>
       {projects &&
         projects.map((project) => (
           <ProjectCard

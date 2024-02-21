@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { MdMoreHoriz } from "react-icons/md";
-import "../../../styles/project/dropdown/projectCardDropdown.css";
 import { useDispatch } from "react-redux";
 import { removeProjects } from "../../../redux/reducers/projectReducer";
 import { deleteProject } from "../../../api/project/deleteProject";
+
+import projectCardDropdownStyles from "./projectCardDropdown.module.css";
 
 interface ProjectCardDropdownProps {
   projectId: number;
@@ -47,12 +48,17 @@ const ProjectCardDropdown: React.FC<ProjectCardDropdownProps> = ({
   }, []); // ref는 불변이므로 의존성 배열에 넣지 않습니다.
 
   return (
-    <div className="project-card-dropdown" ref={ref}>
+    <div
+      className={projectCardDropdownStyles[`project-card-dropdown`]}
+      ref={ref}
+    >
       <button onClick={() => setIsOpen(!isOpen)}>
         <MdMoreHoriz size={"20px"} color="#646E7D" />
       </button>
       {isOpen && (
-        <div className="project-card-dropdown-menu">
+        <div
+          className={projectCardDropdownStyles[`project-card-dropdown-menu`]}
+        >
           {/* 프로젝트 수정 페이지 구현 예정 */}
           <button onClick={() => console.log("Edit")}>Edit</button>
           <button onClick={requestProjectDeletion}>Delete</button>

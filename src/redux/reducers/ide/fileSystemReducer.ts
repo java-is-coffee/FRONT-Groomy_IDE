@@ -194,6 +194,10 @@ const fileSystem = createSlice({
     setItems: (state, action: PayloadAction<FileItem[]>) => {
       state.fileSystem = action.payload;
     },
+    // 프로젝트 퇴장시 모두 리섹
+    resetItems: (state, action: PayloadAction) => {
+      state = initialState;
+    },
     // update 메서드를 활용해서 파일 수정된 부분 저장
     saveItem: (state, action: PayloadAction<FileItem>) => {
       state.fileSystem = state.fileSystem.map((item) =>
@@ -204,6 +208,12 @@ const fileSystem = createSlice({
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { addItem, deleteItem, renameItem, setItems, saveItem } =
-  fileSystem.actions;
+export const {
+  addItem,
+  resetItems,
+  deleteItem,
+  renameItem,
+  setItems,
+  saveItem,
+} = fileSystem.actions;
 export default fileSystem.reducer;

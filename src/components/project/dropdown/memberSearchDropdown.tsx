@@ -4,7 +4,7 @@ import {
   searchMemberByEmail,
 } from "../../../api/member/searchMemberByEmail";
 
-import "../../../styles/project/dropdown/memberSearchDropdown.css";
+import memberModuleStyles from "./memberSearchDropdown.module.css";
 
 interface DropdownProps {
   groupMembers: SearchedMember[];
@@ -79,18 +79,21 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
     }
   }, [searchEmail, groupMembers, searchedMember]);
   return (
-    <div className="member-search-container" ref={dropdownRef}>
+    <div
+      className={memberModuleStyles[`member-search-container`]}
+      ref={dropdownRef}
+    >
       {isOpen ? (
         <input
           type="email"
           placeholder="email로 사용자를 검색하세요."
           value={searchEmail}
           onChange={(e) => setSearchEmail(e.target.value)}
-          className="member-search-input"
+          className={memberModuleStyles[`member-search-input`]}
         />
       ) : (
         <button
-          className="member-search-input"
+          className={memberModuleStyles[`member-search-input`]}
           type="button"
           onClick={() => setIsOpen(true)}
         >
@@ -98,19 +101,24 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
         </button>
       )}
       {isOpen && (
-        <div className="member-search-result">
+        <div className={memberModuleStyles[`member-search-result`]}>
           {searchedMember ? (
-            <div className="member-search-item" onClick={addMember}>
-              <div className="member-search-email">{searchedMember.email}</div>
-              <div className="member-search-name">
+            <div
+              className={memberModuleStyles[`member-search-item`]}
+              onClick={addMember}
+            >
+              <div className={memberModuleStyles[`member-search-email`]}>
+                {searchedMember.email}
+              </div>
+              <div className={memberModuleStyles[`member-search-name`]}>
                 {searchedMember.nickname}
               </div>
-              <div className="member-selected">
+              <div className={memberModuleStyles[`member-selected`]}>
                 {isExistingMember ? "이미 추가된 사용자입니다." : ""}
               </div>
             </div>
           ) : (
-            <div className="member-search-no-result">
+            <div className={memberModuleStyles[`member-search-no-result`]}>
               {`"${searchEmail}"은 존재하지 않는 사용자입니다.`}
             </div>
           )}
