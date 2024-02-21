@@ -13,32 +13,36 @@ const useWebSocket = () => {
 
   const subscriptions = useRef(new Map()).current;
 
-  const connect = useCallback((url: string) => {
-    connectionCount++; // 연결을 설정할 때마다 카운트 증가
-    // 이미 연결된 클라이언트가 있으면 재사용
-    if (globalStompClient && globalStompClient.connected) {
-      setStompClient(globalStompClient);
-      return;
-    }
-    const BaseUrl =
-      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";
-    const socket = new SockJS(`${BaseUrl}/${url}`);
-    const client = Stomp.over(socket);
-    // client.debug = () => {};
-    patchAccessToken();
-    const storedToken = localStorage.getItem("accessToken")?.trim();
-    client.connect(
-      { Authorization: `${storedToken}` },
-      (frame) => {
-        console.log("Connected: " + frame);
-        globalStompClient = client; // 전역 변수에 저장
-        setStompClient(client);
-      },
-      (error) => {
-        console.log(error);
+  const connect = useCallback(
+    (url: string) => {
+      connectionCount++; // 연결을 설정할 때마다 카운트 증가
+      // 이미 연결된 클라이언트가 있으면 재사용
+      console.log(stompClient);
+      if (globalStompClient && globalStompClient.connected) {
+        setStompClient(globalStompClient);
+        return;
       }
-    );
-  }, []);
+      const BaseUrl =
+        "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";
+      const socket = new SockJS(`${BaseUrl}/${url}`);
+      const client = Stomp.over(socket);
+      // client.debug = () => {};
+      patchAccessToken();
+      const storedToken = localStorage.getItem("accessToken")?.trim();
+      client.connect(
+        { Authorization: `${storedToken}` },
+        (frame) => {
+          console.log("Connected: " + frame);
+          globalStompClient = client; // 전역 변수에 저장
+          setStompClient(client);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    [stompClient]
+  );
 
   const disconnect = useCallback(() => {
     connectionCount--;
@@ -50,7 +54,6 @@ const useWebSocket = () => {
     }
     if (stompClient) {
       stompClient.disconnect(() => {
-        console.log("Disconnected");
         globalStompClient = null; // 전역 변수를 null로 설정
         setStompClient(null);
       });
