@@ -2,7 +2,7 @@ import React from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 
-import "../../styles/home/nav.css";
+import navStyles from "./nav.module.css";
 
 type navProps = {
   onChange: (newState: boolean) => void;
@@ -12,15 +12,17 @@ type navProps = {
 
 const Nav: React.FC<navProps> = ({ onChange, sideClose, onOpen }) => {
   return (
-    <div className="menu-bar">
+    <div className={navStyles[`menu-bar`]}>
       <div
-        className={`sidebar-button ${sideClose ? "close" : ""}`}
+        className={`${navStyles[`sidebar-button`]} ${
+          sideClose ? navStyles.close : ""
+        }`}
         onClick={() => onChange(!sideClose)}
       >
         <MdKeyboardDoubleArrowRight size={"32px"} />
       </div>
       <div>
-        <button className="new-project" onClick={onOpen}>
+        <button className={navStyles[`new-project`]} onClick={onOpen}>
           <span>NEW PROJECT</span>
           <GoPlus size={"20px"} />
         </button>

@@ -1,17 +1,17 @@
 import { VscProject } from "react-icons/vsc";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa6";
-import "../../styles/home/sidebar.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { ContentType } from "../../pages/homePage";
-
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
 import { setMember } from "../../redux/reducers/memberReducer";
+
+import sideBarStyles from "./sidebar.module.css";
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;
@@ -80,53 +80,64 @@ const Sidebar: React.FC<SidebarProps> = ({
     console.log(member);
   }, [accessToken, dispatch, member]);
   return (
-    <div className="sidebar-menu">
-      <div className="button-container">
-        <div className="close-button" onClick={() => onChange(!sideClose)}>
+    <div className={sideBarStyles[`sidebar-menu`]}>
+      <div className={sideBarStyles[`button-container`]}>
+        <div
+          className={sideBarStyles[`close-button`]}
+          onClick={() => onChange(!sideClose)}
+        >
           <MdOutlineKeyboardDoubleArrowLeft size={"32px"} />
         </div>
       </div>
-      <div className="side-list">
+      <div className={sideBarStyles[`side-list`]}>
         <div
-          className="user-container"
+          className={sideBarStyles[`user-container`]}
           onClick={() => {
             member ? navigate("/user") : navigate("/login");
           }}
         >
           {member ? (
-            <div className="user-panel">
+            <div className={sideBarStyles[`user-panel`]}>
               <span className="name">{member.name}</span>
               <span className="email">{member.email}</span>
             </div>
           ) : (
-            <div className="user-panel">
-              <span className="name">로그인이 필요합니다</span>
+            <div className={sideBarStyles[`user-panel`]}>
+              <span className={sideBarStyles.name}>로그인이 필요합니다</span>
             </div>
           )}
         </div>
-        <div className="nav-menu">
-          <div className="menu" id="project" onClick={handleMainContent}>
-            <div className="menu-container">
-              <div className="icon">
+        <div className={sideBarStyles[`nav-menu`]}>
+          <div
+            className={sideBarStyles.menu}
+            id="project"
+            onClick={handleMainContent}
+          >
+            <div className={sideBarStyles[`menu-container`]}>
+              <div className={sideBarStyles.icon}>
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
             </div>
           </div>
           <div
-            className="menu"
-            id="invited-project"
+            className={sideBarStyles.menu}
+            id={sideBarStyles[`invited-project`]}
             onClick={handleMainContent}
           >
-            <div className="menu-container">
+            <div className={sideBarStyles[`menu-container`]}>
               <div className="icon">
                 <ConnectWithoutContact />
               </div>
               <span>프로젝트 초대</span>
             </div>
           </div>
-          <div className="menu" id="board" onClick={handleMainContent}>
-            <div className="menu-container">
+          <div
+            className={sideBarStyles.menu}
+            id="board"
+            onClick={handleMainContent}
+          >
+            <div className={sideBarStyles[`menu-container`]}>
               <div className="icon">
                 <FaWpforms size={"32px"} />
               </div>
@@ -135,7 +146,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-      <div className="menu-container">
+      <div className={sideBarStyles[`menu-container`]}>
         <div className="icon float-right">
           <IoIosLogOut size={"32px"} onClick={logOut} />
         </div>

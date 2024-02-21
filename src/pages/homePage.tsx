@@ -6,7 +6,6 @@ import NewProjectModal from "../components/project/newProjectModal";
 import { useNavigate } from "react-router-dom";
 
 import homeStyle from "./home.module.css";
-import styled from "@emotion/styled";
 
 export enum ContentType {
   ProjectList = "project-list",
