@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ProjectCard from "./projectCard";
 import { ProjectDetails } from "../../api/project/patchProjectList";
 import { getInvitedProjects } from "../../api/project/getInvitedProjectList";
