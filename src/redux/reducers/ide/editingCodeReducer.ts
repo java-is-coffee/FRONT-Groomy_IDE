@@ -33,6 +33,11 @@ const curEditingCode = createSlice({
     setCurEditingCode: (state, action: PayloadAction<CodeDetails>) => {
       state.editingCode = action.payload;
     },
+    // 수정중인 파일 리셋
+    reSetCurEditingCode: (state, action: PayloadAction) => {
+      state.editingCode = initialState.editingCode;
+      state.codeTabs = initialState.codeTabs;
+    },
     // 새로 선택된 파일 코드 탭에 추가
     addCodeTab: (state, action: PayloadAction<CodeDetails>) => {
       const isExist = state.codeTabs.some(
@@ -69,6 +74,11 @@ const curEditingCode = createSlice({
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { setCurEditingCode, addCodeTab, removeCodeTab, saveCode } =
-  curEditingCode.actions;
+export const {
+  setCurEditingCode,
+  reSetCurEditingCode,
+  addCodeTab,
+  removeCodeTab,
+  saveCode,
+} = curEditingCode.actions;
 export default curEditingCode.reducer;
