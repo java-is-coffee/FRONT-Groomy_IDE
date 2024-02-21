@@ -10,7 +10,7 @@ import {
   UpdateBoard,
   updateBoardContent,
 } from "../../../api/board/updateBoardContent";
-import { ContentType } from "../../../enum/mainOptionType";
+import { ContentType } from "../../../routes/home";
 import {
   patchBoardList,
   patchContent,
@@ -18,11 +18,12 @@ import {
   patchIsEdited,
 } from "../../../redux/reducers/boardReducer";
 import styled from "./newBoardContent.module.css";
-import IdeOptionType from "../../../enum/ideOptionType";
-import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
-import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 
-function BoardWritePage() {
+function BoardWritePage({
+  onSelectContents,
+}: {
+  onSelectContents: (content: ContentType) => void;
+}) {
   const savedContent = useSelector((state: RootState) => state.board.content);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState<string | undefined>(
@@ -46,12 +47,10 @@ function BoardWritePage() {
     //수정 중이면 해당 게시글로
     if (isEdit) {
       dispatch(patchIsEdited(false));
-      dispatch(setIdeOption(IdeOptionType.BoardContent));
-      dispatch(setMainOption(ContentType.BoardContent));
-    } else {
-      dispatch(setIdeOption(IdeOptionType.BoardList));
-      dispatch(setMainOption(ContentType.BoardList));
+      onSelectContents(ContentType.BoardContent);
     }
+    //수정이 아니다 > 새로운 게시글 > 바로 게시글 리스트로
+    else onSelectContents(ContentType.BoardList);
   };
 
   function checkCompleted(event: React.FormEvent<HTMLInputElement>): void {
@@ -83,9 +82,7 @@ function BoardWritePage() {
         dispatch(patchCurrentPage(1));
         dispatch(patchBoardList(null));
         dispatch(patchContent(response));
-        dispatch(setIdeOption(IdeOptionType.BoardList));
-        dispatch(setMainOption(ContentType.BoardList));
-        // onSelectContents(ContentType.BoardContent);
+        onSelectContents(ContentType.BoardContent);
       }
     }
   };
@@ -108,11 +105,8 @@ function BoardWritePage() {
         requestDTO,
         savedContent.boardId
       );
-      if (response) {
-        dispatch(patchContent(response));
-        dispatch(setIdeOption(IdeOptionType.BoardContent));
-        dispatch(setMainOption(ContentType.BoardContent));
-      }
+      if (response) dispatch(patchContent(response));
+      onSelectContents(ContentType.BoardContent);
     }
   };
 

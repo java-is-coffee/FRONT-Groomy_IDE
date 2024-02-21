@@ -7,13 +7,12 @@ import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { ContentType } from "../../enum/mainOptionType";
+import { ContentType } from "../../routes/home";
 
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
 import { setMember } from "../../redux/reducers/memberReducer";
-import { setMainOption } from "../../redux/reducers/mainpageReducer";
-// import mainOption from "../../redux/reducers/mainpageReducer";
+
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;
@@ -32,8 +31,6 @@ const Sidebar: React.FC<SidebarProps> = ({
   const member = useSelector((state: RootState) => state.member.member);
   const dispatch = useDispatch();
 
-  // const mainOption = useSelector((state: RootState) => state.mainOption.option);
-
   //sidebar 스크롤 따라가게 하기
   window.addEventListener("scroll", function () {
     const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
@@ -49,6 +46,17 @@ const Sidebar: React.FC<SidebarProps> = ({
       }
     }
   });
+
+  // main contents handler
+  const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.currentTarget.id;
+    console.log(target);
+
+    if (target === "project") onSelectContents(ContentType.ProjectList);
+    if (target === "invited-project")
+      onSelectContents(ContentType.InvitedProjectList);
+    if (target === "board") onSelectContents(ContentType.BoardList);
+  };
 
   //로그아웃 버튼
   const logOut = () => {
@@ -72,23 +80,6 @@ const Sidebar: React.FC<SidebarProps> = ({
     }
     console.log(member);
   }, [accessToken, dispatch, member]);
-
-  // main contents handler
-  const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.currentTarget.id;
-    console.log(target);
-
-    // if (target === "project") onSelectContents(ContentType.ProjectList);
-    // if (target === "invited-project")
-    //   onSelectContents(ContentType.InvitedProjectList);
-    // if (target === "board") onSelectContents(ContentType.BoardList);
-
-    if (target === "project") dispatch(setMainOption(ContentType.ProjectList));
-    if (target === "invited-project")
-      dispatch(setMainOption(ContentType.InvitedProjectList));
-    if (target === "board") dispatch(setMainOption(ContentType.BoardList));
-  };
-
   return (
     <div className="sidebar-menu">
       <div className="button-container">

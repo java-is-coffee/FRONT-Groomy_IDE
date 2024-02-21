@@ -5,13 +5,6 @@
   overflow-y: auto;
 }
 
-.board {
-  background-color: var(--main-theme-color);
-  max-height: 90vh;
-  min-height: 90vh;
-  min-width: 50vh;
-}
-
 .inline {
   display: inline;
 }

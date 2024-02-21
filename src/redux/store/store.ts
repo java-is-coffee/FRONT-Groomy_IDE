@@ -7,7 +7,6 @@ import ideOptionReducer from "../reducers/ide/ideOptionReducer";
 import ideSideContainerReducer from "../reducers/ide/ideSideContainerReducer";
 import fileSystemReducer from "../reducers/ide/fileSystemReducer";
 import editingCodeReducer from "../reducers/ide/editingCodeReducer";
-import mainpageReducer from "../reducers/mainpageReducer";
 
 export const store = configureStore({
   reducer: {
@@ -16,7 +15,6 @@ export const store = configureStore({
     board: boardReducer,
     ideOption: ideOptionReducer,
     ideSideContainer: ideSideContainerReducer,
-    mainOption: mainpageReducer,
     fileSystem: fileSystemReducer,
     editingCode: editingCodeReducer,
   },

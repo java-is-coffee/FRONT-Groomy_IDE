@@ -1,14 +1,28 @@
 import React, { useState } from "react";
-import { Button, Stack, TextField } from "@mui/material";
-import styled from "./register.module.css";
-import verificationEmail from "../../api/login/verificationEmail";
-import verificationNumber from "../../api/login/verifiNumber";
-import useRegisterHooks from "../../hooks/register/regitserHooks";
-import postEmailCheck from "../../api/login/postEmailCheck";
-import postRegister, {
-  RegisterDTO,
-  RegisterData,
-} from "../../api/login/postRegister";
+import "../../styles/register.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+interface RegisterData {
+  email: string;
+  password: string;
+  name: string;
+  nickname: string;
+}
+
+interface EmailDupe {
+  email: string;
+}
+
+interface RegisterDTO {
+  data: RegisterData | EmailDupe;
+}
+
+const baseUrl: string =
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/register";
+
+const dupeCheckUrl: string =
+  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/register/email-check";
 
 function RegisterComponent() {
   const [email, setEmail] = useState("");
@@ -19,34 +33,55 @@ function RegisterComponent() {
   const [nickname, setNickname] = useState("");
   const [isCheckedEmail, setIsCheckedEmail] = useState(true);
 
-  const [verifiNumber, setVerifiNumber] = useState("");
-  const [isSendEmail, setIsSendEmail] = useState(false);
-  const [emailSetUp, setEmailSetUp] = useState(false);
-  const [emailFormat, setEmailFormat] = useState(false); //이메일 형식 테스트용
-
-  const regitserHooks = useRegisterHooks();
-
-  const checkDupelicate = async () => {
-    const emailFormat = regitserHooks.emailCheck(email);
-
-    if (emailFormat === true) {
-      const result = await postEmailCheck(email);
-
-      //중복되는 이메일이 없다.
-      if (result === false) {
-        setEmailFormat(true);
-        setIsCheckedEmail(true);
-      } else {
-        setEmailFormat(false);
-        setIsCheckedEmail(false);
-      }
-    } else {
-      setEmailFormat(false);
-      setIsCheckedEmail(true);
-    }
+  const navigate = useNavigate();
+  const goLogin = () => {
+    navigate("/login");
   };
 
-  const onBlurCheckPassword = () => {
+  const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+
+    setEmail(value);
+  };
+
+  const checkDupelicate = async () => {
+    const inputData: EmailDupe = {
+      email: email,
+    };
+    const requestDTO: RegisterDTO = {
+      data: inputData,
+    };
+
+    try {
+      const response = await axios.post(dupeCheckUrl, requestDTO);
+      const result = response.data;
+      console.log(result);
+
+      if (result === false) {
+        console.log("정답이");
+        setIsCheckedEmail(true);
+      } else if (result === true) {
+        setIsCheckedEmail(false);
+      }
+
+      console.log(isCheckedEmail);
+    } catch (error) {
+      alert("통신 실패");
+    }
+  };
+  const onChangePassword = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setPassword(value);
+  };
+
+  const onChangeCheckPassword = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setCheckPassword(value);
+  };
+
+  const onBlurCheckPassword = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setCheckPassword(value);
     if (checkPassword === password) {
       setIsChecked(true);
     } else {
@@ -54,176 +89,139 @@ function RegisterComponent() {
     }
   };
 
-  const handleSubmit = async () => {
-    // event.preventDefault();
-    console.log(isSendEmail);
+  const onChangeName = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setName(value);
+  };
+  const onChangeNickname = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = e.currentTarget.value;
+    setNickname(value);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     const inputData: RegisterData = {
       email: email,
       password: password,
       name: name,
       nickname: nickname,
-      certificationNumber: verifiNumber,
     };
 
     const requestDTO: RegisterDTO = {
       data: inputData,
     };
 
-    const result = await postRegister(requestDTO);
+    try {
+      const response = await axios.post(baseUrl, requestDTO);
 
-    if (result === "success") {
-      alert("회원 가입 완료");
-      regitserHooks.goLogin();
-    } else {
-      alert("실패");
+      const result = response.data;
+      const code = result.status.code;
+
+      if (code === "200") {
+        alert("회원가입에 성공하셨습니다.");
+        goLogin();
+      } else if (code === "301") {
+        alert("이메일이 중복되었습니다."); // 일단 위에서 중복체크 설정은 해뒀는데 api 문서상 301이 보내져서 일단 적어뒀습니다.
+      } else if (code === "300") {
+        alert("회원 가입에 실패하셨습니다. 잠시 뒤, 시도해주세요.");
+      }
+    } catch (error) {
+      alert("네트워크 오류 발생. 잠시 뒤, 이용해주세요.");
     }
   };
-
-  const checkVerifiNumber = async () => {
-    const response = await verificationNumber(email, verifiNumber);
-
-    if (response === 200) {
-      alert("인증 완료");
-      setEmailSetUp(true);
-    } else {
-      setEmailSetUp(false);
-      alert("틀렸습니다.");
-    }
-  };
-
-  const sendEmail = async () => {
-    const response = await verificationEmail(email);
-
-    if (response === 200) {
-      setIsSendEmail(true);
-      console.log("메일 전송 완료");
-    } else {
-      console.log("메일 전송 불가");
-    }
-  };
-
   return (
-    <div className={styled.body}>
-      <div className={styled.logo}>
+    <div className="register-component">
+      <div className="logo-position">
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <Stack spacing={2} style={{ width: "40%" }}>
-        <div className={styled.flex}>
-          <TextField
-            fullWidth
-            className={styled.input}
-            size="small"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setEmail(event.target.value);
-            }}
-            label="이메일 입력"
-            variant="outlined"
-            required
-            onBlur={checkDupelicate}
-            error={emailFormat ? false : true}
-            placeholder="이메일을 입력해주세요."
-          />
-          <Button
-            disabled={emailFormat ? false : true}
-            variant="contained"
-            onClick={sendEmail}
-          >
-            전송
-          </Button>
-        </div>
-        {/* 평소엔 숨겨져있다가 이메일 중복일때만 나타나게 */}
-        <div className={isCheckedEmail ? `${styled.hidden}` : " "}>
-          이메일이 중복되었습니다.
+      <div>
+        <button type="button" className="oauth-login-btn">
+          {" "}
+          구글로 로그인{" "}
+        </button>
+      </div>
+
+      <div className="register-component">
+        <div className="line-separator">
+          <span className="line-left"></span>
+          <span className="or">or</span>
+          <span className="line-right"></span>
         </div>
 
-        <div className={`${styled.flex}`}>
-          <TextField
-            fullWidth
-            className={styled.input}
-            size="small"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setVerifiNumber(event.target.value);
-            }}
-            label="인증번호 입력"
-            variant="outlined"
+        {/* <form onSubmit={handleSubmit}> */}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="emailId"
+            className="id-input"
+            placeholder="이메일을 입력하세요."
+            onChange={onChangeEmail}
+            onBlur={checkDupelicate}
             required
-            placeholder="인증번호를 입력해주세요.(6자리)"
-          />
-          <Button
-            disabled={emailFormat ? false : true}
-            variant="contained"
-            onClick={checkVerifiNumber}
+          />{" "}
+          <div
+            id="wrong-password"
+            className={`check-text ${isCheckedEmail ? "display-none" : " "}`}
           >
-            인증
-          </Button>
-        </div>
-        <TextField
-          fullWidth
-          className={styled.input}
-          size="small"
-          type="password"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setPassword(event.target.value);
-          }}
-          label="비밀번호 입력"
-          variant="outlined"
-          required
-        />
-        <TextField
-          fullWidth
-          className={styled.input}
-          size="small"
-          type="password"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setCheckPassword(event.target.value);
-          }}
-          onBlur={onBlurCheckPassword}
-          label="비밀번호 재입력"
-          variant="outlined"
-          required
-          error={isChecked ? false : true}
-        />
-        <div className={isChecked ? `${styled.hidden}` : " "}>
-          비밀번호가 다릅니다.
-        </div>
-        <TextField
-          fullWidth
-          className={styled.input}
-          size="small"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setName(event.target.value);
-          }}
-          label="이름 입력"
-          variant="outlined"
-          required
-        />
-        <TextField
-          fullWidth
-          className={styled.input}
-          size="small"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setNickname(event.target.value);
-          }}
-          label="닉네임 입력"
-          variant="outlined"
-          required
-        />
-        <Button
-          variant="contained"
-          disabled={emailSetUp ? false : true}
-          onClick={handleSubmit}
-        >
-          회원가입
-        </Button>
-        <div className="">
-          <span className="q">이미 계정이 있으신가요?</span>
-          <div onClick={regitserHooks.goLogin} className="float-right">
-            로그인
+            이메일이 중복되었습니다.
           </div>
+          <input
+            type="password"
+            name="password"
+            className="password-input"
+            placeholder="비밀번호를 입력하세요."
+            onChange={onChangePassword}
+            required
+          />
+          <input
+            type="password"
+            name="password_2"
+            className="password-input_2"
+            placeholder="비밀번호를 다시 입력하세요."
+            onChange={onChangeCheckPassword}
+            onBlur={onBlurCheckPassword}
+            required
+          />{" "}
+          <div
+            id="wrong-password"
+            className={`check-text ${isChecked ? "display-none" : " "}`}
+          >
+            비밀번호가 일치하지 않습니다.
+          </div>
+          <input
+            type="text"
+            name="name"
+            className="name-input"
+            placeholder="이름을 입력하세요."
+            onChange={onChangeName}
+            required
+          />
+          <input
+            type="text"
+            name="nickname"
+            className="nickname-input"
+            placeholder="닉네임을 입력하세요."
+            onChange={onChangeNickname}
+            required
+          />
+          <button type="submit" className="register-btn">
+            회원가입
+          </button>
+        </form>
+      </div>
+
+      <div className="already">
+        <div>
+          <span className="q">이미 계정이 있으세요?</span>
         </div>
-      </Stack>
+        <div>
+          <a href="/login" className="login">
+            로그인
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

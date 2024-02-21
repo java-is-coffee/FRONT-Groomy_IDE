@@ -1,9 +1,7 @@
 enum IdeOptionType {
   None = "none",
   File = "file",
-  BoardList = "board",
-  BoardWrite = "board-write",
-  BoardContent = "boardontent",
+  Board = "board",
   Chat = "chat",
   LiveShare = "live-share",
 }
