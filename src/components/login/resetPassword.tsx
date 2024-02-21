@@ -1,12 +1,6 @@
 import React from "react";
 import styled from "./resetPassword.module.css";
-import {
-  Button,
-  IconButton,
-  InputAdornment,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 
 const resetPassword = () => {
   return (

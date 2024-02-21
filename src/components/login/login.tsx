@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import postLogin, { LoginDTO, LoginData } from "../../api/login/postLogin";
 import SendIcon from "@mui/icons-material/Send";
 import {
@@ -23,7 +22,7 @@ function LoginComponent() {
     if (accessToken) {
       loginHooks.goMain();
     }
-  }, [accessToken]);
+  }, [accessToken, loginHooks]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,10 +45,10 @@ function LoginComponent() {
     }
   };
 
-  const handleLogin = async () => {
-    window.location.href =
-      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/auth/google";
-  };
+  // const handleLogin = async () => {
+  //   window.location.href =
+  //     "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/auth/google";
+  // };
 
   return (
     <div className={styled.body}>

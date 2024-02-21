@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState } from "react";
+import React, { useState } from "react";
 import { Button, Stack, TextField } from "@mui/material";
 import styled from "./register.module.css";
 import verificationEmail from "../../api/login/verificationEmail";
@@ -9,12 +9,6 @@ import postRegister, {
   RegisterDTO,
   RegisterData,
 } from "../../api/login/postRegister";
-
-const baseUrl: string =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/register";
-
-const dupeCheckUrl: string =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/register/email-check";
 
 function RegisterComponent() {
   const [email, setEmail] = useState("");
@@ -62,6 +56,7 @@ function RegisterComponent() {
 
   const handleSubmit = async () => {
     // event.preventDefault();
+    console.log(isSendEmail);
 
     const inputData: RegisterData = {
       email: email,
