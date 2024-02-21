@@ -4,18 +4,22 @@ import { ProjectDetails } from "../../api/project/patchProjectList";
 import { getInvitedProjects } from "../../api/project/getInvitedProjectList";
 
 import projectListStyles from "./projectListContainer.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { patchInvitedProjects } from "../../redux/reducers/projectReducer";
+import { RootState } from "../../redux/store/store";
 
 const InvitedProjectListContainer: React.FC = () => {
-  const [invitedProjects, setInvitedProjects] = useState<
-    ProjectDetails[] | null
-  >();
+  const dispatch = useDispatch();
+  const invitedProjects = useSelector(
+    (state: RootState) => state.projects.invitedProjects
+  );
   useEffect(() => {
     const fetchInvitedProjects = async () => {
       try {
         const storedInvitedProjects: ProjectDetails[] | null =
           await getInvitedProjects();
         if (storedInvitedProjects) {
-          setInvitedProjects(storedInvitedProjects);
+          dispatch(patchInvitedProjects(storedInvitedProjects));
         }
       } catch (error) {
         console.log("api 에러");
@@ -26,7 +30,7 @@ const InvitedProjectListContainer: React.FC = () => {
       fetchInvitedProjects();
     }
     console.log();
-  }, [invitedProjects]);
+  }, [invitedProjects, dispatch]);
   return (
     <div className={projectListStyles[`project-list`]}>
       {invitedProjects &&

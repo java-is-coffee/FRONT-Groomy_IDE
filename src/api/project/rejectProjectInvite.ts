@@ -5,11 +5,11 @@ import { IProjectActionDTO } from "./iprojectActionDto";
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/ide";
 
-interface RequestDTO {
+interface IRequestDTO {
   data: IProjectActionDTO;
 }
 
-export const postParticipateProject = async (
+export const rejectProjectInvite = async (
   invite: IProjectActionDTO
 ): Promise<boolean> => {
   const storedToken = localStorage.getItem("accessToken");
@@ -22,13 +22,13 @@ export const postParticipateProject = async (
       Authorization: `Bearer ${storedToken}`,
     },
   };
-  const request: RequestDTO = {
+  const request: IRequestDTO = {
     data: invite,
   };
   console.log(request);
   try {
     const response = await axios.post(
-      `${USER_API_URL}/participate-project`,
+      `${USER_API_URL}/reject-project`,
       request,
       config
     );
@@ -47,7 +47,7 @@ export const postParticipateProject = async (
       if (error.response?.status === 401) {
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {
-          return postParticipateProject(invite);
+          return rejectProjectInvite(invite);
         }
       }
     } else {
