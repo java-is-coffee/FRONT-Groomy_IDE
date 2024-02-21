@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./routes/login";
 import Register from "./routes/register";
-import Home from "./routes/home";
+import Home from "./pages/homePage";
 import "./styles/style.css";
 import ResetPassword from "./routes/resetPassword";
 import WebIDE from "./routes/webIDE";

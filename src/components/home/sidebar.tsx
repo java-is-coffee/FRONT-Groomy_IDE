@@ -7,12 +7,11 @@ import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { ContentType } from "../../routes/home";
+import { ContentType } from "../../pages/homePage";
 
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
 import { setMember } from "../../redux/reducers/memberReducer";
-
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;

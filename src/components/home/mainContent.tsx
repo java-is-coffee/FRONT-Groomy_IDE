@@ -1,11 +1,10 @@
 import BoardList from "../newBoard/board/boardList";
-import { ContentType } from "../../routes/home";
+import { ContentType } from "../../pages/homePage";
 import ProjectListContainer from "../project/projectListContainer";
 
 import BoardContent from "../newBoard/board/boardContent";
 import BoardWrite from "../newBoard/board/newBoardContent";
 import InvitedProjectListContainer from "../project/invitedProjectLIstContainer";
-
 
 interface MainContentProps {
   curContent: ContentType;
