@@ -108,7 +108,7 @@ const WebIDE = () => {
         <CompositeBar />
       </div>
       <div
-        className={`side-container ${isOpenSide ? "" : "closed"}`}
+        className={`${styles["side-container"]} ${isOpenSide ? "" : styles.closed}`}
         style={
           isOpenSide ? { width: `${sideContainerWidth}px` } : { width: "0px" }
         }
@@ -118,12 +118,12 @@ const WebIDE = () => {
       {isOpenSide ? (
         <div
           ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle ${resizing ? "active" : ""}`}
+          className={`${styles["resize-handle"]} ${resizing ? styles.active : ""}`}
         />
       ) : (
         <div
           ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle closed ${resizing ? "active" : ""}`}
+          className={`${styles["resize-handle"]} ${styles.closed} ${resizing ? styles.active : ""}`}
         />
       )}
       <div

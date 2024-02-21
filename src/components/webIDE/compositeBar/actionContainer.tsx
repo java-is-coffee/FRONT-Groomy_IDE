@@ -1,7 +1,7 @@
 import { VscFiles } from "react-icons/vsc";
 import { GoCommentDiscussion } from "react-icons/go";
 import { GiBlackBook } from "react-icons/gi";
-import "../../../styles/webIDE/compositeBar.css";
+import styles from "../../../styles/webIDE/compositeBar.module.css";
 import IdeOptionType from "../../../enum/ideOptionType";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -46,10 +46,10 @@ const ActionContainer = () => {
   };
 
   return (
-    <div className="action-container">
+    <div className={styles["action-container"]}>
       <div
-        className={`action-option ${
-          selectedOption === IdeOptionType.File ? "selected" : ""
+        className={`${styles["action-option"]} ${
+          selectedOption === IdeOptionType.File ? styles.selected : ""
         }`}
         id="file"
         onClick={changeOption}
@@ -57,8 +57,8 @@ const ActionContainer = () => {
         <VscFiles size={"24px"} />
       </div>
       <div
-        className={`action-option ${
-          selectedOption === IdeOptionType.Board ? "selected" : ""
+        className={`${styles["action-option"]} ${
+          selectedOption === IdeOptionType.Board ? styles.selected : ""
         }`}
         id="board"
         onClick={changeOption}
@@ -66,8 +66,8 @@ const ActionContainer = () => {
         <GiBlackBook size={"24px"} />
       </div>
       <div
-        className={`action-option ${
-          selectedOption === IdeOptionType.Chat ? "selected" : ""
+        className={`${styles["action-option"]} ${
+          selectedOption === IdeOptionType.Chat ? styles.selected : ""
         }`}
         id="chat"
         onClick={changeOption}

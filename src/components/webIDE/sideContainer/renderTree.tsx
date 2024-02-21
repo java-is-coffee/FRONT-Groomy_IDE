@@ -17,6 +17,7 @@ import {
   addCodeTab,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
+import styles from "../../../styles/webIDE/sideContainer/explorer.module.css";
 
 const RenderTree = () => {
   const [expanded, setExpanded] = useState<string[]>([]); // 확장된 노드의 ID 목록
@@ -41,9 +42,9 @@ const RenderTree = () => {
     const source: string[] = name.split(".");
     const icon = getLanguageIcon(source[1]);
     return (
-      <div className="code-details">
-        <div className="code-icon">{icon}</div>
-        <div className="code-title">{name}</div>
+      <div className={styles["code-details"]}>
+        <div className={styles["code-icon"]}>{icon}</div>
+        <div className={styles["code-title"]}>{name}</div>
       </div>
     );
   };
@@ -157,11 +158,11 @@ const RenderTree = () => {
 
   return (
     <div>
-      <div className="explore-options">
-        <span className="project-name">DEV</span>
-        <div className="explore-tools">
+      <div className={styles["explore-options"]}>
+        <span className={styles["project-name"]}>DEV</span>
+        <div className={styles["explore-tools"]}>
           <div
-            className="explore-tools-icon"
+            className={styles["explore-tools-icon"]}
             onClick={() => {
               setIsAddingFile(true);
               openNode();
@@ -170,7 +171,7 @@ const RenderTree = () => {
             <VscNewFile size={"17px"} />
           </div>
           <div
-            className="explore-tools-icon"
+            className={styles["explore-tools-icon"]}
             onClick={() => {
               setIsAddingFolder(true);
               openNode();

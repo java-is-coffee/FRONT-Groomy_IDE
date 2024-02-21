@@ -8,6 +8,7 @@ import {
   resetCurEditingCode,
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
+import styles from "../../../styles/webIDE/codeContainer.module.css";
 
 const CodeTab = () => {
   const dispatch = useDispatch();
@@ -30,17 +31,17 @@ const CodeTab = () => {
     dispatch(setCurEditingCode(code));
   };
   return (
-    <div className="code-tab-container">
+    <div className={styles["code-tab-container"]}>
       {tabDetails.map((tab) => {
         return (
           <div
             key={tab.id}
-            className={`code-tab-items ${tab.id === curTab.id ? "active" : ""}`}
+            className={`${styles["code-tab-items"]} ${tab.id === curTab.id ? styles.active : ""}`}
             onClick={() => handleTabSelect(tab)}
           >
             {getLanguageIcon(tab.name.split(".")[1])}
             <span>{`${tab.name}`}</span>
-            <div className="tab-close" onClick={() => closeTab(tab.id)}>
+            <div className={styles["tab-close"]} onClick={() => closeTab(tab.id)}>
               <Close />
             </div>
           </div>

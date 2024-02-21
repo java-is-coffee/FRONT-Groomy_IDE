@@ -1,6 +1,5 @@
 import React from "react";
-import "../../styles/project/projectListContainer.css";
-import "../../styles/board/board.css";
+import styles from "../../styles/board/board.module.css";
 import { ContentType } from "../../routes/home";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -44,7 +43,7 @@ const BoardContent = ({
   };
 
   return (
-    <div className="w-50 p-15 test box-border">
+    <div className={`${styles["w-50"]} ${styles["p-15"]} ${styles.test} ${styles["box-border"]}`}>
       <div>
         <MdKeyboardArrowLeft size={48} onClick={backList} />
       </div>
@@ -56,7 +55,7 @@ const BoardContent = ({
       </div>
       <hr />
 
-      <div className="board-content-content">{curContent?.content}</div>
+      <div className={styles["board-content-content"]}>{curContent?.content}</div>
       <h2>답변 {curContent?.commentNumber}</h2>
       <hr />
       <Comment />

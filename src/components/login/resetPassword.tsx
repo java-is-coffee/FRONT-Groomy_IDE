@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/loginPage/resetPage.css";
+import styles from "../../styles/loginPage/resetPage.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -72,25 +72,25 @@ function ResetPasswordComponent() {
 
   return (
     <div>
-      <div className="logoPosition">
+      <div className={styles["logo-position"]}>
         <img src="icon/Logo.png" alt="logo" />
       </div>
       {/* 비밀번호 재설정 */}
-      <div className="midText">비밀번호 재설정</div>
+      <div className={styles["mid-text"]}>비밀번호 재설정</div>
 
       <form method="post" onSubmit={handleSubmit}>
         <input
-          className="nameInput"
+          className={styles["name-input"]}
           placeholder="이름을 입력해주세요"
           onChange={onChangeName}
         />
         <input
-          className="emailInput"
+          className={styles["email-input"]}
           onChange={onChangeEmail}
           type="email"
           placeholder="이메일을 입력해주세요"
         />
-        <button className="basicBtn">비밀번호 재설정</button>
+        <button className={styles["basic-btn"]}>비밀번호 재설정</button>
       </form>
     </div>
   );

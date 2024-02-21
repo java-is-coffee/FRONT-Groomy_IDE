@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import "../../styles/board/board.css";
+import styles from "../../styles/board/board.module.css";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -59,7 +59,7 @@ function Comment() {
       <form onSubmit={handleSubmit}>
         <textarea
           rows={3}
-          className="comment-input"
+          className={styles["comment-input"]}
           onChange={onChangeContent}
         ></textarea>
         <button type="submit">댓글 달기</button>
@@ -67,23 +67,23 @@ function Comment() {
       {/* 댓글 출력 */}
       {commentList &&
         commentList.map((data) => (
-          <div key={data.commentId} className="comment-box mt-15">
+          <div key={data.commentId} className={`${styles["comment-box"]} ${styles["mt-15"]}`}>
             <hr />
 
             {/* 작성자 아이콘 & 관리 아이콘 */}
-            <div className="display-flex-space-between">
-              <div className="display-flex-center">
+            <div className={styles["display-flex-space-between"]}>
+              <div className={styles["display-flex-center"]}>
                 <FaUserCircle size={24} />
-                <h4 className="inline ml-15">{data.nickname}</h4>
+                <h4 className={`${styles["inline"]} ${styles["ml-15"]}`}>{data.nickname}</h4>
               </div>
 
-              <div className="float-right display-flex-center">
+              <div className={`${styles["float-right"]} ${styles["display-flex-center"]}`}>
                 <HiOutlineDotsHorizontal size={24} />
               </div>
             </div>
 
-            <div className="comment-content">{data.content}</div>
-            <div className="display-flex-row-reverse ">
+            <div className={styles["comment-content"]}>{data.content}</div>
+            <div className={styles["display-flex-row-reverse"]}>
               <button
                 id={`${data.commentId}`}
                 onClick={() => setWriteReply(!writeReply)}

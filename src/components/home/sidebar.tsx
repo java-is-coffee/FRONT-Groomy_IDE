@@ -1,7 +1,7 @@
 import { VscProject } from "react-icons/vsc";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa6";
-import "../../styles/home/sidebar.css";
+import styles from "../../styles/home/sidebar.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
@@ -67,42 +67,42 @@ const Sidebar: React.FC<SidebarProps> = ({
     console.log(member);
   }, [accessToken, dispatch, member]);
   return (
-    <div className="sidebar-menu">
-      <div className="button-container">
-        <div className="close-button" onClick={() => onChange(!sideClose)}>
+    <div className={styles["sidebar-menu"]}>
+      <div className={styles["button-container"]}>
+        <div className={styles["close-button"]} onClick={() => onChange(!sideClose)}>
           <MdOutlineKeyboardDoubleArrowLeft size={"32px"} />
         </div>
       </div>
-      <div className="side-list">
+      <div className={styles["side-list"]}>
         <div
-          className="user-container"
+          className={styles["user-container"]}
           onClick={() => {
             member ? navigate("/user") : navigate("/login");
           }}
         >
           {member ? (
-            <div className="user-panel">
-              <span className="name">{member.name}</span>
-              <span className="email">{member.email}</span>
+            <div className={styles["user-panel"]}>
+              <span className={styles.name}>{member.name}</span>
+              <span className={styles.email}>{member.email}</span>
             </div>
           ) : (
-            <div className="user-panel">
-              <span className="name">로그인이 필요합니다</span>
+            <div className={styles["user-panel"]}>
+              <span className={styles.name}>로그인이 필요합니다</span>
             </div>
           )}
         </div>
-        <div className="nav-menu">
-          <div className="menu" id="project" onClick={handleMainContent}>
-            <div className="menu-container">
-              <div className="icon">
+        <div className={styles["nav-menu"]}>
+          <div className={styles.menu} id="project" onClick={handleMainContent}>
+            <div className={styles["menu-container"]}>
+              <div className={styles.icon}>
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
             </div>
           </div>
-          <div className="menu" id="board" onClick={handleMainContent}>
-            <div className="menu-container">
-              <div className="icon">
+          <div className={styles.menu} id="board" onClick={handleMainContent}>
+            <div className={styles["menu-container"]}>
+              <div className={styles.icon}>
                 <FaWpforms size={"32px"} />
               </div>
               <span>질문게시판</span>
@@ -110,7 +110,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-      <div className="menu-container"></div>
+      <div className={styles["menu-container"]}></div>
     </div>
   );
 };

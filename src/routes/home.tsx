@@ -54,14 +54,14 @@ const Home: React.FC = () => {
       </nav>
       <NewProjectModal isOpen={isProjectModalOpen} onClose={handleCloseModal} />
       <div className={styles.container}>
-        <aside className={`sidebar ${sideClose ? "closed" : ""}`}>
+        <aside className={`${styles.sidebar} ${sideClose ? styles.closed : ""}`}>
           <Sidebar
             onSelectContents={handleContentChange}
             onChange={handleSidebarToggle}
             sideClose={sideClose}
           />
         </aside>
-        <div className={`main-content ${sideClose ? "wide" : ""}`}>
+        <div className={`${styles["main-content"]} ${sideClose ? styles.wide : ""}`}>
           <MainContent
             curContent={curContent}
             onSelectContents={handleContentChange}

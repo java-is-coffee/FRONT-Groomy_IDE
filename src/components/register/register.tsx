@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/register.css";
+import styles from "../../styles/register.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -131,23 +131,23 @@ function RegisterComponent() {
     }
   };
   return (
-    <div className="register-component">
-      <div className="logo-position">
+    <div className={styles["register-component"]}>
+      <div className={styles["logo-position"]}>
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
       <div>
-        <button type="button" className="oauth-login-btn">
+        <button type="button" className={styles["oauth-login-btn"]}>
           {" "}
           구글로 로그인{" "}
         </button>
       </div>
 
-      <div className="register-component">
-        <div className="line-separator">
-          <span className="line-left"></span>
-          <span className="or">or</span>
-          <span className="line-right"></span>
+      <div className={styles["register-component"]}>
+        <div className={styles["line-separator"]}>
+          <span className={styles["line-left"]}></span>
+          <span className={styles.or}>or</span>
+          <span className={styles["line-right"]}></span>
         </div>
 
         {/* <form onSubmit={handleSubmit}> */}
@@ -155,7 +155,7 @@ function RegisterComponent() {
           <input
             type="text"
             name="emailId"
-            className="id-input"
+            className={styles["id-input"]}
             placeholder="이메일을 입력하세요."
             onChange={onChangeEmail}
             onBlur={checkDupelicate}
@@ -163,14 +163,14 @@ function RegisterComponent() {
           />{" "}
           <div
             id="wrong-password"
-            className={`check-text ${isCheckedEmail ? "display-none" : " "}`}
+            className={`${styles["check-text"]} ${isCheckedEmail ? styles["display-none"] : " "}`}
           >
             이메일이 중복되었습니다.
           </div>
           <input
             type="password"
             name="password"
-            className="password-input"
+            className={styles["password-input"]}
             placeholder="비밀번호를 입력하세요."
             onChange={onChangePassword}
             required
@@ -178,7 +178,7 @@ function RegisterComponent() {
           <input
             type="password"
             name="password_2"
-            className="password-input_2"
+            className={styles["password-input_2"]}
             placeholder="비밀번호를 다시 입력하세요."
             onChange={onChangeCheckPassword}
             onBlur={onBlurCheckPassword}
@@ -186,14 +186,14 @@ function RegisterComponent() {
           />{" "}
           <div
             id="wrong-password"
-            className={`check-text ${isChecked ? "display-none" : " "}`}
+            className={`${styles["check-text"]} ${isChecked ? styles["display-none"] : " "}`}
           >
             비밀번호가 일치하지 않습니다.
           </div>
           <input
             type="text"
             name="name"
-            className="name-input"
+            className={styles["name-input"]}
             placeholder="이름을 입력하세요."
             onChange={onChangeName}
             required
@@ -201,23 +201,23 @@ function RegisterComponent() {
           <input
             type="text"
             name="nickname"
-            className="nickname-input"
+            className={styles["nickname-input"]}
             placeholder="닉네임을 입력하세요."
             onChange={onChangeNickname}
             required
           />
-          <button type="submit" className="register-btn">
+          <button type="submit" className={styles["register-btn"]}>
             회원가입
           </button>
         </form>
       </div>
 
-      <div className="already">
+      <div className={styles.already}>
         <div>
-          <span className="q">이미 계정이 있으세요?</span>
+          <span className={styles.q}>이미 계정이 있으세요?</span>
         </div>
         <div>
-          <a href="/login" className="login">
+          <a href="/login" className={styles.login}>
             로그인
           </a>
         </div>

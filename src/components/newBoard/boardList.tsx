@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import "../../styles/project/projectListContainer.css";
-import "../../styles/board/board.css";
+import styles from "../../styles/board/board.module.css";
 import BoardItem from "./boardItem";
 import { ContentType } from "../../routes/home";
 import { patchBoardList, PageNumber } from "../../api/board/patchBoardList";
@@ -99,9 +98,9 @@ const BoardListContainer = ({
   };
 
   return (
-    <div className="w-50 p-15 test box-border">
-      <div className="board-top  line-bottom display-flex-start">
-        <FaClipboardQuestion className="mr-15" size={25} />
+    <div className={`${styles["w-50"]} ${styles["p-15"]} ${styles["test"]} ${styles["box-border"]}`}>
+      <div className={`${styles["board-top"]} ${styles["line-bottom"]} ${styles["display-flex-start"]}`}>
+        <FaClipboardQuestion className={styles["mr-15"]} size={25} />
         질문 게시판
       </div>
       {boardList &&
@@ -116,10 +115,10 @@ const BoardListContainer = ({
         ))}
 
       {/* 글쓰기 버튼 */}
-      <div className="board-writing-btn" onClick={chageComponent}>
+      <div className={styles["board-writing-btn"]} onClick={chageComponent}>
         글쓰기
       </div>
-      <div className="display-flex-justify-center">
+      <div className={styles["display-flex-justify-center"]}>
         <Paging />
       </div>
     </div>

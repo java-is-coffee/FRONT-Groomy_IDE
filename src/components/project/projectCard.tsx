@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../styles/project/projectCard.css";
+import styles from "../../styles/project/projectCard.module.css";
 import { ProjectDetails } from "../../api/project/patchProjectList";
 import ProjectCardDropdown from "./dropdown/projectCardDropdown";
 
@@ -21,17 +21,17 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails }) => {
   const color =
     LangColor[projectDetails.language as keyof typeof LangColor] || "white";
   return (
-    <div className="project-card" id={projectDetails.projectId.toString()}>
-      <div className="project-header">
-        <span className="project-title">{projectDetails.projectName}</span>
+    <div className={styles["project-card"]} id={projectDetails.projectId.toString()}>
+      <div className={styles["project-header"]}>
+        <span className={styles["project-title"]}>{projectDetails.projectName}</span>
         <ProjectCardDropdown projectId={projectDetails.projectId} />
       </div>
-      <span className="project-language" style={{ backgroundColor: color }}>
+      <span className={styles["project-language"]} style={{ backgroundColor: color }}>
         {projectDetails.language}
       </span>
-      <div className="project-description">{projectDetails.description}</div>
-      <div className="project-created-time">{projectDetails.createdDate}</div>
-      <button className="project-action">
+      <div className={styles["project-description"]}>{projectDetails.description}</div>
+      <div className={styles["project-created-time"]}>{projectDetails.createdDate}</div>
+      <button className={styles["project-action"]}>
         <span>이동하기</span>
       </button>
     </div>

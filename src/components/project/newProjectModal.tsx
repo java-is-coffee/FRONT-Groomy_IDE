@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
 
-import "../../styles/project/newProjectModal.css";
+import styles from "../../styles/project/newProjectModal.module.css";
 import { FaJava, FaPython, FaJsSquare, FaCuttlefish } from "react-icons/fa";
 import { SiKotlin, SiCplusplus } from "react-icons/si";
 
@@ -92,46 +92,46 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
 
   if (!isOpen) return null;
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
+    <div className={styles["modal-overlay"]} onClick={onClose}>
+      <div className={styles["modal-content"]} onClick={(e) => e.stopPropagation()}>
+        <div className={styles["modal-header"]}>
           <span>프로젝트 생성하기</span>
-          <div className="modal-close-button" onClick={onClose}>
+          <div className={styles["modal-close-button"]} onClick={onClose}>
             <RxCross1 width={"32px"} />
           </div>
         </div>
-        <div className="new-project-form" onSubmit={() => false}>
-          <label className="modal-input-label">프로젝트 이름</label>
+        <div className={styles["new-project-form"]} onSubmit={() => false}>
+          <label className={styles["modal-input-label"]}>프로젝트 이름</label>
           <input
-            className="new-project-title"
+            className={styles["new-project-title"]}
             type="text"
             placeholder="프로젝트 이름을 입력하세요"
             onChange={(e) => setProjectName(e.target.value)}
           />
-          <div className="modal-input-label">기술 스택</div>
+          <div className={styles["modal-input-label"]}>기술 스택</div>
           <StackDropdown
             stackOptions={StackOptions}
             onSelectStack={handleSelectLanguage}
           />
-          <label className="modal-input-label">프로젝트 설명</label>
+          <label className={styles["modal-input-label"]}>프로젝트 설명</label>
           <textarea
-            className="new-project-description"
+            className={styles["new-project-description"]}
             placeholder="프로젝트에 대한 간단한 설명을 적어주세요(최대 100자)"
             maxLength={100}
             onChange={(e) => setProjectDescription(e.target.value)}
           ></textarea>
-          <label className="modal-dropdown">맴버 추가하기</label>
-          <div className="member-dropdown">
+          <label className={styles["modal-dropdown"]}>맴버 추가하기</label>
+          <div className={styles["member-dropdown"]}>
             <MemberSearchDropdown
               groupMembers={groupMembers}
               onAddMember={addProjectMember}
             />
-            <div className="members-selected">
+            <div className={styles["members-selected"]}>
               {groupMembers.map((member) => (
-                <div id={member.memberId.toString()} className="group-member">
+                <div id={member.memberId.toString()} className={styles["group-member"]}>
                   <span key={member.memberId}>{member.nickname}</span>
                   <div
-                    className="member-remove-icons"
+                    className={styles["member-remove-icons"]}
                     onClick={removeProjectMember}
                   >
                     <IoMdClose size="13px" style={{ cursor: "pointer" }} />
@@ -140,7 +140,7 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
               ))}
             </div>
           </div>
-          <button className="modal-button" onClick={handleAddProject}>
+          <button className={styles["modal-button"]} onClick={handleAddProject}>
             생성하기
           </button>
         </div>

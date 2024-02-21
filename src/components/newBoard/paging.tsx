@@ -15,6 +15,7 @@ import {
 } from "../../redux/reducers/boardReducer";
 import { patchBoardList, PageNumber } from "../../api/board/patchBoardList";
 import { patchBoard } from "../../redux/reducers/boardReducer";
+import styles from "../../styles/board/board.module.css";
 
 function Paging() {
   const pageList = useSelector((state: RootState) => state.board.page);
@@ -107,11 +108,11 @@ function Paging() {
   };
 
   return (
-    <div className="display-flex-center">
+    <div className={styles["display-flex-center"]}>
       <MdKeyboardDoubleArrowLeft onClick={fullBackList} size={36} />
       <MdKeyboardArrowLeft
         onClick={backList}
-        className="board-page"
+        className={styles["board-page"]}
         size={36}
       />
       {pageList &&
@@ -120,7 +121,7 @@ function Paging() {
             key={number}
             id={`${number}`}
             onClick={movePage}
-            className="board-page"
+            className={styles["board-page"]}
           >
             {number}
           </div>
@@ -129,7 +130,7 @@ function Paging() {
       {/* {pageList.map((number) => number)} */}
       <MdKeyboardArrowRight
         onClick={frontList}
-        className="board-page"
+        className={styles["board-page"]}
         size={36}
       />
       <MdKeyboardDoubleArrowRight onClick={fullFrontList} size={36} />

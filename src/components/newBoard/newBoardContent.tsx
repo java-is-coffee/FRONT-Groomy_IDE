@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/board/board.css";
+import styles from "../../styles/board/board.module.css";
 import { FaClipboard } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -52,63 +52,63 @@ function NewBoardPage() {
   };
 
   return (
-    <div className="w-50 p-15 test box-border">
-      <div className="board-top  line-bottom display-flex-start">
-        <FaClipboard className="mr-15" size={25} />
+    <div className={`${styles["w-50"]} ${styles["p-15"]} ${styles.test} ${styles["box-border"]}`}>
+      <div className={`${styles["board-top"]} ${styles["line-bottom"]} ${styles["display-flex-start"]}`}>
+        <FaClipboard className={styles["mr-15"]} size={25} />
         질문 작성
       </div>
 
-      <form className="mt-30" onSubmit={handleSubmit}>
-        <div className="mt-15">
-          <span className="font-bold">제목</span>
-          <span className="float-right">
+      <form className={styles["mt-30"]} onSubmit={handleSubmit}>
+        <div className={styles["mt-15"]}>
+          <span className={styles["font-bold"]}>제목</span>
+          <span className={styles["float-right"]}>
             <input type="checkbox" name="anonymous" />
             <span>익명 선택</span>
           </span>
-          <span className="float-right mr-15">
+          <span className={`${styles["float-right"]} ${styles["mr-15"]}`}>
             <input type="checkbox" name="completed" onChange={checkCompleted} />
             <span>해결</span>
           </span>
-          <div className="mt-15">
+          <div className={styles["mt-15"]}>
             <input
               type="text"
               name="title"
-              className="input-box"
+              className={styles["input-box"]}
               required
               onChange={onChangeTitle}
             />
           </div>
         </div>
 
-        <div className="mt-15">
-          <span className="font-bold">태그</span>
-          <div className="mt-15">
+        <div className={styles["mt-15"]}>
+          <span className={styles["font-bold"]}>태그</span>
+          <div className={styles["mt-15"]}>
             <input
               type="text"
               name="tag"
-              className="input-box"
+              className={styles["input-box"]}
               required
               //onChange={onChangeTag}
             />
           </div>
         </div>
 
-        <div className="mt-15">
-          <span className="font-bold">내용</span>
-          <div className="mt-15">
+        <div className={styles["mt-15"]}>
+          <span className={styles["font-bold"]}>내용</span>
+          <div className={styles["mt-15"]}>
             <textarea
               required
               name="content"
-              className="input-box board-write-content"
+              className={`${styles["input-box"]} ${styles["board-write-content"]}`}
               rows={20}
               onChange={onChangeContent}
             />
           </div>
         </div>
 
-        <div className="float-right mr-15">
-          <button className="mr-15 board-write-btn bg-white">취소</button>
-          <button className="board-write-btn bg-sub-color" type="submit">
+        <div className={`${styles["float-right"]} ${styles["mr-15"]}`}>
+          <button className={`${styles["mr-15"]} ${styles["board-write-btn"]} ${styles["bg-white"]}`}>취소</button>
+          <button className={`${styles["board-write-btn"]} ${styles["bg-sub-color"]}`} type="submit">
             작성
           </button>
         </div>

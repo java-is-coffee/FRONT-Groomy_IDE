@@ -1,4 +1,4 @@
-.logoPosition {
+.logo-position {
   position: absolute;
   width: 394px;
   height: 366px;
@@ -6,7 +6,7 @@
   top: 147px;
 }
 
-.resetComponent {
+.reset-component {
   /* Group 30 */
 
   position: absolute;
@@ -16,7 +16,7 @@
   top: 629px;
 }
 
-.emailInput {
+.email-input {
   /* 비밀번호 input */
 
   box-sizing: border-box;
@@ -32,7 +32,7 @@
   border-radius: 3px;
 }
 
-.nameInput {
+.name-input {
   /* 이메일&아이디 input */
 
   box-sizing: border-box;
@@ -48,7 +48,7 @@
   border-radius: 3px;
 }
 
-.basicBtn {
+.basic-btn {
   /* 회원가입 */
 
   box-sizing: border-box;
@@ -64,7 +64,7 @@
   color: white;
 }
 
-.midText {
+.mid-text {
   position: absolute;
   left: 44.04%;
   right: 43.87%;

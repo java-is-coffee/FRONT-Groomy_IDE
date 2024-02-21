@@ -2,7 +2,7 @@ import { Editor, useMonaco } from "@monaco-editor/react";
 import React, { useCallback, useEffect, useRef } from "react";
 import CodeTab from "./codeTab";
 
-import "../../../styles/webIDE/codeContainer.css";
+import styles from "../../../styles/webIDE/codeContainer.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import * as monaco from "monaco-editor";
@@ -131,7 +131,7 @@ const CodeEditor = () => {
   }, [monacoInstance, theme]);
   console.log(editFiles.length);
   return (
-    <div className="code-container">
+    <div className={styles["code-container"]}>
       <CodeTab />
       {editFiles.length !== 0 ? (
         <Editor
@@ -141,7 +141,7 @@ const CodeEditor = () => {
           onChange={handleEditorChange}
         />
       ) : (
-        <div className="code-edit-starter">
+        <div className={styles["code-edit-starter"]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>select file to edit</span>
         </div>

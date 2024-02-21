@@ -1,13 +1,13 @@
-import "../../../styles/webIDE/sideContainer/explorer.css";
+import styles from "../../../styles/webIDE/sideContainer/explorer.module.css";
 import RenderTree from "./renderTree";
 
 const Explorer = () => {
   return (
-    <div className="side-content">
-      <div className="side-container-header">
-        <span className="side-container-title">EXPLORER</span>
+    <div className={styles["side-content"]}>
+      <div className={styles["side-container-header"]}>
+        <span className={styles["side-container-title"]}>EXPLORER</span>
       </div>
-      <div className="explore-tree-view">
+      <div className={styles["explore-tree-view"]}>
         <RenderTree />
       </div>
     </div>

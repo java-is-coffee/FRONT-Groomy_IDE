@@ -103,7 +103,7 @@ function LoginComponent() {
         {/* 중앙 분리대 */}
         <div className={styles["line-separator"]}>
           <span className={styles["mid-line"]}></span>
-          <span className={styles["or"]}>or</span>
+          <span className={styles.or}>or</span>
           <span className={styles["mid-line"]}></span>
         </div>
 

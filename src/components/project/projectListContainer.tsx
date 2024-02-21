@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../../styles/project/projectListContainer.css";
+import styles from "../../styles/project/projectListContainer.module.css";
 import ProjectCard from "./projectCard";
 
 import {
@@ -32,7 +32,7 @@ const ProjectListContainer: React.FC = () => {
     }
   }, [accessToken, projects, dispatch]);
   return (
-    <div className="project-list">
+    <div className={styles["project-list"]}>
       {projects &&
         projects.map((project) => (
           <ProjectCard key={project.projectId} projectDetails={project} />

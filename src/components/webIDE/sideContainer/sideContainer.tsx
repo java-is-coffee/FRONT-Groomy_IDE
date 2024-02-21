@@ -4,7 +4,7 @@ import { RootState } from "../../../redux/store/store";
 import IdeOptionType from "../../../enum/ideOptionType";
 import Explorer from "./explorer";
 
-import "../../../styles/webIDE/sideContainer/sideContainer.css";
+import styles from "../../../styles/webIDE/sideContainer/sideContainer.module.css";
 import Board from "./board";
 import Chat from "./chat";
 
@@ -24,7 +24,7 @@ const SideContainer: React.FC = () => {
     }
   };
 
-  return <div className="side-container-contents">{renderContent()}</div>;
+  return <div className={styles["side-container-contents"]}>{renderContent()}</div>;
 };
 
 export default SideContainer;
