@@ -44,22 +44,6 @@ const useWebSocket = () => {
     [stompClient]
   );
 
-  const disconnect = useCallback(() => {
-    connectionCount--;
-    if (connectionCount === 0 && stompClient) {
-      stompClient.disconnect(() => {
-        console.log("Disconnected");
-        globalStompClient = null;
-      });
-    }
-    if (stompClient) {
-      stompClient.disconnect(() => {
-        globalStompClient = null; // 전역 변수를 null로 설정
-        setStompClient(null);
-      });
-    }
-  }, [stompClient]);
-
   const subscribe = useCallback(
     (
       destination: string,
@@ -114,6 +98,25 @@ const useWebSocket = () => {
       stompClient.send(destination, headers, JSON.stringify(body));
     },
     [stompClient]
+  );
+
+  const disconnect = useCallback(
+    (projectId: string) => {
+      // 구독 해제
+      unsubscribe(`/projectws/${projectId}/code`);
+      unsubscribe(`/projectws/${projectId}/files`);
+      unsubscribe(`/projectws/${projectId}/messages`);
+
+      // connectionCount를 감소시키고 연결이 0이 되면 연결을 끊습니다.
+      if (stompClient) {
+        stompClient.disconnect(() => {
+          console.log("Disconnected");
+          globalStompClient = null;
+          setStompClient(null);
+        });
+      }
+    },
+    [stompClient, unsubscribe]
   );
 
   return {

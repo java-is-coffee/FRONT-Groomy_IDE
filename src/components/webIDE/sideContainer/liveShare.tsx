@@ -1,13 +1,17 @@
+import { useParams } from "react-router-dom";
 import useWebSocket from "../../../hooks/useWebSocket";
 import "../../../styles/webIDE/sideContainer/explorer.css";
 
 const LiveShare = () => {
-  const { disconnect } = useWebSocket();
+  const { disconnect, unsubscribe } = useWebSocket();
+  const { projectId } = useParams();
   const handleSharing = () => {
     // connect("ws/project");
   };
   const handleDisconnect = () => {
-    disconnect();
+    if (projectId) {
+      disconnect(projectId);
+    }
   };
 
   return (
