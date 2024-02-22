@@ -8,14 +8,6 @@ import { FaCircleArrowUp } from "react-icons/fa6";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import chatStyles from "./chat.module.css";
 
-type Message = {
-  id: number;
-  text: string;
-  user_name: string;
-  user_icon: JSX.Element;
-  is_mine: boolean;
-};
-
 type ChatComponentsProps = {
   projectId: string | undefined;
 };
@@ -38,11 +30,9 @@ interface IChatDetail {
 const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
   const curMember = useSelector((state: RootState) => state.member.member);
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
-  const { stompClient, connect, subscribe, unsubscribe, sendMessage } =
-    useWebSocket();
+  const { stompClient, subscribe, unsubscribe, sendMessage } = useWebSocket();
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState<IChatDetail[]>([]);
 
@@ -123,7 +113,7 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
     return () => {
       unsubscribe(subUrl);
     };
-  }, [projectId, subscribe, stompClient]);
+  }, [projectId, subscribe, stompClient, unsubscribe]);
 
   return curMember === null ? (
     <div></div>
