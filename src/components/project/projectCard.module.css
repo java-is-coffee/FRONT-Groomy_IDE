@@ -2,40 +2,65 @@
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 10px;
+  padding: 15px;
   width: 300px;
   min-height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .project-header {
   position: relative;
   display: flex;
   justify-content: space-between;
-  justify-items: center;
-  align-items: flex-end;
+  align-items: center;
   border-bottom: 1px solid #ccc;
 }
 
 .project-title {
-  padding: 8px;
+  height: 100%;
+  display: inline-flex;
+  text-align: end;
   font-weight: bold;
+  font-size: 20px;
+  margin-right: 5px;
 }
 
 .project-language {
-  width: 70px;
+  height: 100%;
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
   color: #ffffff;
+  padding: 2px 6px;
+  min-width: 20px;
   display: inline-block;
   border-radius: 4px;
-  padding: 4px 8px;
-  font-size: 14px;
+  font-size: 0.8em;
   text-align: center;
+  order: 2;
+}
+
+.project-member-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.project-member {
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  color: white;
 }
 
 .project-description {
   font-size: 16px;
+  height: 100px;
   color: #333333;
   margin-bottom: 16px;
   overflow: hidden;
