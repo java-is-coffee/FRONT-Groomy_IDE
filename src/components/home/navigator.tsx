@@ -1,16 +1,16 @@
 import React from "react";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
-
 import navStyles from "./nav.module.css";
-
-type navProps = {
-  onChange: (newState: boolean) => void;
+import { useDispatch } from "react-redux";
+import { openNewProjectModal } from "../../redux/reducers/modalReducer";
+interface NavProps {
+  onChange: (change: boolean) => void;
   sideClose: boolean;
-  onOpen: () => void;
-};
+}
 
-const Nav: React.FC<navProps> = ({ onChange, sideClose, onOpen }) => {
+const Nav: React.FC<NavProps> = ({ onChange, sideClose }) => {
+  const dispatch = useDispatch();
   return (
     <div className={navStyles[`menu-bar`]}>
       <div
@@ -22,7 +22,10 @@ const Nav: React.FC<navProps> = ({ onChange, sideClose, onOpen }) => {
         <MdKeyboardDoubleArrowRight size={"32px"} />
       </div>
       <div>
-        <button className={navStyles[`new-project`]} onClick={onOpen}>
+        <button
+          className={navStyles[`new-project`]}
+          onClick={() => dispatch(openNewProjectModal())}
+        >
           <span>NEW PROJECT</span>
           <GoPlus size={"20px"} />
         </button>

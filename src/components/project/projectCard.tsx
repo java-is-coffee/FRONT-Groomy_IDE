@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ProjectDetails } from "../../api/project/patchProjectList";
 import ProjectCardDropdown from "./dropdown/projectCardDropdown";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ import { RxCross2 } from "react-icons/rx";
 import { rejectProjectInvite } from "../../api/project/rejectProjectInvite";
 import { IProjectActionDTO } from "../../api/project/iprojectActionDto";
 import { removeInvitedProjects } from "../../redux/reducers/projectReducer";
+import { getProjectMemberList } from "../../api/member/getProjectMemberList";
+import { IMember } from "../../api/member/imemberDTO";
 
 
 type projectProps = {
@@ -29,12 +31,25 @@ enum LangColor {
   JAVA = "#F8981C",
 }
 
+const getRandomColor = (): string => {
+  let color = "#";
+  for (let i = 0; i < 3; i++) {
+    // Generate a value in the range of 100 ~ 200 for more subdued colors
+    const value = Math.floor(Math.random() * 100) + 100;
+    // Convert the value to hexadecimal and add it to the color string
+    color += value.toString(16).padStart(2, "0");
+  }
+  return color;
+};
+
 const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const color =
     LangColor[projectDetails.language as keyof typeof LangColor] || "white";
   const member = useSelector((state: RootState) => state.member.member);
+  const [projectMember, setProjectMember] = useState<IMember[]>([]);
+
   const fetchAcceptProject = async () => {
     try {
       if (member) {
@@ -78,6 +93,23 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
     fetchRejectProject();
   };
 
+  const fetchProjectMemberList = useCallback(async () => {
+    try {
+      const storedMembers: IMember[] | null = await getProjectMemberList(
+        projectDetails.projectId
+      );
+      if (storedMembers) {
+        setProjectMember(storedMembers);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }, [projectDetails.projectId]);
+
+  useEffect(() => {
+    fetchProjectMemberList();
+  }, [fetchProjectMemberList]);
+
 
   const handleProjectSelect = () => {
     nav(`/chat/${projectDetails.projectId}`, {
@@ -91,17 +123,37 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
       id={projectDetails.projectId.toString()}
     >
       <div className={projectCardStyles[`project-header`]}>
-        <span className={projectCardStyles[`project-title`]}>
-          {projectDetails.projectName}
-        </span>
-        <ProjectCardDropdown projectId={projectDetails.projectId} />
+        <div>
+          <span className={projectCardStyles[`project-title`]}>
+            {projectDetails.projectName}
+          </span>
+          <div
+            className={projectCardStyles[`project-language`]}
+            style={{ backgroundColor: color }}
+          >
+            <span>{projectDetails.language}</span>
+          </div>
+        </div>
+        {type === "project" ? (
+          <ProjectCardDropdown projectDetails={projectDetails} />
+        ) : (
+          ""
+        )}
       </div>
-      <span
-        className={projectCardStyles[`project-language`]}
-        style={{ backgroundColor: color }}
-      >
-        {projectDetails.language}
-      </span>
+      <div className={projectCardStyles[`project-member-container`]}>
+        {projectMember.map((member) => {
+          return (
+            <span
+              key={member.memberId}
+              className={projectCardStyles[`project-member`]}
+              style={{ background: getRandomColor() }}
+            >
+              {member.nickname}
+            </span>
+          );
+        })}
+      </div>
+
       <div className={projectCardStyles[`project-description`]}>
         {projectDetails.description}
       </div>

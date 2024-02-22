@@ -1,24 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  SearchedMember,
-  searchMemberByEmail,
-} from "../../../api/member/searchMemberByEmail";
+import { searchMemberByEmail } from "../../../api/member/searchMemberByEmail";
 
 import memberModuleStyles from "./memberSearchDropdown.module.css";
+import { IMember } from "../../../api/member/imemberDTO";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
 
 interface DropdownProps {
-  groupMembers: SearchedMember[];
-  onAddMember: (member: SearchedMember) => void;
+  groupMembers: IMember[];
+  onAddMember: (member: IMember) => void;
 }
 
 const MemberSearchDropdown: React.FC<DropdownProps> = ({
   groupMembers,
   onAddMember,
 }) => {
+  const curMember = useSelector((state: RootState) => state.member.member);
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isExistingMember, setIsExistingMember] = useState<boolean>(false);
   const [searchEmail, setSearchEmail] = useState<string>("");
-  const [searchedMember, setSearchedMember] = useState<SearchedMember | null>();
+  const [searchedMember, setSearchedMember] = useState<IMember | null>();
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const addMember = () => {
@@ -26,11 +28,11 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
       if (searchedMember) {
         onAddMember(searchedMember);
       }
-      setSearchEmail("");
-      setSearchedMember(null);
-      setIsOpen(false);
-      setIsExistingMember(false);
     }
+    setSearchEmail("");
+    setSearchedMember(null);
+    setIsOpen(false);
+    setIsExistingMember(false);
   };
 
   // 드롭 다운 외부 클릭시 닫히게
@@ -58,11 +60,14 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
   useEffect(() => {
     const getMembers = async () => {
       try {
-        const storedMember: SearchedMember | null = await searchMemberByEmail(
+        const storedMember: IMember | null = await searchMemberByEmail(
           searchEmail
         );
         setSearchedMember(storedMember);
-        console.log(groupMembers);
+        if (curMember?.memberId === storedMember?.memberId) {
+          setIsExistingMember(true);
+          return false;
+        }
         groupMembers.map((member) => {
           if (member.memberId === storedMember?.memberId) {
             setIsExistingMember(true);
@@ -77,7 +82,7 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
     if (!searchedMember) {
       getMembers();
     }
-  }, [searchEmail, groupMembers, searchedMember]);
+  }, [searchEmail, groupMembers, searchedMember, curMember?.memberId]);
   return (
     <div
       className={memberModuleStyles[`member-search-container`]}
@@ -89,6 +94,9 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
           placeholder="email로 사용자를 검색하세요."
           value={searchEmail}
           onChange={(e) => setSearchEmail(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") addMember();
+          }}
           className={memberModuleStyles[`member-search-input`]}
         />
       ) : (

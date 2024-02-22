@@ -66,6 +66,8 @@ const useWebSocket = () => {
         },
       };
 
+      const dst = destination.split("/");
+      toast.info(`${dst[dst.length - 1]} 접속완료`);
       subscriptions.set(destination, subscriptionObject);
 
       return subscriptionObject;
@@ -77,8 +79,6 @@ const useWebSocket = () => {
     (destination: string) => {
       // `subscriptions` Map에서 구독 객체를 찾음
       const subscription = subscriptions.get(destination);
-      const dst = destination.split("/");
-      toast.info(dst[dst.length - 1]);
       if (subscription) {
         // 구독 해제
         subscription.unsubscribe();

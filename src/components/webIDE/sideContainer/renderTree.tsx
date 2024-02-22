@@ -32,6 +32,7 @@ import { IoSyncSharp } from "react-icons/io5";
 import { getFileContent } from "../../../api/codeFile/getFileContent";
 
 import treeStyles from "./renderTree.module.css";
+import { toast } from "react-toastify";
 
 // 언어에 맞는 로고 가져오기
 const setLabel = (name: string) => {
@@ -299,7 +300,12 @@ const RenderTree = () => {
     try {
       if (!projectId) throw new Error("Project ID가 없습니다.");
       const result = await getFileContent(projectId, oldPath);
-      return result || ""; // result가 undefined 또는 null일 경우 빈 문자열 반환
+      if (result) {
+        return result; // result가 undefined 또는 null일 경우 빈 문자열 반환
+      } else {
+        toast.error("파일을 로드할 수 없습니다.");
+        return "";
+      }
     } catch (error) {
       console.error("코드 세부 정보 불러오기 오류:", error);
       return ""; // 오류가 발생했을 경우 빈 문자열 반환
@@ -329,6 +335,7 @@ const RenderTree = () => {
           const result = await getFileTree(projectId);
           if (result) {
             dispatch(setItems(result));
+            toast.done("프로젝트 로드 완료");
           }
         } catch (error) {
           // 에러 핸들링 추가

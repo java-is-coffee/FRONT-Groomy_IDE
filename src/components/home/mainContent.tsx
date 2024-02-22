@@ -8,11 +8,7 @@ import InvitedProjectListContainer from "../project/invitedProjectLIstContainer"
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 
-interface MainContentProps {
-  curContent: ContentType;
-}
-
-const MainContent: React.FC<MainContentProps> = () => {
+const MainContent: React.FC = () => {
   const mainOption = useSelector((state: RootState) => state.mainOption.option);
 
   switch (mainOption) {
