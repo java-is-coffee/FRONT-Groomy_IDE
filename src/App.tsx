@@ -6,6 +6,8 @@ import Home from "./pages/homePage";
 import "./styles/style.css";
 import ResetPassword from "./routes/resetPassword";
 import WebIDE from "./routes/webIDE";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -22,52 +24,18 @@ function App() {
           <Route path="/code-editor/:projectId" element={<WebIDE />}></Route>
         </Routes>
       </Router>
+      <ToastContainer
+        position="top-right"
+        limit={1}
+        closeButton={false}
+        autoClose={4000}
+        draggable={true}
+        closeOnClick={true}
+        pauseOnHover={true}
+        hideProgressBar
+      />
     </div>
   );
 }
 
 export default App;
-
-/*
-  route
-   - 로그인 : /login
-   - 회원가입 : /register
-   - 메인 : /
-   - 프로젝트 생성 : /project
-   - 메인 코드 에디터 : /project/code/{projectId}
-   - 채팅
-      - 프로젝트: /chat/project/{chatId}
-      - DM: /chat/dm/{memberId}
-   - 게시판
-      - 게시판 목록 : /board
-      - 게시글 보기 : /board/{boardId}
-      - 게시글 작성 : /board/new
-      - 게시글 수정 : /board/edit/{boardId}
-*/
-
-/* 
- 리덕스 구조
-  store / state action 
-  
-  const counter = (state = initialState, action) => {
-    console.log(action);
-    switch(action.type) {
-      case INCREMENT:
-        return { 
-          number: state.number + action.diff
-        };
-      case DECREMENT:
-        return { 
-          number: state.number - 1
-        };
-      default:
-        return state;
-    }
-  }
-
-  // 스토어를 만들 땐 createStore 에 리듀서 함수를 넣어서 호출합니다.
-  const { createStore } = Redux;
-  const store = createStore(counter);
-
-
-*/
