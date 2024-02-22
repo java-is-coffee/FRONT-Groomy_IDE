@@ -1,6 +1,5 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
-import { toast } from "react-toastify";
 
 const BASE_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";
@@ -51,7 +50,7 @@ export const postFileDetails = async (
         patchAccessToken();
       } else {
         // 유저에게 메시지 전달
-        toast.error("파일을 불러올수 없습니다.");
+        console.error("파일을 불러올수 없습니다.");
       }
     }
     return false;

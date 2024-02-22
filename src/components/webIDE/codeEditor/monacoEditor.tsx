@@ -16,6 +16,7 @@ import {
 } from "../../../api/codeFile/postFileDetails";
 
 import editorStyles from "./codeEditor.module.css";
+import { toast } from "react-toastify";
 
 // 웹소켓 통신 DTO
 interface CodeDTO {
@@ -71,17 +72,16 @@ const MonacoEditor = () => {
             content: editorInstance.getValue(),
             type: "FILE",
           };
-          console.log("save");
           const saveFileToServer = async () => {
             try {
               const result = await postFileDetails(saveItem);
               if (result) {
-                console.log("저장 성공");
+                toast.done("저장완료");
               } else {
-                console.log("서버에 저장을 실패하였습니다.");
+                toast.error("서버에 저장을 실패하였습니다.");
               }
             } catch (error) {
-              console.log("서버에 저장을 실패하였습니다.");
+              toast.error("서버에 저장을 실패하였습니다.");
             }
           };
 

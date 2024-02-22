@@ -57,7 +57,7 @@ export const getFileTree = async (
         patchAccessToken();
       } else {
         // 유저에게 메시지 전달
-        toast("파일 목록을 불러올수 없습니다.");
+        console.error("파일 목록을 불러올수 없습니다.");
       }
     }
     return null;
