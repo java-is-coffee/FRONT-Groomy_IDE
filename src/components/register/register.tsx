@@ -9,6 +9,7 @@ import postRegister, {
   RegisterDTO,
   RegisterData,
 } from "../../api/login/postRegister";
+import { toast } from "react-toastify";
 
 function RegisterComponent() {
   const [email, setEmail] = useState("");
@@ -97,6 +98,7 @@ function RegisterComponent() {
 
     if (response === 200) {
       setIsSendEmail(true);
+      toast.success("이메일 전송 완료");
       console.log("메일 전송 완료");
     } else {
       console.log("메일 전송 불가");
@@ -104,7 +106,7 @@ function RegisterComponent() {
   };
 
   return (
-    <div className={styled.body}>
+    <div className={styled.box}>
       <div className={styled.logo}>
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>

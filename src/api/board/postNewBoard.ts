@@ -34,8 +34,6 @@ export const postNewBoard = async (
     data: inputData,
   };
 
-  console.log(`${USER_API_URL}`);
-  console.log(requestDTO);
   if (!storedToken) {
     console.error("Access token not found. Please login again.");
     return null;

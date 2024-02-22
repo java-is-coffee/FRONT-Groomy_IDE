@@ -6,19 +6,16 @@ import { useSelector } from "react-redux";
 import { CommentDetails } from "../../../api/board/getCommentList";
 import { newReply } from "../../../api/board/comment/postNewReply";
 import useBoardHooks from "../../../hooks/board/boardHook";
+import MDEditor from "@uiw/react-md-editor";
 
 function Reply({ originComment }: { originComment: CommentDetails }) {
   const [writeReply, setWriteReply] = useState(false);
   const boardId = useSelector((state: RootState) => state.board.contentId);
   const userInfo = useSelector((state: RootState) => state.member.member);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string | undefined>("");
   const boardHooks = useBoardHooks();
 
-  function onChangeContent(event: React.FormEvent<HTMLTextAreaElement>): void {
-    setContent(event.currentTarget.value);
-  }
-
-  const handleSumbit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (boardId !== null && userInfo?.nickname && userInfo.memberId) {
       const comment: CommentDetail = {
@@ -46,15 +43,14 @@ function Reply({ originComment }: { originComment: CommentDetails }) {
         <button onClick={() => setWriteReply(!writeReply)}>대댓글 작성</button>
       </div>
       {writeReply ? (
-        <form onSubmit={handleSumbit}>
-          <div className="mt-15">
-            <textarea
-              rows={3}
-              className="comment-input"
-              onChange={onChangeContent}
-            ></textarea>
-          </div>
-          <button type="submit">작성 하기</button>
+        <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
+          <MDEditor
+            height={200}
+            value={content}
+            preview="edit"
+            onChange={(val) => setContent(val)}
+          />
+          <button type="submit">댓글 달기</button>
         </form>
       ) : (
         " "

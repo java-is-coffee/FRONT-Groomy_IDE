@@ -7,6 +7,7 @@ import BoardWrite from "../newBoard/board/newBoardContent";
 import InvitedProjectListContainer from "../project/invitedProjectLIstContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
+import MyPageContainer from "../mypage/myPageContainer";
 
 const MainContent: React.FC = () => {
   const mainOption = useSelector((state: RootState) => state.mainOption.option);
@@ -22,6 +23,8 @@ const MainContent: React.FC = () => {
       return <BoardContent />;
     case ContentType.BoardWrite:
       return <BoardWrite />;
+    case ContentType.MyPage:
+      return <MyPageContainer />;
     default:
       return <ProjectListContainer />;
   }

@@ -76,7 +76,10 @@ const BoardReducer = createSlice({
     patchCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    patchCommentList: (state, action: PayloadAction<CommentDetails[]>) => {
+    patchCommentList: (
+      state,
+      action: PayloadAction<CommentDetails[] | null>
+    ) => {
       state.commentList = action.payload;
     },
     patchComment: (state, action: PayloadAction<CommentDetails | null>) => {

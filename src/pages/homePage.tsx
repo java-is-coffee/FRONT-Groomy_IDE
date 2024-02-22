@@ -60,12 +60,14 @@ const HomePage: React.FC = () => {
           }`}
         >
           <Sidebar onChange={handleSidebarToggle} sideClose={sideClose} />
+          <Sidebar onChange={handleSidebarToggle} sideClose={sideClose} />
         </aside>
         <div
           className={`${homeStyle["main-content"]} ${
             sideClose ? homeStyle.wide : ""
           }`}
         >
+          <MainContent />
           <MainContent />
         </div>
       </div>

@@ -13,6 +13,7 @@ import { postHelpNumber } from "../../../api/board/comment/postHelpNumber";
 import { patchComment } from "../../../redux/reducers/boardReducer";
 import MDEditor from "@uiw/react-md-editor";
 import styled from "./comment.module.css";
+import { Button } from "@mui/material";
 
 function Comment() {
   const [content, setContent] = useState<string | undefined>("");
@@ -52,10 +53,6 @@ function Comment() {
     }
   };
 
-  // function onChangeContent(event: React.FormEvent<HTMLTextAreaElement>): void {
-  //   setContent(event.currentTarget.value);
-  // }
-
   const handleHelp = async (event: React.MouseEvent<SVGAElement>) => {
     event.preventDefault();
     const id = event.currentTarget.getAttribute("id");
@@ -77,15 +74,20 @@ function Comment() {
 
   return (
     // 댓글 목록
-    <div>
+    <div style={{ marginTop: "20px" }}>
       <form onSubmit={handleSubmit}>
+        <div></div>
         <MDEditor
           height={200}
           value={content}
           preview="edit"
           onChange={(val) => setContent(val)}
         />
-        <button type="submit">댓글 달기</button>
+        <div style={{ marginTop: "15px", marginBottom: "30px" }}>
+          <Button type="submit" variant="contained" style={{ float: "right" }}>
+            댓글 달기
+          </Button>
+        </div>
       </form>
       {/* 댓글 출력 */}
       {commentList &&
