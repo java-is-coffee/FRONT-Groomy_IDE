@@ -16,7 +16,7 @@ const SideContainer: React.FC = () => {
     switch (option) {
       case IdeOptionType.File:
         return <Explorer />;
-      case IdeOptionType.Board:
+      case IdeOptionType.BoardList:
         return <Board />;
       case IdeOptionType.Chat:
         return <Chat />;

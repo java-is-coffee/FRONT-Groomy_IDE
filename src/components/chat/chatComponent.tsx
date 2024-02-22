@@ -33,7 +33,6 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
   const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
   const { stompClient, subscribe, unsubscribe, sendMessage } = useWebSocket();
-  const { stompClient, subscribe, unsubscribe, sendMessage } = useWebSocket();
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState<IChatDetail[]>([]);
 
