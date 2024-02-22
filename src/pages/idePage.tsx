@@ -4,7 +4,7 @@ import StatusBar from "../components/webIDE/statusBar";
 import CompositeBar from "../components/webIDE/compositeBar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store/store";
-import SideContainer from "../components/webIDE/sideContainer/sideContainer";
+import SideContainer from "../components/webIDE/sideContainer";
 import { toggleSideContainer } from "../redux/reducers/ide/ideSideContainerReducer";
 import { useParams } from "react-router-dom";
 import useWebSocket from "../hooks/useWebSocket";
@@ -16,7 +16,8 @@ import { resetItems } from "../redux/reducers/ide/fileSystemReducer";
 import { setIdeOption } from "../redux/reducers/ide/ideOptionReducer";
 import IdeOptionType from "../enum/ideOptionType";
 
-import "../styles/webIDE/webIDE.css";
+import ideStyles from "./webIDE.module.css";
+
 const IdePage = () => {
   const isResizing = useRef(false);
   const [resizing, setResizing] = useState(false);
@@ -126,12 +127,14 @@ const IdePage = () => {
   }, [member, dispatch, connect, disconnect, stompClient]);
 
   return (
-    <div className="ide">
-      <div className="composite-bar">
+    <div className={ideStyles[`ide`]}>
+      <div className={ideStyles[`composite-bar`]}>
         <CompositeBar />
       </div>
       <div
-        className={`side-container ${isOpenSide ? "" : "closed"}`}
+        className={`${ideStyles[`side-container`]} ${
+          isOpenSide ? "" : ideStyles.closed
+        }`}
         style={
           isOpenSide ? { width: `${sideContainerWidth}px` } : { width: "0px" }
         }
@@ -141,16 +144,20 @@ const IdePage = () => {
       {isOpenSide ? (
         <div
           ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle${resizing ? " active" : ""}`}
+          className={`${ideStyles[`resize-handle`]} ${
+            resizing ? ideStyles.active : ""
+          }`}
         />
       ) : (
         <div
           ref={resizeHandle} // 리사이징 핸들 참조 연결
-          className={`resize-handle closed${resizing ? " active" : ""}`}
+          className={`${ideStyles[`resize-handle`]} closed${
+            resizing ? " active" : ""
+          }`}
         />
       )}
       <div
-        className="code-editor"
+        className={ideStyles[`code-editor`]}
         style={
           isOpenSide
             ? { width: `calc(100% - ${sideContainerWidth}px - 52px)` }
@@ -159,7 +166,7 @@ const IdePage = () => {
       >
         <CodeEditor />
       </div>
-      <div className="status-bar">
+      <div className={ideStyles[`status-bar`]}>
         <StatusBar />
       </div>
     </div>

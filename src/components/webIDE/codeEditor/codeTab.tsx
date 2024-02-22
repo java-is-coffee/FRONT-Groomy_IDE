@@ -8,6 +8,8 @@ import {
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 
+import editorStyles from "./codeEditor.module.css";
+
 const CodeTab = () => {
   const dispatch = useDispatch();
   // redux 로부터 현재 탭과 탭에 대한 디테일 가져오기
@@ -32,18 +34,20 @@ const CodeTab = () => {
     dispatch(setCurEditingCode(code));
   };
   return (
-    <div className="code-tab-container">
+    <div className={editorStyles[`code-tab-container`]}>
       {tabDetails.map((tab) => {
         return (
           <div
             key={tab.id}
-            className={`code-tab-items ${tab.id === curTab.id ? "active" : ""}`}
+            className={`${editorStyles[`code-tab-items`]} ${
+              tab.id === curTab.id ? editorStyles.active : ""
+            }`}
             onClick={() => handleTabSelect(tab)}
           >
             {getLanguageIcon(tab.name.split(".")[1])}
             <span>{`${tab.name}`}</span>
             <div
-              className="tab-close"
+              className={editorStyles[`tab-close`]}
               onClick={(event) => closeTab(event, tab.id)}
             >
               <Close />

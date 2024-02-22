@@ -1,13 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store/store";
-import IdeOptionType from "../../../enum/ideOptionType";
-import Explorer from "./explorer";
+import { RootState } from "../../redux/store/store";
+import IdeOptionType from "../../enum/ideOptionType";
+import Explorer from "./sideContainer/explorer";
+import Board from "./sideContainer/board";
+import Chat from "./sideContainer/chat";
+import LiveShare from "./sideContainer/liveShare";
 
-import "../../../styles/webIDE/sideContainer/sideContainer.css";
-import Board from "./board";
-import Chat from "./chat";
-import LiveShare from "./liveShare";
+import ideStyles from "./ideSytles.module.css";
 
 const SideContainer: React.FC = () => {
   const option = useSelector((state: RootState) => state.ideOption.option);
@@ -27,7 +27,11 @@ const SideContainer: React.FC = () => {
     }
   };
 
-  return <div className="side-container-contents">{renderContent()}</div>;
+  return (
+    <div className={ideStyles[`side-container-contents`]}>
+      {renderContent()}
+    </div>
+  );
 };
 
 export default SideContainer;
