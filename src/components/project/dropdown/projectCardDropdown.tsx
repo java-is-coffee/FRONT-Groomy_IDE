@@ -5,25 +5,30 @@ import { removeProjects } from "../../../redux/reducers/projectReducer";
 import { deleteProject } from "../../../api/project/deleteProject";
 
 import projectCardDropdownStyles from "./projectCardDropdown.module.css";
+import {
+  openEditProjectModal,
+  openInviteProjectModal,
+} from "../../../redux/reducers/modalReducer";
+import { ProjectDetails } from "../../../api/project/patchProjectList";
 
 interface ProjectCardDropdownProps {
-  projectId: number;
+  projectDetails: ProjectDetails;
 }
 
 const ProjectCardDropdown: React.FC<ProjectCardDropdownProps> = ({
-  projectId,
+  projectDetails,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const dispatch = useDispatch();
 
   const dispatchProjectRemoval = () => {
-    dispatch(removeProjects(projectId));
+    dispatch(removeProjects(projectDetails.projectId));
   };
 
   const requestProjectDeletion = async () => {
     try {
-      const result = await deleteProject(projectId);
+      const result = await deleteProject(projectDetails.projectId);
       if (result) {
         dispatchProjectRemoval();
       }
@@ -59,9 +64,23 @@ const ProjectCardDropdown: React.FC<ProjectCardDropdownProps> = ({
         <div
           className={projectCardDropdownStyles[`project-card-dropdown-menu`]}
         >
-          {/* 프로젝트 수정 페이지 구현 예정 */}
-          <button onClick={() => console.log("Edit")}>Edit</button>
-          <button onClick={requestProjectDeletion}>Delete</button>
+          <button
+            onClick={() => {
+              dispatch(openInviteProjectModal(projectDetails));
+              setIsOpen(false);
+            }}
+          >
+            INVITE
+          </button>
+          <button
+            onClick={() => {
+              dispatch(openEditProjectModal(projectDetails));
+              setIsOpen(false);
+            }}
+          >
+            EDIT
+          </button>
+          <button onClick={requestProjectDeletion}>REMOVE</button>
         </div>
       )}
     </div>
