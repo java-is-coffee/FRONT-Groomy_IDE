@@ -7,6 +7,7 @@ import { patchComment } from "../../../redux/reducers/boardReducer";
 import useBoardHooks from "../../../hooks/board/boardHook";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import CommentEditModal from "./commentEditModal";
+import styled from "./comment.module.css";
 
 function CommentDropdown({ comment }: { comment: CommentDetails }) {
   const curId = useSelector((state: RootState) => state.board.contentId);
@@ -61,9 +62,9 @@ function CommentDropdown({ comment }: { comment: CommentDetails }) {
 
   return (
     <div>
-      <div className="float-right project-card-dropdown">
+      <div style={{ float: "right" }} className={styled["dropdown"]}>
         <HiOutlineDotsHorizontal
-          className="hori-dot"
+          className={styled["dot"]}
           size={24}
           onClick={handleDropdown}
           onBlur={handleOut}
@@ -71,12 +72,18 @@ function CommentDropdown({ comment }: { comment: CommentDetails }) {
         {isDropdown ? (
           <div
             id={`${comment.commentId}drop`}
-            className="project-card-dropdown-menu "
+            className={styled["dropdown-menu"]}
           >
-            <div className="dropdown-item" onClick={() => handleEdit(comment)}>
+            <div
+              className={styled["dropdown-item"]}
+              onClick={() => handleEdit(comment)}
+            >
               Edit
             </div>
-            <div className="dropdown-item" onClick={() => hadleDelete(comment)}>
+            <div
+              className={styled["dropdown-item"]}
+              onClick={() => hadleDelete(comment)}
+            >
               Delete
             </div>
           </div>

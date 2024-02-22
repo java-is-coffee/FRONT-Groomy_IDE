@@ -6,12 +6,13 @@ import { useEffect } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { ContentType } from "../../pages/homePage";
+import { ContentType } from "../../enum/mainOptionType";
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
 import { setMember } from "../../redux/reducers/memberReducer";
 
 import sideBarStyles from "./sidebar.module.css";
+import { setMainOption } from "../../redux/reducers/mainpageReducer";
 
 type SidebarProps = {
   onSelectContents: (content: ContentType) => void;
@@ -51,10 +52,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   // main contents handler
   const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.currentTarget.id;
-    if (target === "project") onSelectContents(ContentType.ProjectList);
+    console.log(target);
+
+    if (target === "project") dispatch(setMainOption(ContentType.ProjectList));
     if (target === "invited-project")
-      onSelectContents(ContentType.InvitedProjectList);
-    if (target === "board") onSelectContents(ContentType.BoardList);
+      dispatch(setMainOption(ContentType.InvitedProjectList));
+    if (target === "board") dispatch(setMainOption(ContentType.BoardList));
   };
 
   //로그아웃 버튼

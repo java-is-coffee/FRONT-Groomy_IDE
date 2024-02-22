@@ -8,6 +8,8 @@ import Chat from "./sideContainer/chat";
 import LiveShare from "./sideContainer/liveShare";
 
 import ideStyles from "./ideSytles.module.css";
+import BoardContent from "../newBoard/board/boardContent";
+import BoardWritePage from "../newBoard/board/newBoardContent";
 
 const SideContainer: React.FC = () => {
   const option = useSelector((state: RootState) => state.ideOption.option);
@@ -16,8 +18,12 @@ const SideContainer: React.FC = () => {
     switch (option) {
       case IdeOptionType.File:
         return <Explorer />;
-      case IdeOptionType.Board:
+      case IdeOptionType.BoardList:
         return <Board />;
+      case IdeOptionType.BoardContent:
+        return <BoardContent />;
+      case IdeOptionType.BoardWrite:
+        return <BoardWritePage />;
       case IdeOptionType.Chat:
         return <Chat />;
       case IdeOptionType.LiveShare:

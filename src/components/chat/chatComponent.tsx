@@ -113,7 +113,7 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
     return () => {
       unsubscribe(subUrl);
     };
-  }, [projectId, subscribe, stompClient, unsubscribe]);
+  }, [projectId, subscribe, unsubscribe, stompClient]);
 
   return curMember === null ? (
     <div></div>

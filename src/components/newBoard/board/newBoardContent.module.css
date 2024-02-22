@@ -1,5 +1,5 @@
 .write-container {
-  width: 80%;
+  width: 100%;
   padding: 15px;
   background-color: var(--main-theme-color);
   max-height: 92.5vh;
@@ -34,4 +34,8 @@
   border: 1px solid #062b52;
   border-radius: 3px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.font-bold {
+  font-weight: 700;
 }

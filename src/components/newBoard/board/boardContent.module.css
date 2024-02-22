@@ -1,5 +1,5 @@
 .content-container {
-  width: 80%;
+  width: 100%;
   padding: 15px;
   background-color: var(--main-theme-color);
   max-height: 92.5vh;
@@ -8,6 +8,31 @@
   box-sizing: border-box;
   border: 2px solid black;
   overflow-y: auto;
+}
+
+.top {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dot {
+  padding: 2px;
+}
+
+.hidden {
+  display: none;
+}
+
+.dot:hover {
+  background-color: rgb(218, 218, 218);
+}
+
+.help-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .completed-box {
