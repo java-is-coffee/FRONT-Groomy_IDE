@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import CodeTab from "./codeTab";
-
-import "../../../styles/webIDE/codeContainer.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import MonacoEditor from "./monacoEditor";
 import useWebSocket from "../../../hooks/useWebSocket";
 import { useParams } from "react-router-dom";
+
+import editorStyles from "./codeEditor.module.css";
 
 // enum EditorTheme {
 //   iplastic = "iplastic",
@@ -44,12 +44,12 @@ const CodeEditor = () => {
   });
 
   return (
-    <div className="code-container">
+    <div className={editorStyles[`code-container`]}>
       <CodeTab />
       {editFiles.length !== 0 ? (
         <MonacoEditor />
       ) : (
-        <div className="code-edit-starter">
+        <div className={editorStyles[`code-edit-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>select file to edit</span>
         </div>

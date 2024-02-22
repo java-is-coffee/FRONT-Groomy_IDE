@@ -1,5 +1,6 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
+import { toast } from "react-toastify";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member";
@@ -58,7 +59,7 @@ export const searchMemberByEmail = async (
         patchAccessToken();
       } else {
         // 유저에게 메시지 전달
-        console.log("유효하지 않은 접근입니다. 로그인을 진행해 주세요");
+        toast("유저 목록을 불러오는데 오류가 발생했습니다.");
       }
     }
     return null;
