@@ -7,6 +7,14 @@
   font-weight: 700;
 }
 
+.right {
+  float: right;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
 .board-item {
   background-color: white;
   width: 100%;

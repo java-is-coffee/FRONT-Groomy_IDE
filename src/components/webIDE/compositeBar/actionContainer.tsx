@@ -29,7 +29,7 @@ const ActionContainer = () => {
         dispatchOptions(IdeOptionType.File);
         break;
       case "board":
-        dispatchOptions(IdeOptionType.Board);
+        dispatchOptions(IdeOptionType.BoardList);
         break;
       case "chat":
         dispatchOptions(IdeOptionType.Chat);
@@ -63,7 +63,9 @@ const ActionContainer = () => {
       </div>
       <div
         className={`${actionStyles[`action-option`]} ${
-          selectedOption === IdeOptionType.Board ? actionStyles.selected : ""
+          selectedOption === IdeOptionType.BoardList
+            ? actionStyles.selected
+            : ""
         }`}
         id="board"
         onClick={changeOption}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "../../../styles/board/board.css";
-import "../../../styles/board/boardDropBox.css";
-import { ContentType } from "../../../pages/homePage";
+
+import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -21,12 +20,11 @@ import MDEditor from "@uiw/react-md-editor";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { CiBookmarkMinus } from "react-icons/ci";
 import styled from "./boardContent.module.css";
+import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
+import IdeOptionType from "../../../enum/ideOptionType";
+import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 
-const BoardContent = ({
-  onSelectContents,
-}: {
-  onSelectContents: (content: ContentType) => void;
-}) => {
+const BoardContent = () => {
   const curContent = useSelector((state: RootState) => state.board.content);
   const userInfo = useSelector((state: RootState) => state.member.member);
   const beforePageIndex = useSelector(
@@ -55,14 +53,16 @@ const BoardContent = ({
     if (beforePageIndex) {
       boardHooks.updateBoardList(beforePageIndex);
       dispatch(patchContent(null));
-      onSelectContents(ContentType.BoardList);
+      dispatch(setIdeOption(IdeOptionType.BoardList));
+      dispatch(setMainOption(ContentType.BoardList));
     }
   };
 
   const handleEdit = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     dispatch(patchIsEdited(true));
-    onSelectContents(ContentType.BoardWrite);
+    dispatch(setIdeOption(IdeOptionType.BoardWrite));
+    dispatch(setMainOption(ContentType.BoardWrite));
   };
 
   const hadleDelete = async (event: React.MouseEvent<HTMLDivElement>) => {
@@ -74,7 +74,6 @@ const BoardContent = ({
         await removeBoard(curContent.boardId);
         dispatch(patchContent(null));
         dispatch(patchBoardList(null));
-        onSelectContents(ContentType.BoardList);
       }
     }
   };
@@ -117,9 +116,9 @@ const BoardContent = ({
 
   return (
     <div className={styled["content-container"]}>
-      <div className="relative flex-space-betwwen">
+      <div className={styled.top}>
         <MdKeyboardArrowLeft
-          className="hori-dot"
+          className={styled.dot}
           size={48}
           onClick={backList}
         />
@@ -131,13 +130,13 @@ const BoardContent = ({
         {checkOwner ? (
           <div className={styled["dropdown"]}>
             <HiOutlineDotsHorizontal
-              className="hori-dot"
+              className={styled.dot}
               size={48}
               onClick={() => setBoardOptionCheck((prev) => !prev)}
             />
             <div
               className={`${styled["dropdown-menu"]} ${
-                boardOptionCheck ? " " : "hidden"
+                boardOptionCheck ? " " : `${styled["hidden"]}`
               }`}
             >
               <div className={styled["dropdown-item"]} onClick={handleEdit}>
@@ -171,13 +170,16 @@ const BoardContent = ({
       ) : (
         " "
       )}
-      {/* <div>{curContent?.content}</div> */}
 
-      <h3 className="display-flex-justify-center display-flex-center">
-        <FaThumbsUp size={36} className="mr-15" onClick={handleHelp} />
+      <h3 className={styled["help-container"]}>
+        <FaThumbsUp
+          size={36}
+          style={{ marginRight: "15px" }}
+          onClick={handleHelp}
+        />
         도움됐어요! : {curContent?.helpNumber}
       </h3>
-      <h5 className="display-flex-justify-center display-flex-center">
+      <h5 className={styled["help-container"]}>
         스크랩 : {curContent?.scrapNumber}
       </h5>
       <h2>답변 {curContent?.commentNumber}</h2>

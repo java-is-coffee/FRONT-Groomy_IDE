@@ -1,6 +1,5 @@
 import React from "react";
 
-import "../../../styles/board/board.css";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { GrView } from "react-icons/gr";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -22,7 +21,7 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
   return (
     // 게시글 상단 미해결 과 제목
     <div className={styled["board-item"]} id={`${BoardDetails.boardId}`}>
-      <div className="mt-15">
+      <div style={{ marginTop: "15px" }}>
         {BoardDetails.completed ? (
           <span className={styled["completed-box"]}>해결됨</span>
         ) : (
@@ -39,7 +38,7 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
       {/* 멤버 아이디 */}
       <div>
         <span>{BoardDetails.nickname}</span>
-        <div className="float-right">
+        <div className={styled.right}>
           <span className={styled["bottom-icon"]}>
             <FaRegThumbsUp />
             <span className={styled["bottom-icon-number"]}>

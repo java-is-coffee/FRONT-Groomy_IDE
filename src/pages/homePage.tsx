@@ -94,10 +94,7 @@ const HomePage: React.FC = () => {
             sideClose ? homeStyle.wide : ""
           }`}
         >
-          <MainContent
-            curContent={curContent}
-            onSelectContents={handleContentChange}
-          />
+          <MainContent curContent={curContent} />
         </div>
       </div>
     </div>

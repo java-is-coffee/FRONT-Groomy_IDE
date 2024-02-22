@@ -120,7 +120,7 @@ function Paging() {
   };
 
   return (
-    <div className="display-flex-center">
+    <div className={styled.center}>
       <MdKeyboardDoubleArrowLeft onClick={fullBackList} size={36} />
       <MdKeyboardArrowLeft
         onClick={backList}

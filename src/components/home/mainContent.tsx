@@ -1,31 +1,31 @@
 import BoardList from "../newBoard/board/boardList";
-import { ContentType } from "../../pages/homePage";
+import { ContentType } from "../../enum/mainOptionType";
 import ProjectListContainer from "../project/projectListContainer";
 
 import BoardContent from "../newBoard/board/boardContent";
 import BoardWrite from "../newBoard/board/newBoardContent";
 import InvitedProjectListContainer from "../project/invitedProjectLIstContainer";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 interface MainContentProps {
   curContent: ContentType;
-  onSelectContents: (content: ContentType) => void;
 }
 
-const MainContent: React.FC<MainContentProps> = ({
-  curContent,
-  onSelectContents,
-}) => {
-  switch (curContent) {
+const MainContent: React.FC<MainContentProps> = () => {
+  const mainOption = useSelector((state: RootState) => state.mainOption.option);
+
+  switch (mainOption) {
     case ContentType.ProjectList:
       return <ProjectListContainer />;
     case ContentType.InvitedProjectList:
       return <InvitedProjectListContainer />;
     case ContentType.BoardList:
-      return <BoardList onSelectContents={onSelectContents} />;
+      return <BoardList />;
     case ContentType.BoardContent:
-      return <BoardContent onSelectContents={onSelectContents} />;
+      return <BoardContent />;
     case ContentType.BoardWrite:
-      return <BoardWrite onSelectContents={onSelectContents} />;
+      return <BoardWrite />;
     default:
       return <ProjectListContainer />;
   }
