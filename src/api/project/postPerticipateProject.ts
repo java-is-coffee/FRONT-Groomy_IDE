@@ -1,22 +1,16 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
+import { IProjectActionDTO } from "./iprojectActionDto";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/ide";
 
 interface RequestDTO {
-  data: AcceptInvite;
+  data: IProjectActionDTO;
 }
 
-export interface AcceptInvite {
-  projectId: number;
-  hostMemberId: number;
-  invitedMemberId: number;
-}
-
-// projectList 가져오는 메서드
 export const postParticipateProject = async (
-  invite: AcceptInvite
+  invite: IProjectActionDTO
 ): Promise<boolean> => {
   const storedToken = localStorage.getItem("accessToken");
   if (!storedToken) {

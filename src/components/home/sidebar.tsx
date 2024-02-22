@@ -33,7 +33,9 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   //sidebar 스크롤 따라가게 하기
   window.addEventListener("scroll", function () {
-    const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
+    const sidebar = document.querySelector(
+      `.${sideBarStyles[`sidebar-menu`]}`
+    ) as HTMLElement;
     if (sidebar) {
       const scrollPosition =
         window.scrollY || document.documentElement.scrollTop;
@@ -99,8 +101,8 @@ const Sidebar: React.FC<SidebarProps> = ({
         >
           {member ? (
             <div className={sideBarStyles[`user-panel`]}>
-              <span className="name">{member.name}</span>
-              <span className="email">{member.email}</span>
+              <span className={sideBarStyles.name}>{member.name}</span>
+              <span className={sideBarStyles.email}>{member.email}</span>
             </div>
           ) : (
             <div className={sideBarStyles[`user-panel`]}>
@@ -123,11 +125,11 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <div
             className={sideBarStyles.menu}
-            id={sideBarStyles[`invited-project`]}
+            id="invited-project"
             onClick={handleMainContent}
           >
             <div className={sideBarStyles[`menu-container`]}>
-              <div className="icon">
+              <div className={sideBarStyles.icon}>
                 <ConnectWithoutContact />
               </div>
               <span>프로젝트 초대</span>
@@ -148,7 +150,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
       <div className={sideBarStyles[`menu-container`]}>
-        <div className="icon float-right">
+        <div className={sideBarStyles[`icon float-right`]}>
           <IoIosLogOut size={"32px"} onClick={logOut} />
         </div>
       </div>

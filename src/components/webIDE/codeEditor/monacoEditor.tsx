@@ -15,6 +15,8 @@ import {
   postFileDetails,
 } from "../../../api/codeFile/postFileDetails";
 
+import editorStyles from "./codeEditor.module.css";
+
 // 웹소켓 통신 DTO
 interface CodeDTO {
   action: string;
@@ -237,21 +239,21 @@ const MonacoEditor = () => {
   ]);
 
   return (
-    <div className="monaco-editor-container">
+    <div className={editorStyles[`monaco-editor-container`]}>
       <div style={{ display: isLoading ? "" : "none" }}>
-        <div className="code-edit-starter">
+        <div className={editorStyles[`code-edit-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>Loading... Editor...</span>
-          <div className="loader"></div>
+          <div className={editorStyles[`loader`]}></div>
         </div>
       </div>
-      <div hidden={isLoading} className="monaco-editor">
+      <div hidden={isLoading} className={editorStyles[`monaco-editor`]}>
         <Editor
           key={curFile.id}
           language={curFile.lang}
           value={curFile.content}
           onMount={handleEditorDidMount}
-          className="editor"
+          className={editorStyles[`editor`]}
         />
       </div>
     </div>
