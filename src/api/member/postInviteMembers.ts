@@ -1,6 +1,5 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
-import { toast } from "react-toastify";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";

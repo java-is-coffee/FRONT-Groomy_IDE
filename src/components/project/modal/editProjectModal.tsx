@@ -59,7 +59,7 @@ const EditProjectModal = () => {
         }
       })();
     }
-  }, [editProject, getProjectMemberList]);
+  }, [editProject]);
 
   // 폼 제출 핸들러
   const handleSubmitProject = async () => {

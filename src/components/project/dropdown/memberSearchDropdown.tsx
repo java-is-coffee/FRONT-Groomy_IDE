@@ -82,7 +82,7 @@ const MemberSearchDropdown: React.FC<DropdownProps> = ({
     if (!searchedMember) {
       getMembers();
     }
-  }, [searchEmail, groupMembers, searchedMember]);
+  }, [searchEmail, groupMembers, searchedMember, curMember?.memberId]);
   return (
     <div
       className={memberModuleStyles[`member-search-container`]}
