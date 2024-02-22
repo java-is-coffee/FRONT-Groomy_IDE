@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/home/sidebar";
 import Nav from "../components/home/navigator";
 import MainContent from "../components/home/mainContent";
-import NewProjectModal from "../components/project/newProjectModal";
 import { useNavigate } from "react-router-dom";
 
 import homeStyle from "./home.module.css";
+import NewProjectModal from "../components/project/modal/newProjectModal";
+import EditProjectModal from "../components/project/modal/editProjectModal";
+import InviteProjectDetailsModal from "../components/project/modal/inviteModal";
 
 export enum ContentType {
   ProjectList = "project-list",
@@ -24,30 +26,6 @@ const HomePage: React.FC = () => {
   const handleSidebarToggle = (changeState: boolean) => {
     setSideClosed(changeState);
   };
-  // 메인 컨텐츠 타입 state
-  const [curContent, setCurContent] = useState<ContentType>(
-    ContentType.ProjectList
-  );
-  // 메인 컨텐츠 handler
-  const handleContentChange = (content: ContentType) => {
-    setCurContent((prevContent) => {
-      if (prevContent !== content) {
-        setCurContent(content);
-        return content;
-      }
-      return prevContent;
-    });
-  };
-  const [isProjectModalOpen, setIsProjectModalOpen] = useState<boolean>(false);
-
-  const handleOpenModal = () => {
-    setIsProjectModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsProjectModalOpen(false);
-  };
-
   //GoogleOauth 로그인 시, 필요한 작업
   useEffect(() => {
     console.log("토큰 확인");
@@ -70,31 +48,25 @@ const HomePage: React.FC = () => {
   return (
     <div>
       <nav className={homeStyle.nav}>
-        <Nav
-          onChange={handleSidebarToggle}
-          sideClose={sideClose}
-          onOpen={handleOpenModal}
-        />
+        <Nav onChange={handleSidebarToggle} sideClose={sideClose} />
       </nav>
-      <NewProjectModal isOpen={isProjectModalOpen} onClose={handleCloseModal} />
+      <NewProjectModal />
+      <EditProjectModal />
+      <InviteProjectDetailsModal />
       <div className={homeStyle.container}>
         <aside
           className={`${homeStyle.sidebar} ${
             sideClose ? homeStyle.closed : ""
           }`}
         >
-          <Sidebar
-            onSelectContents={handleContentChange}
-            onChange={handleSidebarToggle}
-            sideClose={sideClose}
-          />
+          <Sidebar onChange={handleSidebarToggle} sideClose={sideClose} />
         </aside>
         <div
           className={`${homeStyle["main-content"]} ${
             sideClose ? homeStyle.wide : ""
           }`}
         >
-          <MainContent curContent={curContent} />
+          <MainContent />
         </div>
       </div>
     </div>

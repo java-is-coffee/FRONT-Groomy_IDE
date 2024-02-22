@@ -1,24 +1,13 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
+import { toast } from "react-toastify";
 
-const BASE_URL =
+const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";
 
-export interface ISaveItem {
-  projectId: string;
-  fileName: string;
-  filePath: string;
-  content: string;
-  type: "FILE" | "FOLDER";
-}
-
-interface requestFileTree {
-  data: ISaveItem;
-}
-
-// 프로젝트 파일 가져오는 메서드
-export const postFileDetails = async (
-  fileItem: ISaveItem
+export const deleteProjectMember = async (
+  projectId: number,
+  memberId: number
 ): Promise<boolean> => {
   const storedToken = localStorage.getItem("accessToken");
   if (!storedToken) {
@@ -30,13 +19,9 @@ export const postFileDetails = async (
       Authorization: `Bearer ${storedToken}`,
     },
   };
-  const request: requestFileTree = {
-    data: fileItem,
-  };
   try {
-    const response = await axios.post(
-      `${BASE_URL}/api/file/create`,
-      request,
+    const response = await axios.delete(
+      `${USER_API_URL}/api/ide/kick/${projectId}/${memberId}`,
       config
     );
     if (response.status === 200) {
@@ -47,10 +32,15 @@ export const postFileDetails = async (
     if (axios.isAxiosError(error)) {
       const status = error.response?.status;
       if (status === 401) {
-        patchAccessToken();
+        const isTokenUpdate = await patchAccessToken();
+        if (isTokenUpdate) {
+          return deleteProjectMember(projectId, memberId);
+        }
+      } else if (error.response?.status === 400) {
+        toast.error("루트 사용자만 멤버 조작이 가능합니다.");
       } else {
         // 유저에게 메시지 전달
-        console.error("파일을 불러올수 없습니다.");
+        toast("유저 목록을 불러오는데 오류가 발생했습니다.");
       }
     }
     return false;
