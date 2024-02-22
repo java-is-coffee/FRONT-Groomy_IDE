@@ -1,6 +1,7 @@
 // projectsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ProjectDetails } from "../../api/project/patchProjectList";
+import { RootState } from "../store/store";
 
 // 초기 상태의 타입 정의
 interface ProjectsState {
@@ -32,3 +33,4 @@ const projectReducer = createSlice({
 // 액션 생성자와 리듀서 내보내기
 export const { patchProjects, removeProjects } = projectReducer.actions;
 export default projectReducer.reducer;
+export const selectProjects = (state: { projects: { projects: any; }; }) => state.projects.projects;

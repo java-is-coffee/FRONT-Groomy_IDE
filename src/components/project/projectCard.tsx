@@ -11,6 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 
+
 type projectProps = {
   projectDetails: ProjectDetails;
   type: string;
@@ -48,6 +49,13 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
   const handleAcceptInvite = () => {
     fetchAcceptProject();
   };
+
+  const handleProjectSelect = () => {
+    nav(`/chat/${projectDetails.projectId}`, {
+      state: { projectName: projectDetails.projectName }
+    });
+  };
+
   return (
     <div className="project-card" id={projectDetails.projectId.toString()}>
       <div className="project-header">

@@ -6,6 +6,8 @@ import Home from "./routes/home";
 import "./styles/style.css";
 import ResetPassword from "./routes/resetPassword";
 import WebIDE from "./routes/webIDE";
+import ChatComponent from "./components/chat/chatComponent";
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/code-editor/:projectId" element={<WebIDE />}></Route>
+          <Route path="/chat/:projectId" element={<ChatComponent />} />
         </Routes>
       </Router>
     </div>

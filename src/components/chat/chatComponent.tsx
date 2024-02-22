@@ -7,14 +7,17 @@ import useWebSocket from "../../hooks/useWebSocket";
 import { FaCircleArrowUp } from "react-icons/fa6";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import chatStyles from "./chat.module.css";
+import { useLocation, useParams } from "react-router-dom";
+import { selectProjects } from "../../redux/reducers/projectReducer";
 
-// type Message = {
-//   id: number;
-//   text: string;
-//   user_name: string;
-//   user_icon: JSX.Element;
-//   is_mine: boolean;
-// };
+
+type Message = {
+  id: number;
+  text: string;
+  user_name: string;
+  user_icon: JSX.Element;
+  is_mine: boolean;
+};
 
 type ChatComponentsProps = {
   projectId: string | undefined;
@@ -35,34 +38,37 @@ interface IChatDetail {
   createdTime: string;
 }
 
-const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
+const ChatComponent: React.FC = () => { 
   const curMember = useSelector((state: RootState) => state.member.member);
-
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
-
-  const { stompClient, connect, subscribe, unsubscribe, sendMessage } =
-    useWebSocket();
   const [inputValue, setInputValue] = useState("");
   const [chatLog, setChatLog] = useState<IChatDetail[]>([]);
+  const endOfMessagesRef = useRef<HTMLDivElement | null>(null);
 
+  const projects = useSelector(selectProjects);
+  const { projectId } = useParams<{projectId: string}>(); 
+  const [projectName, setProjectName] = useState('');
+  
+  const { stompClient, connect, subscribe, unsubscribe, sendMessage } = useWebSocket();
+
+  // const location = useLocation();
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  // 채팅 불러오기
   useEffect(() => {
-    const loadChatLogs = async () => {
-      try {
-        if (!projectId) return;
-        const response = await fetchChatLogs(projectId, 1);
-        if (response) {
-          console.log(response);
-          setChatLog(response.reverse());
-        } else {
-          console.log("No chat logs were fetched.");
-        }
-      } catch (error) {
+    const loadChatLogs = async () => { 
+      if (!projectId) return;
+        try {
+          const response = await fetchChatLogs(projectId, 1);
+          if (response) {
+            setChatLog(response.reverse());
+          }
+        } catch (error) {
         console.error("Failed to fetch chat logs:", error);
       }
     };
     loadChatLogs();
   }, [projectId]);
+
 
   // 채팅 메시지 전송
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,34 +86,31 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
       email: curMember.email,
       message: inputValue,
     };
-
     const message = {
       data: sendMsg,
     };
-
     const dst = `/app/project-chat/${projectId}/send`;
     console.log(message);
 
     sendMessage(dst, message);
-
     setInputValue("");
   };
 
-  // // Enter 키 이벤트 처리
-  // const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-  //   if (e.key === 'Enter' && !e.shiftKey) {
-  //     e.preventDefault();
-  //     handleSendMessage();
-  //   }
-  // };
-
-  // if (!isModalOpen) return null;
+  // 자동 프로젝트 이름
+  useEffect(() => {
+    const project = projects.find((p: { projectId: { toString: () => string | undefined; }; }) => p.projectId.toString() === projectId);
+    if (project) {
+      setProjectName(project.projectName); // 프로젝트 이름 설정
+    }
+  }, [projectId, projects]);
 
   // 자동 스크롤
   useEffect(() => {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatLog]);
 
+
+  //웹소켓
   useEffect(() => {
     if (!stompClient) {
       return;
@@ -125,13 +128,13 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
     };
   }, [projectId, subscribe, stompClient]);
 
+
   return curMember === null ? (
     <div></div>
   ) : (
     <div className={chatStyles.modal}>
       <div className={chatStyles.chat_header_container}>
-        <div className={chatStyles.chat_project_name}>프로젝트 - A</div>
-        {/* <button className={chatStyles.chat_close_button} onClick={handleCloseModal}>&times;</button> */}
+        <div className={chatStyles.chat_project_name}>{projectName}</div>
       </div>
       <div className={chatStyles.chat_messages_container}>
         <div className={chatStyles.chat_messages_warpper}>
