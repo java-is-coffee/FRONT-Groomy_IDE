@@ -77,7 +77,7 @@ const EditProjectModal = () => {
       try {
         await patchProjectDetails(editProject.projectId, projectDetails);
         await postInviteMembers(editProject.projectId, projectMemberIds);
-        toast.success("업로드 성공");
+        toast.success("수정되었습니다.");
         const result = await patchProjectList();
         if (result) {
           dispatch(patchProjects(result));
