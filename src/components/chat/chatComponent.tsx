@@ -8,13 +8,13 @@ import { FaCircleArrowUp } from "react-icons/fa6";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import chatStyles from "./chat.module.css";
 
-type Message = {
-  id: number;
-  text: string;
-  user_name: string;
-  user_icon: JSX.Element;
-  is_mine: boolean;
-};
+// type Message = {
+//   id: number;
+//   text: string;
+//   user_name: string;
+//   user_icon: JSX.Element;
+//   is_mine: boolean;
+// };
 
 type ChatComponentsProps = {
   projectId: string | undefined;
@@ -145,10 +145,12 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
               }`}
             >
               <div className={chatStyles.chat_user_info}>
-                <AccountCircleIcon />
-                <span className={chatStyles.chat_user_name}>
-                  {message.name}
-                </span>
+                <div className={chatStyles.chat_name_icon_wrapper}>
+                  <AccountCircleIcon className={chatStyles.chat_user_icon} />
+                  <span className={chatStyles.chat_user_name}>
+                    {message.name}
+                  </span>
+                </div>
                 <span className={chatStyles.chat_user_email}>
                   {message.email}
                 </span>
@@ -182,7 +184,7 @@ const ChatComponent: React.FC<ChatComponentsProps> = ({ projectId }) => {
           onChange={handleInputChange}
           style={{
             width: "100%",
-            fontSize: "14px", // 글꼴 크기를 줄입니다.
+            fontSize: "14px", 
           }}
         />
         <IconButton aria-label="send-btn" type="submit">
