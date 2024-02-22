@@ -17,6 +17,7 @@ import { setIdeOption } from "../redux/reducers/ide/ideOptionReducer";
 import IdeOptionType from "../enum/ideOptionType";
 
 import ideStyles from "./webIDE.module.css";
+import { toast } from "react-toastify";
 
 const IdePage = () => {
   const isResizing = useRef(false);
@@ -73,20 +74,19 @@ const IdePage = () => {
 
   const { projectId } = useParams();
   const member = useSelector((state: RootState) => state.member.member);
-  const { stompClient, connect, disconnect, unsubscribe } = useWebSocket();
+  const { stompClient, connect, disconnect } = useWebSocket();
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
       try {
         const member = await getMemberInfo();
-        console.log(member);
         if (member) {
           dispatch(setMember(member));
         } else {
-          console.log("맴버 정보 오류");
+          toast.error("맴버 정보 오류");
         }
       } catch (error) {
-        console.error("맴버 정보 가져오기 실패:", error);
+        toast.error("맴버 정보 가져오기 실패:");
       }
     };
     // 멤버 정보 가져오기
@@ -103,7 +103,7 @@ const IdePage = () => {
           console.log("토큰 정보 오류");
         }
       } catch (error) {
-        console.error("맴버 정보 가져오기 실패:", error);
+        console.error("토큰 정보 가져오기 실패:", error);
       }
     };
 
@@ -112,11 +112,8 @@ const IdePage = () => {
     // 웹소켓 연결이 안되어있는 경우 연결
     if (!stompClient) {
       connect("ws/project");
-    } else {
-      console.log(stompClient);
     }
     return () => {
-      console.log("connection 끊기");
       if (projectId) {
         disconnect(projectId);
       }
@@ -124,7 +121,7 @@ const IdePage = () => {
       dispatch(resetItems());
       dispatch(setIdeOption(IdeOptionType.File));
     };
-  }, [member, dispatch, connect, disconnect, stompClient]);
+  }, [member, dispatch, connect, disconnect, stompClient, projectId]);
 
   return (
     <div className={ideStyles[`ide`]}>

@@ -13,6 +13,7 @@ import StackDropdown from "./dropdown/stackDropdown";
 import MemberSearchDropdown from "./dropdown/memberSearchDropdown";
 
 import newProjectModalStyles from "./newProjectModal.module.css";
+import { toast } from "react-toastify";
 
 interface NewProjectModalProps {
   isOpen: boolean;
@@ -55,16 +56,26 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
       };
       try {
         await postNewProject(projectDetails);
+        toast.success("업로드 성공", {
+          position: "top-right",
+          autoClose: 5000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         const result = await patchProjectList();
         if (result) {
           dispatch(patchProjects(result));
+        } else {
+          toast.error("접근 권한이 없습니다.");
         }
       } catch (error) {
-        console.error("프로젝트 추가 중 오류 발생:", error);
+        toast.error("추가중 오류 발생 다시 시도해주세요");
       }
       onClose();
     } else {
-      console.log("세션이 만료되었습니다.");
+      toast.error("세션이 만료되었습니다. 새로고침해주세요");
     }
   };
 

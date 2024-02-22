@@ -7,6 +7,7 @@ import projectListStyles from "./projectListContainer.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { patchInvitedProjects } from "../../redux/reducers/projectReducer";
 import { RootState } from "../../redux/store/store";
+import { toast } from "react-toastify";
 
 const InvitedProjectListContainer: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,9 +21,27 @@ const InvitedProjectListContainer: React.FC = () => {
           await getInvitedProjects();
         if (storedInvitedProjects) {
           dispatch(patchInvitedProjects(storedInvitedProjects));
+        } else {
+          toast.error("잘못된 접근입니다.", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
       } catch (error) {
-        console.log("api 에러");
+        toast.error("api error", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       }
     };
 

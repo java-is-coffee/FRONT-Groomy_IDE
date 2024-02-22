@@ -2,9 +2,9 @@ import { useState, useCallback, useRef } from "react";
 import SockJS from "sockjs-client";
 import Stomp, { Client, Subscription } from "stompjs";
 import { patchAccessToken } from "../api/auth/patchAccessToken";
+import { toast } from "react-toastify";
 
 let globalStompClient: Client | null = null;
-let connectionCount = 0;
 
 const useWebSocket = () => {
   const [stompClient, setStompClient] = useState<Client | null>(
@@ -15,7 +15,6 @@ const useWebSocket = () => {
 
   const connect = useCallback(
     (url: string) => {
-      connectionCount++; // 연결을 설정할 때마다 카운트 증가
       // 이미 연결된 클라이언트가 있으면 재사용
       console.log(stompClient);
       if (globalStompClient && globalStompClient.connected) {
@@ -78,7 +77,8 @@ const useWebSocket = () => {
     (destination: string) => {
       // `subscriptions` Map에서 구독 객체를 찾음
       const subscription = subscriptions.get(destination);
-
+      const dst = destination.split("/");
+      toast.info(dst[dst.length - 1]);
       if (subscription) {
         // 구독 해제
         subscription.unsubscribe();
@@ -110,7 +110,7 @@ const useWebSocket = () => {
       // connectionCount를 감소시키고 연결이 0이 되면 연결을 끊습니다.
       if (stompClient) {
         stompClient.disconnect(() => {
-          console.log("Disconnected");
+          toast.info("프로젝트 연결해제");
           globalStompClient = null;
           setStompClient(null);
         });

@@ -145,10 +145,6 @@ const fileSystem = createSlice({
             )
           : [],
       });
-
-      console.log(segments);
-      console.log(parentPathSegments);
-      console.log(newPath);
       const findAndUpdateItem = (
         items: FileItem[],
         pathSegments: string[],
@@ -158,7 +154,6 @@ const fileSystem = createSlice({
           if (pathSegments.length === 1 && item.name === pathSegments[0]) {
             // 경로의 마지막 부분에 도달했고, 현재 항목의 이름이 경로와 일치한다면 이름과 경로를 변경합니다.
             const updatedItem = { ...item, name: name, path: newPath };
-            console.log("catch rename File" + updateItem.name);
             return updateItemPath(updatedItem, newPath);
           } else if (
             item.children &&

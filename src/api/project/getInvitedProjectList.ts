@@ -1,6 +1,7 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
 import { ProjectDetails } from "./patchProjectList";
+import { toast } from "react-toastify";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/ide";
@@ -25,7 +26,6 @@ export const getInvitedProjects = async (): Promise<
       `${USER_API_URL}/invited-list`,
       config
     );
-    console.log(response.data);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -45,10 +45,7 @@ export const getInvitedProjects = async (): Promise<
         }
       }
     } else {
-      console.error(
-        "An unexpected error occurred while fetching project list:",
-        error
-      );
+      toast.error("목록을 불러올 수 없습니다.");
     }
 
     return null;
