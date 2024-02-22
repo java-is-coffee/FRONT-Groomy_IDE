@@ -19,7 +19,6 @@ import {
   setCurEditingCode,
 } from "../../../redux/reducers/ide/editingCodeReducer";
 import { getFileTree } from "../../../api/codeFile/getFileTree";
-
 import { useParams } from "react-router-dom";
 import useTree from "../../../hooks/useTree";
 import useWebSocket from "../../../hooks/useWebSocket";
@@ -32,11 +31,13 @@ import { RxCross2 } from "react-icons/rx";
 import { IoSyncSharp } from "react-icons/io5";
 import { getFileContent } from "../../../api/codeFile/getFileContent";
 
+import treeStyles from "./renderTree.module.css";
+
 // 언어에 맞는 로고 가져오기
 const setLabel = (name: string) => {
   const source: string[] = name.split(".");
   const icon = getLanguageIcon(source[1]);
-  return <div className="code-icon">{icon}</div>;
+  return <div className={treeStyles[`code-icon`]}>{icon}</div>;
 };
 
 // 소켓 통신에 필요한 dto
@@ -370,12 +371,12 @@ const RenderTree = () => {
   }, [stompClient, projectId, connect, subscribe, unsubscribe, dispatch]);
 
   return (
-    <div ref={treeViewRef}>
-      <div className="explore-options">
-        <span className="project-name">DEV</span>
-        <div className="explore-tools">
+    <div ref={treeViewRef} className={treeStyles[`explore-container`]}>
+      <div className={treeStyles[`explore-options`]}>
+        <span className={treeStyles[`project-name`]}>DEV</span>
+        <div className={treeStyles[`explore-tools`]}>
           <div
-            className="explore-tools-icon"
+            className={treeStyles[`explore-tools-icon`]}
             id="file-sync-icon"
             onClick={() => {
               const syncFileSystem = async () => {
@@ -394,7 +395,7 @@ const RenderTree = () => {
             <IoSyncSharp size={"17px"} />
           </div>
           <div
-            className="explore-tools-icon"
+            className={treeStyles[`explore-tools-icon`]}
             onClick={() => {
               setIsAddingFile("FILE");
               if (selectedFolder) {
@@ -405,7 +406,7 @@ const RenderTree = () => {
             <VscNewFile size={"17px"} />
           </div>
           <div
-            className="explore-tools-icon"
+            className={treeStyles[`explore-tools-icon`]}
             onClick={() => {
               setIsAddingFile("FOLDER");
               if (selectedFolder) {
@@ -417,28 +418,30 @@ const RenderTree = () => {
           </div>
         </div>
       </div>
-      <div>
-        <TreeView
-          aria-label="file system navigator"
-          defaultCollapseIcon={<FaRegFolderOpen color="#FFCB28" />}
-          defaultExpandIcon={<FaFolder color="#FFCB28" />}
-          expanded={expanded}
-          multiSelect={true}
-          onNodeSelect={handleNodeSelect}
-          onNodeToggle={handleNodeToggle}
-          sx={{
-            fontFamily: "Consolas",
-            fontWeight: "lighter", // TreeView 전체의 폰트 무게를 bold로 설정
-            fontSize: "1rem",
-            "& .MuiTreeItem-label": {
-              fontFamily: "Consolas", // TreeItem 라벨의 폰트 패밀리를 Arial로 설정
-              fontSize: "1rem", // TreeItem 라벨의 폰트 크기를 1rem으로 설정
-            },
-          }}
-        >
-          {renderTree(userFiles)}
-          {selectedFolder ? "" : renderNewItemInput()}
-        </TreeView>
+      <div className={treeStyles[`tree-container`]}>
+        <div className={treeStyles[`tree-wrapper`]}>
+          <TreeView
+            aria-label="file system navigator"
+            defaultCollapseIcon={<FaRegFolderOpen color="#FFCB28" />}
+            defaultExpandIcon={<FaFolder color="#FFCB28" />}
+            expanded={expanded}
+            multiSelect={true}
+            onNodeSelect={handleNodeSelect}
+            onNodeToggle={handleNodeToggle}
+            sx={{
+              fontFamily: "Consolas",
+              fontWeight: "lighter", // TreeView 전체의 폰트 무게를 bold로 설정
+              fontSize: "1rem",
+              "& .MuiTreeItem-label": {
+                fontFamily: "Consolas", // TreeItem 라벨의 폰트 패밀리를 Arial로 설정
+                fontSize: "1rem", // TreeItem 라벨의 폰트 크기를 1rem으로 설정
+              },
+            }}
+          >
+            {renderTree(userFiles)}
+            {selectedFolder ? "" : renderNewItemInput()}
+          </TreeView>
+        </div>
       </div>
     </div>
   );

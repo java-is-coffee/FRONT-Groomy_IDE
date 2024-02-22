@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import "../../../styles/board/board.css";
 import { FaClipboard } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { NewBoard, postNewBoard } from "../../../api/board/postNewBoard";
-import "react-quill/dist/quill.snow.css";
 import MDEditor from "@uiw/react-md-editor";
 import {
   UpdateBoard,
@@ -121,14 +119,14 @@ function BoardWritePage() {
     return (
       <div className={styled["write-container"]}>
         <div className={styled["header"]}>
-          <FaClipboard className="mr-15" size={25} />
+          <FaClipboard style={{ marginRight: "15px" }} size={25} />
           질문 작성
         </div>
 
-        <form className="mt-30" onSubmit={handleEdit}>
-          <div className="mt-15">
-            <span className="font-bold">제목</span>
-            <span className="float-right">
+        <form style={{ marginTop: "30px" }} onSubmit={handleEdit}>
+          <div style={{ marginTop: "15px" }}>
+            <span className={styled["font-bold"]}>제목</span>
+            <span style={{ float: "right" }}>
               <input
                 type="checkbox"
                 name="anonymous"
@@ -137,7 +135,7 @@ function BoardWritePage() {
               />
               <span>익명 선택</span>
             </span>
-            <span className="float-right mr-15">
+            <span style={{ marginRight: "15px", float: "right" }}>
               <input
                 type="checkbox"
                 name="completed"
@@ -146,7 +144,7 @@ function BoardWritePage() {
               />
               <span>해결</span>
             </span>
-            <div className="mt-15">
+            <div style={{ marginTop: "15px" }}>
               <input
                 type="text"
                 name="title"
@@ -158,9 +156,9 @@ function BoardWritePage() {
             </div>
           </div>
 
-          <div className="mt-15">
-            <span className="font-bold">내용</span>
-            <div className="float-right mr-15">
+          <div style={{ marginTop: "15px" }}>
+            <span className={styled["font-bold"]}>내용</span>
+            <div style={{ marginRight: "15px", float: "right" }}>
               <button className={styled.btn} onClick={backList}>
                 취소
               </button>
@@ -168,7 +166,7 @@ function BoardWritePage() {
                 작성
               </button>
             </div>
-            <div className="mt-15">
+            <div style={{ marginTop: "15px" }}>
               <MDEditor
                 height={500}
                 value={content}
@@ -186,22 +184,22 @@ function BoardWritePage() {
   return (
     <div className={styled["write-container"]}>
       <div className={styled["header"]}>
-        <FaClipboard className="mr-15" size={25} />
+        <FaClipboard style={{ marginRight: "15px" }} size={25} />
         질문 작성
       </div>
 
       <form className="mt-30" onSubmit={handleSubmit}>
-        <div className="mt-15">
-          <span className="font-bold">제목</span>
-          <span className="float-right">
+        <div style={{ marginTop: "15px" }}>
+          <span className={styled["font-bold"]}>제목</span>
+          <span style={{ float: "right" }}>
             <input type="checkbox" name="anonymous" onChange={checkAnony} />
             <span>익명 선택</span>
           </span>
-          <span className="float-right mr-15">
+          <span style={{ marginRight: "15px", float: "right" }}>
             <input type="checkbox" name="completed" onChange={checkCompleted} />
             <span>해결</span>
           </span>
-          <div className="mt-15">
+          <div style={{ marginTop: "15px" }}>
             <input
               type="text"
               name="title"
@@ -212,9 +210,9 @@ function BoardWritePage() {
           </div>
         </div>
 
-        <div className="mt-15">
-          <span className="font-bold">내용</span>
-          <div className="float-right mr-15">
+        <div style={{ marginTop: "15px" }}>
+          <span className={styled["font-bold"]}>내용</span>
+          <div style={{ marginRight: "15px", float: "right" }}>
             <button className={styled.btn} onClick={backList}>
               취소
             </button>
@@ -222,7 +220,7 @@ function BoardWritePage() {
               작성
             </button>
           </div>
-          <div className="mt-15">
+          <div style={{ marginTop: "15px" }}>
             <MDEditor
               height={500}
               value={content}

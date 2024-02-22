@@ -1,4 +1,5 @@
 .action-container {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   align-items: center; /* 아이콘들을 수직 중앙 정렬 */

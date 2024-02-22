@@ -1,6 +1,7 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
 import { FileItem } from "../../redux/reducers/ide/fileSystemReducer";
+import { toast } from "react-toastify";
 
 const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/file";
@@ -44,6 +45,7 @@ export const getFileTree = async (
       if (fileTree) {
         return fileTree;
       } else {
+        toast.error("파일 목록을 불러올 수 없습니다.");
         return null;
       }
     }
@@ -55,8 +57,7 @@ export const getFileTree = async (
         patchAccessToken();
       } else {
         // 유저에게 메시지 전달
-        console.log(status);
-        console.log("유효하지 않은 접근입니다. 로그인을 진행해 주세요");
+        toast("파일 목록을 불러올수 없습니다.");
       }
     }
     return null;

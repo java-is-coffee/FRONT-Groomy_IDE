@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../../../styles/project/projectListContainer.css";
-import "../../../styles/board/board.css";
 import BoardItem from "./boardItem";
 import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +21,9 @@ import SeachPaging from "./searchPaging";
 import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
 import IdeOptionType from "../../../enum/ideOptionType";
 import { setMainOption } from "../../../redux/reducers/mainpageReducer";
-// import { Pagination } from "@mui/material";
+import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
+import IdeOptionType from "../../../enum/ideOptionType";
+import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 
 export enum SearchCompleted {
   All = "all",
@@ -137,7 +137,7 @@ const BoardListContainer = () => {
           onClick={resetBoadList}
         />
         질문 게시판
-        <span className="float-right">
+        <span>
           <SlMagnifier
             size={25}
             onClick={() => setSearchModalOpen(!searchModalOpen)}
@@ -145,7 +145,10 @@ const BoardListContainer = () => {
         </span>
       </div>
       {/* 검색 파트 */}
-      <div id="searchForm" className={searchModalOpen ? "" : "hidden"}>
+      <div
+        id="searchForm"
+        className={searchModalOpen ? "" : `${styled.hidden}`}
+      >
         <form onSubmit={handleSubmit} className={styled["search-box"]}>
           <div>
             <span

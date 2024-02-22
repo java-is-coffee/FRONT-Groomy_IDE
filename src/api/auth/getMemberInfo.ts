@@ -41,7 +41,6 @@ export const getMemberInfo = async (): Promise<MemberInfo | null> => {
     if (axios.isAxiosError(error)) {
       console.log(error);
       if (error.response?.status === 401) {
-        // 리프레쉬 확인로그
         console.log("Access token expired. Attempting to refresh...");
         const isTokenRefreshed = await patchAccessToken();
         if (isTokenRefreshed) {

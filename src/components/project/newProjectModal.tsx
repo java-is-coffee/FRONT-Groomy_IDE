@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { IoMdClose } from "react-icons/io";
-
-import "../../styles/project/newProjectModal.css";
 import { FaJava, FaPython, FaJsSquare, FaCuttlefish } from "react-icons/fa";
 import { SiKotlin, SiCplusplus } from "react-icons/si";
-
 import { SearchedMember } from "../../api/member/searchMemberByEmail";
 import { NewProject, postNewProject } from "../../api/project/postNewProject";
 import { patchProjectList } from "../../api/project/patchProjectList";
@@ -14,6 +11,9 @@ import { patchProjects } from "../../redux/reducers/projectReducer";
 import { RootState } from "../../redux/store/store";
 import StackDropdown from "./dropdown/stackDropdown";
 import MemberSearchDropdown from "./dropdown/memberSearchDropdown";
+
+import newProjectModalStyles from "./newProjectModal.module.css";
+import { toast } from "react-toastify";
 
 interface NewProjectModalProps {
   isOpen: boolean;
@@ -56,16 +56,26 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
       };
       try {
         await postNewProject(projectDetails);
+        toast.success("업로드 성공", {
+          position: "top-right",
+          autoClose: 5000,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         const result = await patchProjectList();
         if (result) {
           dispatch(patchProjects(result));
+        } else {
+          toast.error("접근 권한이 없습니다.");
         }
       } catch (error) {
-        console.error("프로젝트 추가 중 오류 발생:", error);
+        toast.error("추가중 오류 발생 다시 시도해주세요");
       }
       onClose();
     } else {
-      console.log("세션이 만료되었습니다.");
+      toast.error("세션이 만료되었습니다. 새로고침해주세요");
     }
   };
 
@@ -92,46 +102,66 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
 
   if (!isOpen) return null;
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
+    <div className={newProjectModalStyles[`modal-overlay`]} onClick={onClose}>
+      <div
+        className={newProjectModalStyles[`modal-content`]}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className={newProjectModalStyles[`modal-header`]}>
           <span>프로젝트 생성하기</span>
-          <div className="modal-close-button" onClick={onClose}>
+          <div
+            className={newProjectModalStyles[`modal-close-button`]}
+            onClick={onClose}
+          >
             <RxCross1 width={"32px"} />
           </div>
         </div>
-        <div className="new-project-form" onSubmit={() => false}>
-          <label className="modal-input-label">프로젝트 이름</label>
+        <div
+          className={newProjectModalStyles[`new-project-form`]}
+          onSubmit={() => false}
+        >
+          <label className={newProjectModalStyles[`modal-input-label`]}>
+            프로젝트 이름
+          </label>
           <input
-            className="new-project-title"
+            className={newProjectModalStyles[`new-project-title`]}
             type="text"
             placeholder="프로젝트 이름을 입력하세요"
             onChange={(e) => setProjectName(e.target.value)}
           />
-          <div className="modal-input-label">기술 스택</div>
+          <div className={newProjectModalStyles[`modal-input-label`]}>
+            기술 스택
+          </div>
           <StackDropdown
             stackOptions={StackOptions}
             onSelectStack={handleSelectLanguage}
           />
-          <label className="modal-input-label">프로젝트 설명</label>
+          <label className={newProjectModalStyles[`modal-input-label`]}>
+            프로젝트 설명
+          </label>
           <textarea
-            className="new-project-description"
+            className={newProjectModalStyles[`new-project-description`]}
             placeholder="프로젝트에 대한 간단한 설명을 적어주세요(최대 100자)"
             maxLength={100}
             onChange={(e) => setProjectDescription(e.target.value)}
           ></textarea>
-          <label className="modal-dropdown">맴버 추가하기</label>
-          <div className="member-dropdown">
+          <label className={newProjectModalStyles[`modal-dropdown`]}>
+            맴버 추가하기
+          </label>
+          <div className={newProjectModalStyles[`member-dropdown`]}>
             <MemberSearchDropdown
               groupMembers={groupMembers}
               onAddMember={addProjectMember}
             />
-            <div className="members-selected">
+            <div className={newProjectModalStyles[`members-selected`]}>
               {groupMembers.map((member) => (
-                <div id={member.memberId.toString()} className="group-member">
+                <div
+                  id={member.memberId.toString()}
+                  className={newProjectModalStyles[`group-member`]}
+                >
                   <span key={member.memberId}>{member.nickname}</span>
                   <div
-                    className="member-remove-icons"
+                    className={newProjectModalStyles[`member-remove-icons`]}
                     onClick={removeProjectMember}
                   >
                     <IoMdClose size="13px" style={{ cursor: "pointer" }} />
@@ -140,7 +170,10 @@ const NewProjectModal: React.FC<NewProjectModalProps> = ({
               ))}
             </div>
           </div>
-          <button className="modal-button" onClick={handleAddProject}>
+          <button
+            className={newProjectModalStyles[`modal-button`]}
+            onClick={handleAddProject}
+          >
             생성하기
           </button>
         </div>

@@ -9,6 +9,10 @@
   border: 2px solid black;
 }
 
+.hidden {
+  display: none;
+}
+
 .header {
   margin: -15px -15px 10px -15px;
   padding: 15px;

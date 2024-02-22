@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import "../../../styles/board/board.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
@@ -13,6 +12,7 @@ import { FaThumbsUp } from "react-icons/fa";
 import { postHelpNumber } from "../../../api/board/comment/postHelpNumber";
 import { patchComment } from "../../../redux/reducers/boardReducer";
 import MDEditor from "@uiw/react-md-editor";
+import styled from "./comment.module.css";
 
 function Comment() {
   const [content, setContent] = useState<string | undefined>("");
@@ -77,7 +77,7 @@ function Comment() {
 
   return (
     // 댓글 목록
-    <div className="">
+    <div>
       <form onSubmit={handleSubmit}>
         <MDEditor
           height={200}
@@ -92,17 +92,20 @@ function Comment() {
         commentList.map((comment) => (
           <div
             key={comment.commentId}
-            className={`"comment-box mt-15 ${
-              comment.originComment ? "reply" : " "
+            style={{ marginTop: "15px" }}
+            className={` mt-15 ${
+              comment.originComment ? `${styled.reply}` : " "
             } "`}
           >
             <hr />
 
             {/* 작성자 아이콘 & 관리 아이콘 */}
-            <div className="display-flex-space-between relative">
-              <div className="display-flex-center">
+            <div className={styled["icon-box"]}>
+              <div className={styled["flex"]}>
                 <FaUserCircle size={24} />
-                <h4 className="inline ml-15">{comment.nickname}</h4>
+                <h4 style={{ display: "inline", marginLeft: "15px" }}>
+                  {comment.nickname}
+                </h4>
               </div>
 
               {userInfo?.memberId === comment.memberId ? (
@@ -114,9 +117,9 @@ function Comment() {
               " "
             ) : (
               <>
-                <span className="float-right">{comment.helpNumber}</span>
+                <span style={{ float: "right" }}>{comment.helpNumber}</span>
                 <FaThumbsUp
-                  className="float-right mr-15"
+                  style={{ float: "right", marginRight: "15px" }}
                   onClick={handleHelp}
                   id={`${comment.commentId}`}
                 />

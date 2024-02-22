@@ -1,54 +1,63 @@
 import { VscProject } from "react-icons/vsc";
 import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa6";
-import "../../styles/home/sidebar.css";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getMemberInfo } from "../../api/auth/getMemberInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { ContentType } from "../../enum/mainOptionType";
-
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
 import { setMember } from "../../redux/reducers/memberReducer";
 import { setMainOption } from "../../redux/reducers/mainpageReducer";
 // import mainOption from "../../redux/reducers/mainpageReducer";
+import sideBarStyles from "./sidebar.module.css";
+import { setMainOption } from "../../redux/reducers/mainpageReducer";
 
 type SidebarProps = {
-  onSelectContents: (content: ContentType) => void;
   onChange: (newState: boolean) => void;
   sideClose: boolean;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({
-  onSelectContents,
-  onChange,
-  sideClose,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
   // member 정보 저장용 state
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const member = useSelector((state: RootState) => state.member.member);
   const dispatch = useDispatch();
+  const [topPosition, setTopPosition] = useState(0);
 
   // const mainOption = useSelector((state: RootState) => state.mainOption.option);
 
   //sidebar 스크롤 따라가게 하기
-  window.addEventListener("scroll", function () {
-    const sidebar = document.querySelector(".sidebar-menu") as HTMLElement;
-    if (sidebar) {
-      const scrollPosition =
-        window.scrollY || document.documentElement.scrollTop;
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.scrollY;
+      setTopPosition(position);
+    };
 
-      const topPosition = scrollPosition;
-      if (topPosition > 0) {
-        sidebar.style.top = `${topPosition}px`;
-      } else {
-        sidebar.style.top = `0px`;
-      }
-    }
-  });
+    window.addEventListener("scroll", handleScroll);
+
+    // 컴포넌트가 언마운트될 때 이벤트 리스너를 정리합니다.
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // 인라인 스타일 대신 CSS 클래스를 토글하는 방식을 사용할 수도 있습니다.
+  const sidebarStyle = {
+    top: `${topPosition}px`,
+  };
+
+  // main contents handler
+  const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.currentTarget.id;
+    if (target === "project") dispatch(setMainOption(ContentType.ProjectList));
+    if (target === "invited-project")
+      dispatch(setMainOption(ContentType.InvitedProjectList));
+    if (target === "board") dispatch(setMainOption(ContentType.BoardList));
+  };
 
   //로그아웃 버튼
   const logOut = () => {
@@ -90,53 +99,64 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   return (
-    <div className="sidebar-menu">
-      <div className="button-container">
-        <div className="close-button" onClick={() => onChange(!sideClose)}>
+    <div className={sideBarStyles[`sidebar-menu`]} style={sidebarStyle}>
+      <div className={sideBarStyles[`button-container`]}>
+        <div
+          className={sideBarStyles[`close-button`]}
+          onClick={() => onChange(!sideClose)}
+        >
           <MdOutlineKeyboardDoubleArrowLeft size={"32px"} />
         </div>
       </div>
-      <div className="side-list">
+      <div className={sideBarStyles[`side-list`]}>
         <div
-          className="user-container"
+          className={sideBarStyles[`user-container`]}
           onClick={() => {
             member ? navigate("/user") : navigate("/login");
           }}
         >
           {member ? (
-            <div className="user-panel">
-              <span className="name">{member.name}</span>
-              <span className="email">{member.email}</span>
+            <div className={sideBarStyles[`user-panel`]}>
+              <span className={sideBarStyles.name}>{member.name}</span>
+              <span className={sideBarStyles.email}>{member.email}</span>
             </div>
           ) : (
-            <div className="user-panel">
-              <span className="name">로그인이 필요합니다</span>
+            <div className={sideBarStyles[`user-panel`]}>
+              <span className={sideBarStyles.name}>로그인이 필요합니다</span>
             </div>
           )}
         </div>
-        <div className="nav-menu">
-          <div className="menu" id="project" onClick={handleMainContent}>
-            <div className="menu-container">
-              <div className="icon">
+        <div className={sideBarStyles[`nav-menu`]}>
+          <div
+            className={sideBarStyles.menu}
+            id="project"
+            onClick={handleMainContent}
+          >
+            <div className={sideBarStyles[`menu-container`]}>
+              <div className={sideBarStyles.icon}>
                 <VscProject size={"32px"} />
               </div>
               <span>프로젝트</span>
             </div>
           </div>
           <div
-            className="menu"
+            className={sideBarStyles.menu}
             id="invited-project"
             onClick={handleMainContent}
           >
-            <div className="menu-container">
-              <div className="icon">
+            <div className={sideBarStyles[`menu-container`]}>
+              <div className={sideBarStyles.icon}>
                 <ConnectWithoutContact />
               </div>
               <span>프로젝트 초대</span>
             </div>
           </div>
-          <div className="menu" id="board" onClick={handleMainContent}>
-            <div className="menu-container">
+          <div
+            className={sideBarStyles.menu}
+            id="board"
+            onClick={handleMainContent}
+          >
+            <div className={sideBarStyles[`menu-container`]}>
               <div className="icon">
                 <FaWpforms size={"32px"} />
               </div>
@@ -145,8 +165,8 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-      <div className="menu-container">
-        <div className="icon float-right">
+      <div className={sideBarStyles[`menu-container`]}>
+        <div className={sideBarStyles[`icon float-right`]}>
           <IoIosLogOut size={"32px"} onClick={logOut} />
         </div>
       </div>
