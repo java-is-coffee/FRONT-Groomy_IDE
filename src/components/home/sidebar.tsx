@@ -15,16 +15,11 @@ import sideBarStyles from "./sidebar.module.css";
 import { setMainOption } from "../../redux/reducers/mainpageReducer";
 
 type SidebarProps = {
-  onSelectContents: (content: ContentType) => void;
   onChange: (newState: boolean) => void;
   sideClose: boolean;
 };
 
-const Sidebar: React.FC<SidebarProps> = ({
-  onSelectContents,
-  onChange,
-  sideClose,
-}) => {
+const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
   // member 정보 저장용 state
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
