@@ -106,7 +106,9 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
   }, [projectDetails.projectId]);
 
   useEffect(() => {
-    fetchProjectMemberList();
+    if (type === "project") {
+      fetchProjectMemberList();
+    }
   }, [fetchProjectMemberList]);
 
   return (
