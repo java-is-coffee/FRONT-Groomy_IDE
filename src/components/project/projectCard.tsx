@@ -143,19 +143,17 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
         )}
       </div>
       <div className={projectCardStyles[`project-member-container`]}>
-        {type === "project"
-          ? projectMember.map((member) => {
-              return (
-                <span
-                  key={member.memberId}
-                  className={projectCardStyles[`project-member`]}
-                  style={{ background: getRandomColor() }}
-                >
-                  {member.nickname}
-                </span>
-              );
-            })
-          : ""}
+        {projectMember.map((member) => {
+          return (
+            <span
+              key={member.memberId}
+              className={projectCardStyles[`project-member`]}
+              style={{ background: getRandomColor() }}
+            >
+              {member.nickname}
+            </span>
+          );
+        })}
       </div>
 
       <div className={projectCardStyles[`project-description`]}>
