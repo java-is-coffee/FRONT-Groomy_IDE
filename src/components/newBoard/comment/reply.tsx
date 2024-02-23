@@ -57,7 +57,26 @@ function Reply({ originComment }: { originComment: CommentDetails }) {
             preview="edit"
             onChange={(val) => setContent(val)}
           />
-          <button type="submit">댓글 달기</button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "space-between",
+              height: "8vh",
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              style={{
+                float: "right",
+                marginTop: "10px",
+                marginBottom: "10px",
+              }}
+            >
+              대댓글 달기
+            </Button>
+          </div>
         </form>
       ) : (
         " "
