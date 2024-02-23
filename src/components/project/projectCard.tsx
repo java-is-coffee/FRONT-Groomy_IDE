@@ -106,7 +106,9 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
   }, [projectDetails.projectId]);
 
   useEffect(() => {
-    fetchProjectMemberList();
+    if (type === "project") {
+      fetchProjectMemberList();
+    }
   }, [fetchProjectMemberList]);
 
   return (
@@ -133,17 +135,19 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
         )}
       </div>
       <div className={projectCardStyles[`project-member-container`]}>
-        {projectMember.map((member) => {
-          return (
-            <span
-              key={member.memberId}
-              className={projectCardStyles[`project-member`]}
-              style={{ background: getRandomColor() }}
-            >
-              {member.nickname}
-            </span>
-          );
-        })}
+        {type === "project"
+          ? projectMember.map((member) => {
+              return (
+                <span
+                  key={member.memberId}
+                  className={projectCardStyles[`project-member`]}
+                  style={{ background: getRandomColor() }}
+                >
+                  {member.nickname}
+                </span>
+              );
+            })
+          : ""}
       </div>
 
       <div className={projectCardStyles[`project-description`]}>
