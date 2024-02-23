@@ -40,7 +40,7 @@ const ResetPassword = () => {
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <form style={{ width: "40%" }} onSubmit={sendEmail}>
+      <form style={{ width: "500px" }} onSubmit={sendEmail}>
         <Stack spacing={1.5}>
           <TextField
             fullWidth

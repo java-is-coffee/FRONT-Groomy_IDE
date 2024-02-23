@@ -7,44 +7,41 @@
 }
 
 .profile {
-  padding: 50px;
-  border: 2px solid rgb(140, 139, 139);
+  /* padding: 50px; */
+  border: 2px solid #d9d9d9;
   border-radius: 10px;
   background-color: white;
-  max-width: 20vw;
-  min-width: 20vw;
+  width: 40%;
 }
 
 .profile-text {
   margin: 10px 0px 10px 0px;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .icon {
-  border: 1px solid rgb(140, 139, 139);
+  border: 1px solid #d9d9d9;
   border-radius: 500px;
 }
 
-.introduce {
-  padding: 50px;
-  border: 2px solid rgb(140, 139, 139);
+.comment {
+  border: 2px solid #d9d9d9;
   border-radius: 10px;
   background-color: white;
-  max-width: 40vw;
-  min-width: 40vw;
+  width: 60%;
 }
 
 .board {
   width: 50%;
   min-height: 45vh;
   padding: 10px;
-  border: 2px solid rgb(140, 139, 139);
+  border: 2px solid #d9d9d9;
   border-radius: 10px;
   background-color: white;
 }
 
 .item {
-  border: 2px solid rgb(140, 139, 139);
+  border: 2px solid #d9d9d9;
   background-color: black;
 }

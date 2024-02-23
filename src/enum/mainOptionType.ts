@@ -6,4 +6,5 @@ export enum ContentType {
   BoardWrite = "board-write",
   MyPage = "my-page",
   Chat = "chat",
+  MyPageResetPassword = "my-page-pass",
 }

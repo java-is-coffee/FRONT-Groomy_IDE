@@ -48,7 +48,7 @@ function Reply({ originComment }: { originComment: CommentDetails }) {
             height={200}
             value={content}
             preview="edit"
-            onChange={(val) => setContent(val)}
+            // onChange={(val) => setContent(val)}
           />
           <button type="submit">댓글 달기</button>
         </form>

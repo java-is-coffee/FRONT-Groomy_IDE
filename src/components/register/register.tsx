@@ -111,7 +111,7 @@ function RegisterComponent() {
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <Stack spacing={2} style={{ width: "40%" }}>
+      <Stack spacing={2} style={{ width: "500px" }}>
         <div className={styled.flex}>
           <TextField
             fullWidth

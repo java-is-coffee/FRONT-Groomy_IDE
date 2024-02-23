@@ -8,6 +8,7 @@ import InvitedProjectListContainer from "../project/invitedProjectLIstContainer"
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import MyPageContainer from "../mypage/myPageContainer";
+import MyPageResetPassword from "../mypage/myPageResetPassword";
 
 const MainContent: React.FC = () => {
   const mainOption = useSelector((state: RootState) => state.mainOption.option);
@@ -25,6 +26,8 @@ const MainContent: React.FC = () => {
       return <BoardWrite />;
     case ContentType.MyPage:
       return <MyPageContainer />;
+    case ContentType.MyPageResetPassword:
+      return <MyPageResetPassword />;
     default:
       return <ProjectListContainer />;
   }

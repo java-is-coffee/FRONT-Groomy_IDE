@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
-import myStyle from "./myPageBoard.module.css";
+import myStyle from "./myComment.module.css";
 import { LuClipboardEdit } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { patchMyCommentList } from "../../redux/reducers/myPageReducer";
-import { ListItemButton, ListItemText } from "@mui/material";
 import getMyCommentList from "../../api/myPage/getMyComment";
 import { CommentDetails } from "../../api/board/getCommentList";
+import { Chip } from "@mui/material";
+import { FaRegCommentDots, FaRegThumbsUp } from "react-icons/fa6";
+import { GrView } from "react-icons/gr";
 
 const MycommentList = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -34,21 +36,33 @@ const MycommentList = () => {
         fetchMyboard();
       }
     }
-  }, [accessToken, myComments, dispatch]);
+  }, [accessToken, myComments, dispatch, member]);
 
   return (
-    <div>
+    <div style={{ padding: "8px" }}>
       <div className={myStyle.top}>
         <LuClipboardEdit style={{ marginRight: "10px" }} />
         작성한 댓글
       </div>
-      <div style={{ maxHeight: "20vh", overflowY: "scroll" }}>
+      <div style={{ height: "30vh", overflowY: "scroll" }}>
         {myComments &&
           myComments.map((item: CommentDetails) => (
-            <div key={item.boardId} className={myStyle.item}>
-              <ListItemButton>
-                <ListItemText primary={item.content} />
-              </ListItemButton>
+            <div key={item.commentId + "s"} style={{ cursor: "pointer" }}>
+              <div className={myStyle.item}>
+                {item.content}
+                <span className={myStyle["bottom"]}>
+                  <span className={myStyle["bottom-icon"]}>
+                    <span className={myStyle["bottom-icon-number"]}>
+                      <Chip
+                        avatar={<FaRegThumbsUp />}
+                        label={item.helpNumber}
+                        size="small"
+                        variant="outlined"
+                      />
+                    </span>
+                  </span>
+                </span>
+              </div>
             </div>
           ))}
       </div>

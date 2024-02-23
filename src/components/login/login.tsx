@@ -12,7 +12,6 @@ import styled from "./login.module.css";
 import ClearIcon from "@mui/icons-material/Clear";
 import useLoginHooks from "../../hooks/login/useloginHooks";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 function LoginComponent() {
   const accessToken = localStorage.getItem("accessToken");
@@ -49,9 +48,7 @@ function LoginComponent() {
 
   const ouathLogin = async () => {
     window.location.href =
-      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/auth/google";
-    const base_url =
-      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/auth/google";
+      "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google";
 
     // window.open(base_url, "_blank");
 
@@ -67,13 +64,13 @@ function LoginComponent() {
         <img src="icon/Logo.png" alt="구르미 로고" />
       </div>
 
-      <div className={styled.oauth} style={{ width: "40%" }}>
+      <div className={styled.oauth} style={{ width: "500px" }}>
         <Button variant="outlined" fullWidth onClick={ouathLogin}>
           구글 로그인
         </Button>
       </div>
 
-      <form style={{ width: "40%" }} onSubmit={handleSubmit}>
+      <form style={{ width: "500px" }} onSubmit={handleSubmit}>
         <Stack spacing={1.5}>
           <TextField
             fullWidth

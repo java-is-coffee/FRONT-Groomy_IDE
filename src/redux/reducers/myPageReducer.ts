@@ -6,12 +6,14 @@ export interface MyPageStatus {
   myBoardList: BoardDetails[] | null;
   scrappedBoardList: BoardDetails[] | null;
   MyCommentList: CommentDetails[] | null;
+  isBack: boolean;
 }
 
 const initialState: MyPageStatus = {
   myBoardList: null,
   scrappedBoardList: null,
   MyCommentList: null,
+  isBack: false,
 };
 
 const MyPageReducer = createSlice({
@@ -33,9 +35,16 @@ const MyPageReducer = createSlice({
     ) => {
       state.MyCommentList = action.payload;
     },
+    setBackLog: (state, action: PayloadAction<boolean>) => {
+      state.isBack = action.payload;
+    },
   },
 });
 
-export const { patchMyBoardList, patchScrappedList, patchMyCommentList } =
-  MyPageReducer.actions;
+export const {
+  patchMyBoardList,
+  patchScrappedList,
+  patchMyCommentList,
+  setBackLog,
+} = MyPageReducer.actions;
 export default MyPageReducer.reducer;
