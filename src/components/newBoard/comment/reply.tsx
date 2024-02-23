@@ -7,6 +7,7 @@ import { CommentDetails } from "../../../api/board/getCommentList";
 import { newReply } from "../../../api/board/comment/postNewReply";
 import useBoardHooks from "../../../hooks/board/boardHook";
 import MDEditor from "@uiw/react-md-editor";
+import { Button } from "@mui/material";
 
 function Reply({ originComment }: { originComment: CommentDetails }) {
   const [writeReply, setWriteReply] = useState(false);
@@ -40,7 +41,13 @@ function Reply({ originComment }: { originComment: CommentDetails }) {
   return (
     <div className={style[`block`]}>
       <div className="display-flex-row-reverse flex-end mt-30">
-        <button onClick={() => setWriteReply(!writeReply)}>대댓글 작성</button>
+        {originComment.commentStatus !== "DELETED" ? (
+          <Button onClick={() => setWriteReply(!writeReply)}>
+            대댓글 작성
+          </Button>
+        ) : (
+          ""
+        )}
       </div>
       {writeReply ? (
         <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
@@ -48,7 +55,7 @@ function Reply({ originComment }: { originComment: CommentDetails }) {
             height={200}
             value={content}
             preview="edit"
-            // onChange={(val) => setContent(val)}
+            onChange={(val) => setContent(val)}
           />
           <button type="submit">댓글 달기</button>
         </form>

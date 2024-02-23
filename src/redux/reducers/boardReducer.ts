@@ -20,6 +20,7 @@ interface BoardStaus {
 export interface BoardDetails {
   boardId: number;
   memberId: number;
+  memberHelpNumber: number;
   title: string;
   nickname: string;
   content: string;

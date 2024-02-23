@@ -5,6 +5,7 @@ import { GrView } from "react-icons/gr";
 import { FaRegCommentDots } from "react-icons/fa";
 import { BoardDetails } from "../../../redux/reducers/boardReducer";
 import styled from "./boardItem.module.css";
+import useRankHooks from "../../../hooks/userRank";
 
 type boardProps = {
   BoardDetails: BoardDetails;
@@ -18,6 +19,8 @@ const deleteTag = (origin: string): string => {
 };
 
 const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
+  const userRankHooks = useRankHooks();
+
   return (
     // 게시글 상단 미해결 과 제목
     <div className={styled["board-item"]} id={`${BoardDetails.boardId}`}>
@@ -36,8 +39,21 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
       </div>
 
       {/* 멤버 아이디 */}
-      <div>
-        <span>{BoardDetails.nickname}</span>
+      <div className={styled.info}>
+        {/* 등급을 위한 멤버 헬프 넘버 */}
+        <div className={styled.info}>
+          <span>
+            <img
+              style={{ width: "40px", marginRight: "5px" }}
+              src={`icon/rankIcon/${userRankHooks.getUserRank(
+                BoardDetails.memberHelpNumber
+              )}.png`}
+              alt="유저 등급"
+            />
+          </span>
+          <span>{BoardDetails.nickname}</span>
+        </div>
+
         <div className={styled.right}>
           <span className={styled["bottom-icon"]}>
             <FaRegThumbsUp />

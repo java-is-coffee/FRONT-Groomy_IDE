@@ -67,13 +67,13 @@ const BoardContent = () => {
     }
   };
 
-  const handleEdit = (event: React.MouseEvent) => {
+  const handleEdit = () => {
     dispatch(patchIsEdited(true));
     dispatch(setIdeOption(IdeOptionType.BoardWrite));
     dispatch(setMainOption(ContentType.BoardWrite));
   };
 
-  const hadleDelete = async (event: React.MouseEvent) => {
+  const hadleDelete = async () => {
     if (!window.confirm("게시글을 삭제 하시겠습니까?")) {
       alert("게시글 삭제가 취소 되었습니다.");
     } else {

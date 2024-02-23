@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import myStyle from "./myPageContainer.module.css";
 import { Avatar, Button } from "@mui/material";
+
 import { deepPurple } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -29,8 +30,6 @@ function MyPageContainer() {
 
   //유저 닉네임 아이콘에 넣기
   const nickNameSlice = member?.nickname.slice(0, 3);
-
-  // const [isEdit, setIsEdit] = useState(false);
 
   const dispatch = useDispatch();
   // member 정보 불러오기
@@ -83,6 +82,17 @@ function MyPageContainer() {
   const moveReset = () => {
     dispatch(setMainOption(ContentType.MyPageResetPassword));
   };
+
+  // const accountDelete = async () => {
+  //   const response = await deleteMember();
+
+  //   if (response === 200) {
+  //     toast.warning("회원 탈퇴 성공");
+  //     dispatch(setMember(null));
+  //     localStorage.clear();
+  //     dispatch(setMainOption(ContentType.ProjectList));
+  //   }
+  // };
 
   return (
     <div className={myStyle.body}>
@@ -166,6 +176,14 @@ function MyPageContainer() {
           <ScrappedBoard />
         </div>
       </div>
+
+      {/* <div>
+        <div className={myStyle.contents}>
+          <span className={myStyle.selected}>작성한 게시글</span>
+          <span className={myStyle.unSelected}>스크랩한 게시글</span>
+          <span className={myStyle.unSelected}>작성한 댓글</span>
+        </div>
+      </div> */}
     </div>
   );
 }

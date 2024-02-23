@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { FaUserCircle } from "react-icons/fa";
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
 import { CommentDetail, newComment } from "../../../api/board/newComment";
@@ -15,16 +13,22 @@ import MDEditor from "@uiw/react-md-editor";
 import styled from "./comment.module.css";
 import { Button } from "@mui/material";
 
+import { toast } from "react-toastify";
+import useRankHooks from "../../../hooks/userRank";
+
 function Comment() {
   const [content, setContent] = useState<string | undefined>("");
   const boardHooks = useBoardHooks();
 
   const userInfo = useSelector((state: RootState) => state.member.member);
   const curId = useSelector((state: RootState) => state.board.contentId);
+  const boardData = useSelector((state: RootState) => state.board.content);
 
   const commentList = useSelector(
     (state: RootState) => state.board.commentList
   );
+
+  const userRankHook = useRankHooks();
 
   const boardIdData: BoardId = {
     boardId: curId,
@@ -32,8 +36,25 @@ function Comment() {
 
   const dispatch = useDispatch();
 
+  function dateFormat(date: string | undefined): string {
+    if (date) {
+      let editDate = date.substring(0, 19);
+      let sliceDate = editDate.split("T");
+
+      const result = sliceDate[0] + " " + sliceDate[1];
+      return result;
+    }
+    return "null";
+  }
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (content === "") {
+      toast.error("댓글을 입력해주세요 ㅠㅠ");
+      return;
+    }
+
     if (curId !== null && userInfo?.nickname && userInfo.memberId) {
       const comment: CommentDetail = {
         boardId: curId,
@@ -83,63 +104,84 @@ function Comment() {
           preview="edit"
           onChange={(val) => setContent(val)}
         />
-        <div style={{ marginTop: "15px", marginBottom: "30px" }}>
-          <Button type="submit" variant="contained" style={{ float: "right" }}>
-            댓글 달기
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            height: "8vh",
+          }}
+        >
+          <h3>답변 : {boardData?.commentNumber} </h3>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ float: "right", marginTop: "10px" }}
+          >
+            답변 달기
           </Button>
         </div>
       </form>
-      {/* 댓글 출력 */}
-      {commentList &&
-        commentList.map((comment) => (
-          <div
-            key={comment.commentId}
-            style={{ marginTop: "15px" }}
-            className={` mt-15 ${
-              comment.originComment ? `${styled.reply}` : " "
-            } "`}
-          >
-            <hr />
 
-            {/* 작성자 아이콘 & 관리 아이콘 */}
-            <div className={styled["icon-box"]}>
-              <div className={styled["flex"]}>
-                <FaUserCircle size={24} />
-                <h4 style={{ display: "inline", marginLeft: "15px" }}>
-                  {comment.nickname}
-                </h4>
+      <div>
+        <hr />
+        {commentList &&
+          commentList.map((comment) => (
+            <div
+              key={comment.commentId}
+              style={{ marginTop: "15px", borderBottom: "4px solid #d9d9d9" }}
+              className={` ${
+                comment.originComment ? `${styled.reply}` : " "
+              } "`}
+            >
+              {/* 작성자 아이콘 & 관리 아이콘 */}
+              <div className={styled["icon-box"]}>
+                <div className={styled["flex"]}>
+                  <img
+                    style={{ width: "40px", marginRight: "5px" }}
+                    src={`icon/rankIcon/${userRankHook.getUserRank(
+                      comment.memberHelpNumber
+                    )}.png`}
+                    alt="유저 등급"
+                  />
+                  <h4 className={styled.nickname}>{comment.nickname}</h4>
+                  {comment.commentStatus !== "DELETED" ? (
+                    <span>{dateFormat(comment.createdTime)}</span>
+                  ) : (
+                    " "
+                  )}
+                </div>
+
+                {userInfo?.memberId === comment.memberId ? (
+                  <CommentDropdown comment={comment} />
+                ) : null}
               </div>
 
-              {userInfo?.memberId === comment.memberId ? (
-                <CommentDropdown comment={comment} />
-              ) : null}
+              {comment.commentStatus === "DELETED" ? (
+                " "
+              ) : (
+                <>
+                  <span style={{ float: "right" }}>{comment.helpNumber}</span>
+                  <FaThumbsUp
+                    style={{ float: "right", marginRight: "15px" }}
+                    onClick={handleHelp}
+                    id={`${comment.commentId}`}
+                  />
+                </>
+              )}
+
+              <MDEditor.Markdown
+                style={{ padding: 15, backgroundColor: "unset" }}
+                source={comment.content}
+              />
+
+              {comment.originComment === null ? (
+                <Reply originComment={comment} />
+              ) : (
+                " "
+              )}
             </div>
-
-            {comment.commentStatus === "DELETED" ? (
-              " "
-            ) : (
-              <>
-                <span style={{ float: "right" }}>{comment.helpNumber}</span>
-                <FaThumbsUp
-                  style={{ float: "right", marginRight: "15px" }}
-                  onClick={handleHelp}
-                  id={`${comment.commentId}`}
-                />
-              </>
-            )}
-
-            <MDEditor.Markdown
-              style={{ padding: 15, backgroundColor: "unset" }}
-              source={comment.content}
-            />
-
-            {comment.originComment === null ? (
-              <Reply originComment={comment} />
-            ) : (
-              " "
-            )}
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 }
