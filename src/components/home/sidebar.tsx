@@ -13,7 +13,6 @@ import { setMember } from "../../redux/reducers/memberReducer";
 import { setMainOption } from "../../redux/reducers/mainpageReducer";
 // import mainOption from "../../redux/reducers/mainpageReducer";
 import sideBarStyles from "./sidebar.module.css";
-import { setMainOption } from "../../redux/reducers/mainpageReducer";
 
 type SidebarProps = {
   onChange: (newState: boolean) => void;
@@ -81,22 +80,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
     }
     console.log(member);
   }, [accessToken, dispatch, member]);
-
-  // main contents handler
-  const handleMainContent = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.currentTarget.id;
-    console.log(target);
-
-    // if (target === "project") onSelectContents(ContentType.ProjectList);
-    // if (target === "invited-project")
-    //   onSelectContents(ContentType.InvitedProjectList);
-    // if (target === "board") onSelectContents(ContentType.BoardList);
-
-    if (target === "project") dispatch(setMainOption(ContentType.ProjectList));
-    if (target === "invited-project")
-      dispatch(setMainOption(ContentType.InvitedProjectList));
-    if (target === "board") dispatch(setMainOption(ContentType.BoardList));
-  };
 
   return (
     <div className={sideBarStyles[`sidebar-menu`]} style={sidebarStyle}>

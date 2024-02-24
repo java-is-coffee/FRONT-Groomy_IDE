@@ -5,9 +5,9 @@ import sideStyles from "./sideContents.module.css";
 const Chat = () => {
   return (
     <div className={sideStyles[`side-content`]}>
-      <div className={sideStyles[`side-container-header`]}>
+      {/* <div className={sideStyles[`side-container-header`]}>
         <span className={sideStyles[`side-container-title`]}>CHAT</span>
-      </div>
+      </div> */}
       <ChatComponent /> 
     </div>
   );

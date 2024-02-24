@@ -21,9 +21,6 @@ import SeachPaging from "./searchPaging";
 import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
 import IdeOptionType from "../../../enum/ideOptionType";
 import { setMainOption } from "../../../redux/reducers/mainpageReducer";
-import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
-import IdeOptionType from "../../../enum/ideOptionType";
-import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 
 export enum SearchCompleted {
   All = "all",

@@ -29,7 +29,7 @@ const ActionContainer = () => {
         dispatchOptions(IdeOptionType.File);
         break;
       case "board":
-        dispatchOptions(IdeOptionType.BoardListList);
+        dispatchOptions(IdeOptionType.BoardList);
         break;
       case "chat":
         dispatchOptions(IdeOptionType.Chat);
