@@ -111,6 +111,7 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
     }
   }, [fetchProjectMemberList, type]);
 
+
   return (
     <div
       className={projectCardStyles[`project-card`]}
