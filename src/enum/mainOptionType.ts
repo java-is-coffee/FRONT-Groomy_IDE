@@ -4,5 +4,7 @@ export enum ContentType {
   BoardList = "board",
   BoardContent = "board-content",
   BoardWrite = "board-write",
+  MyPage = "my-page",
   Chat = "chat",
+  MyPageResetPassword = "my-page-pass",
 }

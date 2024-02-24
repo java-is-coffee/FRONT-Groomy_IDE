@@ -24,6 +24,7 @@ const verificationEmail = async (inputEamil: string) => {
 
     if (response.status === 200) {
       console.log("이메일 발송 완료");
+
       return response.status;
     } else {
       console.log("이메일 발송 실패");

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import BoardItem from "./boardItem";
 import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
 import { RootState } from "../../../redux/store/store";
 import {
   BoardDetails,
@@ -21,6 +22,7 @@ import SeachPaging from "./searchPaging";
 import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
 import IdeOptionType from "../../../enum/ideOptionType";
 import { setMainOption } from "../../../redux/reducers/mainpageReducer";
+import { Button, Fab, TextField } from "@mui/material";
 
 export enum SearchCompleted {
   All = "all",
@@ -31,7 +33,6 @@ export enum SearchCompleted {
 const BoardListContainer = () => {
   const accessToken = localStorage.getItem("accessToken");
   const boardList = useSelector((state: RootState) => state.board.boardList);
-  // const isEdited = useSelector((state: RootState) => state.board.isEdited);
   const isSearch = useSelector((state: RootState) => state.board.isSearch);
   const [searchData, setSearchData] = useState("");
   const [searchIsCompleted, setsearchIsCompleted] = useState(
@@ -45,6 +46,7 @@ const BoardListContainer = () => {
 
   useEffect(() => {
     console.log("보드 리스트 업데이트 ");
+
     const fetchBoardList = async () => {
       await boardHooks.updateBoardList(1);
     };
@@ -92,10 +94,6 @@ const BoardListContainer = () => {
         </>
       );
     }
-  };
-
-  const searchDataSet = (event: React.FormEvent<HTMLInputElement>) => {
-    setSearchData(event.currentTarget.value);
   };
 
   const handleSeacrhComplete = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -187,17 +185,40 @@ const BoardListContainer = () => {
             </span>
           </div>
 
-          <input
-            style={{ width: "calc(1% * 98)" }}
-            className={styled.input}
-            value={searchData}
-            required
-            onChange={searchDataSet}
-            placeholder="작성자 / 제목 / 내용 과 관련된 검색어를 입력해주세요."
-          />
-          <button className={styled["search-btn"]} type="submit">
-            검색
-          </button>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <TextField
+              style={{ marginLeft: "-1px", marginTop: "30px" }}
+              id="standard-helperText"
+              sx={{
+                m: 1,
+                backgroundColor: "white",
+                borderColor: "#d9d9d9",
+                ":hover": { borderColor: "black" },
+              }}
+              label="검색어 입력"
+              fullWidth
+              size="small"
+              onChange={(val) => setSearchData(val.target.value)}
+              helperText="작성자 / 게시글 제목 / 게시글 내용과 관련되어 검색해주세요."
+              variant="outlined"
+            />
+            <Button
+              sx={{
+                m: 1,
+                color: "black",
+                backgroundColor: "white",
+                float: "right",
+                maxHeight: "40px",
+                margin: "0px",
+                borderColor: "gray",
+                ":hover": { borderColor: "black" },
+              }}
+              type="submit"
+              variant="outlined"
+            >
+              검색
+            </Button>
+          </div>
         </form>
       </div>
 
@@ -213,10 +234,21 @@ const BoardListContainer = () => {
           </div>
         ))}
 
-      {/* 글쓰기 버튼 */}
-      <div className={styled["writing-btn"]} onClick={chageComponent}>
-        글쓰기
+      <div onClick={chageComponent}>
+        <Fab
+          color="primary"
+          aria-label="edit"
+          style={{
+            float: "right",
+            position: "fixed",
+            bottom: "10px",
+            right: "50px",
+          }}
+        >
+          <EditIcon />
+        </Fab>
       </div>
+
       {isSearch ? (
         <div className={styled["paging"]}>
           <SeachPaging

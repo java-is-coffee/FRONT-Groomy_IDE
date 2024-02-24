@@ -91,8 +91,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
       <div className={sideBarStyles[`side-list`]}>
         <div
           className={sideBarStyles[`user-container`]}
+          id="my-page"
           onClick={() => {
-            member ? navigate("/user") : navigate("/login");
+            member
+              ? dispatch(setMainOption(ContentType.MyPage))
+              : navigate("/login");
           }}
         >
           {member ? (

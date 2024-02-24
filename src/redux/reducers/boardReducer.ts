@@ -20,6 +20,7 @@ interface BoardStaus {
 export interface BoardDetails {
   boardId: number;
   memberId: number;
+  memberHelpNumber: number;
   title: string;
   nickname: string;
   content: string;
@@ -73,10 +74,13 @@ const BoardReducer = createSlice({
     patchPageOffset: (state, action: PayloadAction<number>) => {
       state.pageOffset = action.payload;
     },
-    patchCurrentPage: (state, action: PayloadAction<number>) => {
+    patchCurrentPage: (state, action: PayloadAction<number | null>) => {
       state.currentPage = action.payload;
     },
-    patchCommentList: (state, action: PayloadAction<CommentDetails[]>) => {
+    patchCommentList: (
+      state,
+      action: PayloadAction<CommentDetails[] | null>
+    ) => {
       state.commentList = action.payload;
     },
     patchComment: (state, action: PayloadAction<CommentDetails | null>) => {
