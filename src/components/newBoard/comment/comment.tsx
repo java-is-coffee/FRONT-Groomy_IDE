@@ -26,8 +26,6 @@ function Comment() {
     (state: RootState) => state.board.commentList
   );
 
-  // const userRankHook = useRankHooks();
-
   const boardIdData: BoardId = {
     boardId: curId,
   };
@@ -36,7 +34,7 @@ function Comment() {
     event.preventDefault();
 
     if (content === "") {
-      toast.error("댓글을 입력해주세요 ㅠㅠ");
+      toast.error("댓글을 입력해주세요.");
       return;
     }
 

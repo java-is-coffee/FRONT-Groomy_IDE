@@ -110,17 +110,6 @@ const BoardContent = () => {
     }
   };
 
-  function dateFormat(date: string | undefined): string {
-    if (date) {
-      let editDate = date.substring(0, 19);
-      let sliceDate = editDate.split("T");
-
-      const result = sliceDate[0] + " " + sliceDate[1];
-      return result;
-    }
-    return "null";
-  }
-
   return (
     <div className={styled.boardContentContainer}>
       <div className={styled.option}>
@@ -177,7 +166,7 @@ const BoardContent = () => {
         <span className={styled.nickname}>{curContent?.nickname}</span>
         <span className={styled.separator}></span>
         <span className={styled.createdTime}>
-          {dateFormat(curContent?.createdTime)}
+          {boardHooks.dateFormat(curContent?.createdTime)}
         </span>
         <span className={styled.Separator}></span>
         <span className={styled.viewNumber}>

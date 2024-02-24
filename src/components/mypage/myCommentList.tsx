@@ -7,8 +7,7 @@ import { patchMyCommentList } from "../../redux/reducers/myPageReducer";
 import getMyCommentList from "../../api/myPage/getMyComment";
 import { CommentDetails } from "../../api/board/getCommentList";
 import { Chip } from "@mui/material";
-import { FaRegCommentDots, FaRegThumbsUp } from "react-icons/fa6";
-import { GrView } from "react-icons/gr";
+import { FaRegThumbsUp } from "react-icons/fa6";
 
 const MycommentList = () => {
   const accessToken = localStorage.getItem("accessToken");

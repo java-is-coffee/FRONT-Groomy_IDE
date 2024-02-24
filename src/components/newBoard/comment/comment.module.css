@@ -93,3 +93,31 @@
 .scrapIconButton:hover {
   transform: scale(1.1);
 }
+
+.interactionStats {
+  display: flex;
+  float: right;
+  align-items: center; /* 아이콘과 숫자를 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center;
+  width: 40px; /* 동그라미 크기 조절 */
+  height: 40px; /* 동그라미 크기 조절 */
+  border-radius: 10px; /* 동그라미 모양 만들기 */
+  border: 1px solid var(--sub-theme-color); /* 테두리 색상 */
+  margin: 10px; /* 주변 요소와의 간격 */
+  background-color: #f9f9f9; /* 배경색 */
+  cursor: pointer; /* 마우스 오버 시 커서 변경 */
+}
+
+.interactionStats .iconConatiner {
+  padding: 5px;
+}
+
+.interactionStats:hover {
+  background-color: var(--sub-theme-color); /* 호버 시 배경색 변경 */
+  color: white;
+}
+
+.interactionStats > svg {
+  margin-right: 5px; /* 아이콘과 숫자 사이 간격 */
+}

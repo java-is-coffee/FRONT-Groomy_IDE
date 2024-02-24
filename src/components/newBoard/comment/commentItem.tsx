@@ -24,33 +24,23 @@ const CommentItem = ({ comment }: { comment: CommentDetails }) => {
 
   const dispatch = useDispatch();
 
-  function dateFormat(date: string | undefined): string {
-    if (date) {
-      let editDate = date.substring(0, 19);
-      let sliceDate = editDate.split("T");
-
-      const result = sliceDate[0] + " " + sliceDate[1];
-      return result;
-    }
-    return "null";
-  }
-
   const handleHelp = async (event: React.MouseEvent<SVGAElement>) => {
-    event.preventDefault();
     const id = event.currentTarget.getAttribute("id");
-
     if (id && userInfo) {
-      const intId = parseInt(id);
+      const intId = parseInt(id!);
+
+      if (intId === comment.commentId) {
+        toast.error("자신의 댓글은 추천 불가능합니다.");
+        return;
+      }
+
       const fixContent: CommentDetails | null = await postHelpNumber(
         intId,
         userInfo.memberId
       );
-      if (fixContent === null) {
-        alert("자신의 댓글은 추천 불가능 합니다.");
-      } else {
-        boardHooks.updateCommentList(curId);
-        dispatch(patchComment(fixContent));
-      }
+
+      boardHooks.updateCommentList(curId);
+      dispatch(patchComment(fixContent));
     }
   };
 
@@ -95,7 +85,7 @@ const CommentItem = ({ comment }: { comment: CommentDetails }) => {
           />
           <h4 className={styled.nickname}>{comment.nickname}</h4>
           {comment.commentStatus !== "DELETED" ? (
-            <span>{dateFormat(comment.createdTime)}</span>
+            <span>{boardHooks.dateFormat(comment.createdTime)}</span>
           ) : (
             " "
           )}
@@ -114,12 +104,16 @@ const CommentItem = ({ comment }: { comment: CommentDetails }) => {
         " "
       ) : (
         <>
-          <span style={{ float: "right" }}>{comment.helpNumber}</span>
-          <FaThumbsUp
-            style={{ float: "right", marginRight: "15px" }}
-            onClick={handleHelp}
-            id={`${comment.commentId}`}
-          />
+          <div className={styled.interactionStats}>
+            <div className={styled.iconContainer}>
+              <FaThumbsUp
+                size={"14px"}
+                onClick={handleHelp}
+                id={`${comment.commentId}`}
+              />
+            </div>
+            {comment.helpNumber}
+          </div>
         </>
       )}
 
