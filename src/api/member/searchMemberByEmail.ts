@@ -1,6 +1,5 @@
 import axios from "axios";
 import { patchAccessToken } from "../auth/patchAccessToken";
-import { toast } from "react-toastify";
 import { IMember } from "./imemberDTO";
 
 const USER_API_URL =
@@ -57,7 +56,6 @@ export const searchMemberByEmail = async (
         }
       } else {
         // 유저에게 메시지 전달
-        toast("유저 목록을 불러오는데 오류가 발생했습니다.");
       }
     }
     return null;
