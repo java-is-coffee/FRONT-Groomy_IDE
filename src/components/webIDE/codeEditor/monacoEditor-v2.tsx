@@ -115,16 +115,8 @@ const MonacoEditorV2 = () => {
         }
       }
     });
-  }, [
-    stompClient,
-    projectId,
-    curFile,
-    editorInstance,
-    connect,
-    manageWidget,
-    member,
-    subscribe,
-  ]);
+    // eslint-disable-next-line
+  }, [stompClient, projectId, curFile, editorInstance, member]);
 
   useEffect(() => {
     if (!editorInstance || !yDocs[curFile.id] || !providers[curFile.id]) return;

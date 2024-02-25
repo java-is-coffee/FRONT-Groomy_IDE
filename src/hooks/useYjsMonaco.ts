@@ -86,6 +86,9 @@ const useYjsMonaco = (
     const awareness = providers[curFile.id].awareness;
     if (!yDocs[curFile.id] || !providers[curFile.id] || !model) return;
     const yText = yDocs[curFile.id].getText("monaco");
+    if (binding[curFile.id]) {
+      binding[curFile.id].destroy();
+    }
     const newBinding = new MonacoBinding(
       yText,
       model,
@@ -93,7 +96,9 @@ const useYjsMonaco = (
       awareness
     );
     setBinding((prev) => ({ ...prev, [curFile.id]: newBinding }));
-    setIsBindingEnd(true);
+    setTimeout(() => {
+      setIsBindingEnd(true);
+    }, 1000);
   };
 
   return { yDocs, providers, isBindingEnd, bindEditor };
