@@ -111,14 +111,6 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
     }
   }, [fetchProjectMemberList, type]);
 
-  //ci/cd주석처리
-
-  // const handleProjectSelect = () => {
-  //   nav(`/chat/${projectDetails.projectId}`, {
-  //     state: { projectName: projectDetails.projectName }
-  //   });
-  // };
-
   return (
     <div
       className={projectCardStyles[`project-card`]}

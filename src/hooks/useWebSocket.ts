@@ -2,7 +2,6 @@ import { useState, useCallback, useRef } from "react";
 import SockJS from "sockjs-client";
 import Stomp, { Client, Subscription } from "stompjs";
 import { patchAccessToken } from "../api/auth/patchAccessToken";
-import { toast } from "react-toastify";
 
 let globalStompClient: Client | null = null;
 
@@ -25,9 +24,9 @@ const useWebSocket = () => {
         "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080";
       const socket = new SockJS(`${BaseUrl}/${url}`);
       const client = Stomp.over(socket);
-      // client.debug = () => {};
       patchAccessToken();
       const storedToken = localStorage.getItem("accessToken")?.trim();
+      client.debug = () => {};
       client.connect(
         { Authorization: `${storedToken}` },
         (frame) => {
@@ -65,9 +64,6 @@ const useWebSocket = () => {
           subscriptions.delete(destination); // 구독 해제 시 맵에서 제거
         },
       };
-
-      const dst = destination.split("/");
-      toast.info(`${dst[dst.length - 1]} 접속완료`);
       subscriptions.set(destination, subscriptionObject);
 
       return subscriptionObject;
@@ -110,7 +106,6 @@ const useWebSocket = () => {
       // connectionCount를 감소시키고 연결이 0이 되면 연결을 끊습니다.
       if (stompClient) {
         stompClient.disconnect(() => {
-          toast.info("프로젝트 연결해제");
           globalStompClient = null;
           setStompClient(null);
         });

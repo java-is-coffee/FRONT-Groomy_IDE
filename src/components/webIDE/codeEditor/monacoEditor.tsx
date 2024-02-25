@@ -169,7 +169,7 @@ const MonacoEditor = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
-  }, [tempToken, yDoc, provider, editorInstance]);
+  }, [yDoc, provider, editorInstance]);
 
   // 커서 변경 이벤트 핸들러 추가 & 변경시 웹소켓으로 메세지 전송
   const handleEditorDidMount: OnMount = (
