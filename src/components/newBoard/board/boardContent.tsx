@@ -84,7 +84,17 @@ const BoardContent = () => {
     }
   };
 
-  const handleScrap = async (event: React.MouseEvent<SVGAElement>) => {
+  const handleScrapSVG = async (event: React.MouseEvent<SVGAElement>) => {
+    event.preventDefault();
+    if (curContent) {
+      const result = await postScrapToggle(curContent.boardId);
+      if (result) {
+        dispatch(patchContent(result));
+      }
+    }
+  };
+
+  const handleScrapDiv = async (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (curContent) {
       const result = await postScrapToggle(curContent.boardId);
@@ -138,9 +148,9 @@ const BoardContent = () => {
             </div>
           </div>
         ) : curContent?.memberScrapped ? (
-          <CiBookmarkMinus size={"48px"} onClick={handleScrap} />
+          <CiBookmarkMinus size={"48px"} onClick={handleScrapSVG} />
         ) : (
-          <CiBookmarkPlus size={"48px"} onClick={handleScrap} />
+          <CiBookmarkPlus size={"48px"} onClick={handleScrapSVG} />
         )}
       </div>
       <div className={styled.headerSection}>
@@ -204,7 +214,7 @@ const BoardContent = () => {
           </div>
           {curContent?.helpNumber}
         </div>
-        <div className={styled.interactionStats}>
+        <div className={styled.interactionStats} onClick={handleScrapDiv}>
           <div>
             <MdOutlineBookmarkAdd size={"18px"} />
           </div>
