@@ -5,6 +5,7 @@ const USER_API_URL =
   "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/ide";
 
 export interface ProjectDetails {
+  name(name: any): unknown;
   projectId: number;
   memberId: number;
   projectName: string;
