@@ -8,7 +8,6 @@ import {
   updateBoardContent,
 } from "../../../api/board/updateBoardContent";
 import MDEditor from "@uiw/react-md-editor";
-import { ContentType } from "../../../enum/mainOptionType";
 import {
   patchBoardList,
   patchContent,
@@ -16,11 +15,9 @@ import {
   patchIsEdited,
 } from "../../../redux/reducers/boardReducer";
 import styled from "./newBoardContent.module.css";
-import IdeOptionType from "../../../enum/ideOptionType";
-import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
-import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 import { FormControlLabel, FormGroup, TextField } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
+import useBoardHooks from "../../../hooks/board/boardHook";
 
 function BoardWritePage() {
   const savedContent = useSelector((state: RootState) => state.board.content);
@@ -37,20 +34,15 @@ function BoardWritePage() {
   const user = useSelector((state: RootState) => state.member.member);
   const isEdit = useSelector((state: RootState) => state.board.isEdited);
 
-  // function onChangeTitle(event: React.FormEvent<HTMLInputElement>): void {
-  //   const value = event.currentTarget.value;
-  //   setTitle(value);
-  // }
+  const boardHooks = useBoardHooks();
 
   const backList = () => {
     //수정 중이면 해당 게시글로
     if (isEdit) {
       dispatch(patchIsEdited(false));
-      dispatch(setIdeOption(IdeOptionType.BoardContent));
-      dispatch(setMainOption(ContentType.BoardContent));
+      boardHooks.switchOption("content");
     } else {
-      dispatch(setIdeOption(IdeOptionType.BoardList));
-      dispatch(setMainOption(ContentType.BoardList));
+      boardHooks.switchOption("list");
     }
   };
 
@@ -83,9 +75,7 @@ function BoardWritePage() {
         dispatch(patchCurrentPage(1));
         dispatch(patchBoardList(null));
         dispatch(patchContent(response));
-        dispatch(setIdeOption(IdeOptionType.BoardList));
-        dispatch(setMainOption(ContentType.BoardList));
-        // onSelectContents(ContentType.BoardContent);
+        boardHooks.switchOption("content");
       }
     }
   };
@@ -110,130 +100,11 @@ function BoardWritePage() {
       );
       if (response) {
         dispatch(patchContent(response));
-        dispatch(setIdeOption(IdeOptionType.BoardContent));
-        dispatch(setMainOption(ContentType.BoardContent));
+        boardHooks.switchOption("content");
       }
     }
   };
 
-  //수정 중일 경우
-  // if (isEdit && savedContent) {
-  //   return (
-  //     <div className={styled["write-container"]}>
-  //       <div className={styled["header"]}>
-  //         <FaClipboard style={{ marginRight: "15px" }} size={25} />
-  //         질문 작성
-  //       </div>
-
-  //       <form style={{ marginTop: "30px" }} onSubmit={handleEdit}>
-  //         <div style={{ marginTop: "15px" }}>
-  //           <span className={styled["font-bold"]}>제목</span>
-  //           <span style={{ float: "right" }}>
-  //             <input
-  //               type="checkbox"
-  //               name="anonymous"
-  //               onChange={checkAnony}
-  //               checked={isAnony}
-  //             />
-  //             <span>익명 선택</span>
-  //           </span>
-  //           <span style={{ marginRight: "15px", float: "right" }}>
-  //             <input
-  //               type="checkbox"
-  //               name="completed"
-  //               checked={isCompleted}
-  //               onChange={checkCompleted}
-  //             />
-  //             <span>해결</span>
-  //           </span>
-  //           <div style={{ marginTop: "15px" }}>
-  //             <input
-  //               type="text"
-  //               name="title"
-  //               className={styled.input}
-  //               required
-  //               onChange={onChangeTitle}
-  //               defaultValue={savedContent.title}
-  //             />
-  //           </div>
-  //         </div>
-
-  //         <div style={{ marginTop: "15px" }}>
-  //           <span className={styled["font-bold"]}>내용</span>
-  //           <div style={{ marginRight: "15px", float: "right" }}>
-  //             <button className={styled.btn} onClick={backList}>
-  //               취소
-  //             </button>
-  //             <button className={styled.btn} type="submit">
-  //               작성
-  //             </button>
-  //           </div>
-  //           <div style={{ marginTop: "15px" }}>
-  //             <MDEditor
-  //               height={500}
-  //               value={content}
-  //               preview="edit"
-  //               onChange={(val) => setContent(val)}
-  //             />
-  //           </div>
-  //         </div>
-  //       </form>
-  //     </div>
-  //   );
-  // }
-
-  // //새로운 게시글 작성
-  // return (
-  //   <div className={styled["write-container"]}>
-  //     <div className={styled["header"]}>
-  //       <FaClipboard style={{ marginRight: "15px" }} size={25} />
-  //       질문 작성
-  //     </div>
-
-  //     <form style={{ marginTop: "30px" }} onSubmit={handleSubmit}>
-  //       <div style={{ marginTop: "15px" }}>
-  //         <span className={styled["font-bold"]}>제목</span>
-  //         <span style={{ float: "right" }}>
-  //           <input type="checkbox" name="anonymous" onChange={checkAnony} />
-  //           <span>익명 선택</span>
-  //         </span>
-  //         <span style={{ marginRight: "15px", float: "right" }}>
-  //           <input type="checkbox" name="completed" onChange={checkCompleted} />
-  //           <span>해결</span>
-  //         </span>
-  //         <div style={{ marginTop: "15px" }}>
-  //           <input
-  //             type="text"
-  //             name="title"
-  //             className={styled.input}
-  //             required
-  //             onChange={onChangeTitle}
-  //           />
-  //         </div>
-  //       </div>
-
-  //       <div style={{ marginTop: "15px" }}>
-  //         <span className={styled["font-bold"]}>내용</span>
-  //         <div style={{ marginRight: "15px", float: "right" }}>
-  //           <button className={styled.btn} onClick={backList}>
-  //             취소
-  //           </button>
-  //           <button className={styled.btn} type="submit">
-  //             작성
-  //           </button>
-  //         </div>
-  //         <div style={{ marginTop: "15px" }}>
-  //           <MDEditor
-  //             height={500}
-  //             value={content}
-  //             preview="edit"
-  //             onChange={(val) => setContent(val)}
-  //           />
-  //         </div>
-  //       </div>
-  //     </form>
-  //   </div>
-  // );
   return (
     <div className={styled["write-container"]}>
       <div className={styled["header"]}>

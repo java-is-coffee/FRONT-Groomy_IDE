@@ -151,11 +151,17 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
           </div>
         </div>
       </div>
-      <div className={sideBarStyles[`menu-container`]}>
-        <div className={sideBarStyles[`icon float-right`]}>
-          <IoIosLogOut size={"32px"} onClick={logOut} />
+
+      {member ? (
+        <div className={sideBarStyles[`menu-container`]}>
+          <div className={sideBarStyles[`icon float-right`]}>
+            <IoIosLogOut size={"32px"} onClick={logOut} />
+          </div>
+          <span>로그아웃</span>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

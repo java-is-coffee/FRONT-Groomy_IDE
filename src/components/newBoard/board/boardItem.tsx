@@ -45,7 +45,7 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
           <span>
             <img
               style={{ width: "40px", marginRight: "5px" }}
-              src={`icon/rankIcon/${userRankHooks.getUserRank(
+              src={`/icon/rankIcon/${userRankHooks.getUserRank(
                 BoardDetails.memberHelpNumber
               )}.png`}
               alt="유저 등급"

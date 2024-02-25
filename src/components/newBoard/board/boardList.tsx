@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import BoardItem from "./boardItem";
-import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import { RootState } from "../../../redux/store/store";
@@ -19,9 +18,6 @@ import styled from "./boardList.module.css";
 import { searchBoardList } from "../../../api/board/searchBoardList";
 import useBoardHooks from "../../../hooks/board/boardHook";
 import SeachPaging from "./searchPaging";
-import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
-import IdeOptionType from "../../../enum/ideOptionType";
-import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 import { Button, Fab, TextField } from "@mui/material";
 
 export enum SearchCompleted {
@@ -34,6 +30,7 @@ const BoardListContainer = () => {
   const accessToken = localStorage.getItem("accessToken");
   const boardList = useSelector((state: RootState) => state.board.boardList);
   const isSearch = useSelector((state: RootState) => state.board.isSearch);
+
   const [searchData, setSearchData] = useState("");
   const [searchIsCompleted, setsearchIsCompleted] = useState(
     SearchCompleted.All
@@ -64,14 +61,12 @@ const BoardListContainer = () => {
       dispatch(patchContentId(fetchContentId));
       boardHooks.updateCommentList(fetchContentId);
 
-      dispatch(setIdeOption(IdeOptionType.BoardContent));
-      dispatch(setMainOption(ContentType.BoardContent));
+      boardHooks.switchOption("content");
     }
     //타겟 id가 존재하지 않는다면 새로운 게시글 이라는뜻.
     else {
       dispatch(patchContent(null));
-      dispatch(setIdeOption(IdeOptionType.BoardWrite));
-      dispatch(setMainOption(ContentType.BoardWrite));
+      boardHooks.switchOption("write");
     }
   };
 
@@ -126,20 +121,20 @@ const BoardListContainer = () => {
   return (
     <div className={styled["list-container"]}>
       <div className={styled["header"]}>
-      <span>질문 게시판</span>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <FaClipboardQuestion
-          className="mr-15"
-          size={25}
-          onClick={resetBoadList}
-        />
-        <SlMagnifier
-          size={25}
-          onClick={() => setSearchModalOpen(!searchModalOpen)}
-        />
+        <span>질문 게시판</span>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <FaClipboardQuestion
+            className="mr-15"
+            size={25}
+            onClick={resetBoadList}
+          />
+          <SlMagnifier
+            size={25}
+            onClick={() => setSearchModalOpen(!searchModalOpen)}
+          />
+        </div>
       </div>
-    </div>
-      
+
       {/* 검색 파트 */}
       <div
         id="searchForm"

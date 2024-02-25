@@ -13,7 +13,7 @@ import {
   patchPageOffset,
   BoardDetails,
 } from "../../../redux/reducers/boardReducer";
-// import { getBoardList, PageNumber } from "../../api/board/getBoardList";
+
 import { patchBoardList } from "../../../redux/reducers/boardReducer";
 import { getSearchMax } from "../../../api/board/getSearchMax";
 import { SearchCompleted } from "./boardList";
@@ -30,7 +30,7 @@ function SeachPaging({
   const pageList = useSelector((state: RootState) => state.board.page);
   const maxPage = useSelector((state: RootState) => state.board.maxPage);
   const pageOffset = useSelector((state: RootState) => state.board.pageOffset);
-  // const isSearch = useSelector((state: RootState) => state.board.isSearch);
+
   const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
 
@@ -70,9 +70,6 @@ function SeachPaging({
   const movePage = async (e: React.MouseEvent<HTMLDivElement>) => {
     const page = parseInt(e.currentTarget.id);
 
-    // const Page: PageNumber = {
-    //   page: page,
-    // };
     const storedBoard: BoardDetails[] | null = await searchBoardList(
       page,
       searchData,

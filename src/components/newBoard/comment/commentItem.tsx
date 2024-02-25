@@ -78,7 +78,7 @@ const CommentItem = ({ comment }: { comment: CommentDetails }) => {
         <div className={styled["flex"]}>
           <img
             style={{ width: "40px", marginRight: "5px" }}
-            src={`icon/rankIcon/${userRankHook.getUserRank(
+            src={`/icon/rankIcon/${userRankHook.getUserRank(
               comment.memberHelpNumber
             )}.png`}
             alt="유저 등급"

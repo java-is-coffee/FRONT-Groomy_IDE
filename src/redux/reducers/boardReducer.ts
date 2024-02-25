@@ -1,6 +1,7 @@
 // projectsSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CommentDetails } from "../../api/board/getCommentList";
+import BoardOption from "../../enum/boardOptionType";
 
 // 초기 상태의 타입 정의
 interface BoardStaus {
@@ -15,6 +16,7 @@ interface BoardStaus {
   comment: CommentDetails | null;
   isEdited: boolean;
   isSearch: boolean;
+  option: BoardOption | null;
 }
 
 export interface BoardDetails {
@@ -47,6 +49,7 @@ const initialState: BoardStaus = {
   comment: null,
   isEdited: false,
   isSearch: false,
+  option: null,
 };
 
 const BoardReducer = createSlice({
@@ -89,6 +92,10 @@ const BoardReducer = createSlice({
     patchIsSeacrh: (state, action: PayloadAction<boolean>) => {
       state.isSearch = action.payload;
     },
+    setOption: (state, action: PayloadAction<BoardOption>) => {
+      state.option = action.payload;
+      console.log(state.option);
+    },
   },
 });
 
@@ -105,5 +112,6 @@ export const {
   patchCommentList,
   patchComment,
   patchIsSeacrh,
+  setOption,
 } = BoardReducer.actions;
 export default BoardReducer.reducer;
