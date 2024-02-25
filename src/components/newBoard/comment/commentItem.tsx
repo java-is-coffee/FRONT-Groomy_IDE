@@ -24,18 +24,16 @@ const CommentItem = ({ comment }: { comment: CommentDetails }) => {
 
   const dispatch = useDispatch();
 
-  const handleHelp = async (event: React.MouseEvent<SVGAElement>) => {
-    const id = event.currentTarget.getAttribute("id");
-    if (id && userInfo) {
-      const intId = parseInt(id!);
-
-      if (intId === comment.commentId) {
+  const handleHelp = async (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (userInfo) {
+      if (userInfo.memberId === comment.memberId) {
         toast.error("자신의 댓글은 추천 불가능합니다.");
         return;
       }
 
       const fixContent: CommentDetails | null = await postHelpNumber(
-        intId,
+        comment.commentId,
         userInfo.memberId
       );
 
@@ -104,13 +102,9 @@ const CommentItem = ({ comment }: { comment: CommentDetails }) => {
         " "
       ) : (
         <>
-          <div className={styled.interactionStats}>
+          <div className={styled.interactionStats} onClick={handleHelp}>
             <div className={styled.iconContainer}>
-              <FaThumbsUp
-                size={"14px"}
-                onClick={handleHelp}
-                id={`${comment.commentId}`}
-              />
+              <FaThumbsUp size={"14px"} />
             </div>
             {comment.helpNumber}
           </div>
