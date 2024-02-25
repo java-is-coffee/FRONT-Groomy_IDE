@@ -111,8 +111,9 @@ const ChatComponent: React.FC = () => {
   //   setInputValue(event.target.value);
   // };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e: any) => {
     console.log("message send");
+    e.preventDefault();
     if (!curMember) {
       console.log("새로고침 진행해주세요");
       return;
@@ -339,7 +340,7 @@ const ChatComponent: React.FC = () => {
       </div>
       <form
         className={chatStyles.chat_input_container}
-        onSubmit={handleSendMessage}
+        onSubmit={(e: any) => handleSendMessage(e)}
       >
         <Input
           size="small"
