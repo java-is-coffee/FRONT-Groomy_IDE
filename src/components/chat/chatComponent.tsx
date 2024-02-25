@@ -12,20 +12,6 @@ import { selectProjects } from "../../redux/reducers/projectReducer";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-//ci/cd를 위해서 잠시 주석처리했습니다. 사용하신다면 해당 주석 삭제해주세용.
-
-// type Message = {
-//   id: number;
-//   text: string;
-//   user_name: string;
-//   user_icon: JSX.Element;
-//   is_mine: boolean;
-// };
-
-// type ChatComponentsProps = {
-//   projectId: string | undefined;
-// };
-
 interface IChatDTO {
   memberId: number;
   name?: string;
@@ -52,14 +38,8 @@ const ChatComponent: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [projectName, setProjectName] = useState("");
 
-  // const location = useLocation();
-  // const navigate = useNavigate();
-
-  //connect 제거했씁니다 (ci/cd)
   const { stompClient, subscribe, unsubscribe, sendMessage } = useWebSocket();
 
-  // const searchParams = new URLSearchParams(location.search);
-  // const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   // 채팅 불러오기
   useEffect(() => {
@@ -140,14 +120,14 @@ const ChatComponent: React.FC = () => {
         p.projectId.toString() === projectId
     );
     if (project) {
-      setProjectName(project.projectName); // 프로젝트 이름 설정
+      setProjectName(project.projectName); 
     }
   }, [projectId, projects]);
 
-  // 자동 스크롤
-  useEffect(() => {
-    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatLog]);
+  // // 자동 스크롤
+  // useEffect(() => {
+  //   endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [chatLog]);
 
   //웹소켓
   useEffect(() => {
