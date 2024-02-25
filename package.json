@@ -72,7 +72,10 @@
     "jest-environment-jsdom": "^29.7.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
     "react-app-rewired": "^2.2.1",
-    "ts-jest": "^29.1.2"
+    "ts-jest": "^29.1.2",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   },
   "transformIgnorePatterns": [
     "node_modules/(?!axios)/"
