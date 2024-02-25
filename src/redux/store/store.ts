@@ -8,6 +8,7 @@ import ideSideContainerReducer from "../reducers/ide/ideSideContainerReducer";
 import fileSystemReducer from "../reducers/ide/fileSystemReducer";
 import editingCodeReducer from "../reducers/ide/editingCodeReducer";
 import mainpageReducer from "../reducers/mainpageReducer";
+import myPageReducer from "../reducers/myPageReducer";
 import modalReducer from "../reducers/modalReducer";
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
     mainOption: mainpageReducer,
     fileSystem: fileSystemReducer,
     editingCode: editingCodeReducer,
+    myPage: myPageReducer,
     modalState: modalReducer,
   },
 });

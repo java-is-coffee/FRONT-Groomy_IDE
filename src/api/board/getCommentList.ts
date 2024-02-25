@@ -13,6 +13,7 @@ export interface CommentDetails {
   createdTime: string;
   originComment: number | null;
   memberId: number;
+  memberHelpNumber: number;
   commentStatus: string;
 }
 
@@ -27,22 +28,31 @@ function sortByHierarchy(arr: CommentDetails[]) {
   const parents = arr.filter((item) => item.originComment === null);
 
   parents.forEach((parent) => {
-    sortedArr.push(parent);
+    //부모 중 자식이 있다면.
+    if (
+      hasChildren(arr, parent.commentId) ||
+      parent.commentStatus !== "DELETED"
+    ) {
+      sortedArr.push(parent);
+    }
 
     // 부모에 해당하는 자손을 찾아서 정렬
     const children = arr.filter(
       (item) => item.originComment === parent.commentId
     );
-    // console.log("아이 출");
-    // console.log(children);
     children.forEach((child) => {
       sortedArr.push(child);
     });
-    // console.log(sortedArr);
   });
 
   return sortedArr;
 }
+
+const hasChildren = (arr: CommentDetails[], parentId: number) => {
+  return arr.some((children) => {
+    return children.originComment === parentId;
+  });
+};
 
 export const getCommentList = async ({
   boardId,

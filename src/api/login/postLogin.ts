@@ -25,10 +25,8 @@ const postLogin = async (inputData: LoginDTO) => {
         localStorage.setItem("refreshToken", result.refreshToken);
       }
       return "success";
-    } else return "fail";
+    }
   } catch (error) {
-    alert("네트워크 오류 발생. 잠시 뒤, 이용해주세요.");
-    console.log(error);
     return "error";
   }
 };

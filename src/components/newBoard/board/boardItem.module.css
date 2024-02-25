@@ -22,8 +22,11 @@
   border-radius: 10px;
   padding: 15px;
   box-sizing: border-box;
-  border: 2px solid black;
+  border: 1px solid #d9d9d9;
   overflow-y: auto;
+  transition: background-color 0.3s ease; /* 호버 효과를 위한 부드러운 전환 */
+  display: flex; /* 항목 내용을 플렉스 박스로 배치 */
+  flex-direction: column;
 }
 
 .board-item:hover {
@@ -46,8 +49,17 @@
 }
 
 .bottom-icon {
-  margin-left: 10px;
+  display: flex; /* 아이콘을 플렉스 박스로 배치 */
+  align-items: center; /* 세로 중앙 정렬 */
+  margin-top: 10px;
 }
 .bottom-icon-number {
   margin-left: 5px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
 }
