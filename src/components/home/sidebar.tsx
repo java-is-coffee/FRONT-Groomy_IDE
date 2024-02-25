@@ -10,9 +10,9 @@ import { ContentType } from "../../enum/mainOptionType";
 import { IoIosLogOut } from "react-icons/io";
 import { ConnectWithoutContact } from "@mui/icons-material";
 import { setMember } from "../../redux/reducers/memberReducer";
-
-import sideBarStyles from "./sidebar.module.css";
 import { setMainOption } from "../../redux/reducers/mainpageReducer";
+// import mainOption from "../../redux/reducers/mainpageReducer";
+import sideBarStyles from "./sidebar.module.css";
 
 type SidebarProps = {
   onChange: (newState: boolean) => void;
@@ -26,6 +26,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
   const member = useSelector((state: RootState) => state.member.member);
   const dispatch = useDispatch();
   const [topPosition, setTopPosition] = useState(0);
+
+  // const mainOption = useSelector((state: RootState) => state.mainOption.option);
 
   //sidebar 스크롤 따라가게 하기
   useEffect(() => {
@@ -78,6 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
     }
     console.log(member);
   }, [accessToken, dispatch, member]);
+
   return (
     <div className={sideBarStyles[`sidebar-menu`]} style={sidebarStyle}>
       <div className={sideBarStyles[`button-container`]}>
@@ -91,8 +94,11 @@ const Sidebar: React.FC<SidebarProps> = ({ onChange, sideClose }) => {
       <div className={sideBarStyles[`side-list`]}>
         <div
           className={sideBarStyles[`user-container`]}
+          id="my-page"
           onClick={() => {
-            member ? navigate("/user") : navigate("/login");
+            member
+              ? dispatch(setMainOption(ContentType.MyPage))
+              : navigate("/login");
           }}
         >
           {member ? (

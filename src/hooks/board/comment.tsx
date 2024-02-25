@@ -1,7 +1,10 @@
-import React from "react";
+import { useDispatch } from "react-redux";
+//import { RootState } from "../../redux/store/store";
 
-function comment() {
-  return <div>comment</div>;
+function useCommentHooks() {
+  const dispatch = useDispatch();
+
+  return {};
 }
 
-export default comment;
+export default useCommentHooks;

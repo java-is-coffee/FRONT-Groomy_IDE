@@ -73,12 +73,18 @@ function useBoardHooks() {
     }
   };
 
-  const handleHelp = async (event: React.MouseEvent<SVGElement>) => {
-    event.preventDefault();
-    console.log("추천업");
-  };
+  function dateFormat(date: string | undefined): string {
+    if (date) {
+      let editDate = date.substring(0, 19);
+      let sliceDate = editDate.split("T");
 
-  return { updateBoardList, updateCommentList, updateBoardDetail, handleHelp };
+      const result = sliceDate[0] + " " + sliceDate[1];
+      return result;
+    }
+    return "null";
+  }
+
+  return { updateBoardList, updateCommentList, updateBoardDetail, dateFormat };
 }
 
 export default useBoardHooks;
