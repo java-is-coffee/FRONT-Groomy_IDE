@@ -1,7 +1,10 @@
 import { UserRank } from "../enum/userRank";
 
 const useRankHooks = () => {
-  const getRank = (userHelpNumber: number): UserRank | null => {
+  const getRank = (userHelpNumber: number | undefined): UserRank | null => {
+    if (userHelpNumber === undefined) {
+      return null;
+    }
     if (userHelpNumber >= 0 && userHelpNumber <= 4) return UserRank.Level0;
     if (userHelpNumber >= 5 && userHelpNumber <= 20) return UserRank.Level1;
     if (userHelpNumber >= 21 && userHelpNumber <= 30) return UserRank.Level2;
@@ -17,7 +20,7 @@ const useRankHooks = () => {
     return null;
   };
 
-  const getUserRank = (helpNumber: number): UserRank | null => {
+  const getUserRank = (helpNumber: number | undefined): UserRank | null => {
     const icon = getRank(helpNumber);
 
     return icon;

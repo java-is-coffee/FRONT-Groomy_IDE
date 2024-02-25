@@ -30,6 +30,7 @@ const BoardListContainer = () => {
   const accessToken = localStorage.getItem("accessToken");
   const boardList = useSelector((state: RootState) => state.board.boardList);
   const isSearch = useSelector((state: RootState) => state.board.isSearch);
+
   const [searchData, setSearchData] = useState("");
   const [searchIsCompleted, setsearchIsCompleted] = useState(
     SearchCompleted.All
@@ -120,20 +121,20 @@ const BoardListContainer = () => {
   return (
     <div className={styled["list-container"]}>
       <div className={styled["header"]}>
-      <span>질문 게시판</span>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <FaClipboardQuestion
-          className="mr-15"
-          size={25}
-          onClick={resetBoadList}
-        />
-        <SlMagnifier
-          size={25}
-          onClick={() => setSearchModalOpen(!searchModalOpen)}
-        />
+        <span>질문 게시판</span>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <FaClipboardQuestion
+            className="mr-15"
+            size={25}
+            onClick={resetBoadList}
+          />
+          <SlMagnifier
+            size={25}
+            onClick={() => setSearchModalOpen(!searchModalOpen)}
+          />
+        </div>
       </div>
-    </div>
-      
+
       {/* 검색 파트 */}
       <div
         id="searchForm"

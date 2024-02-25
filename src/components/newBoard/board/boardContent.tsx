@@ -25,9 +25,11 @@ import { setBackLog } from "../../../redux/reducers/myPageReducer";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { TfiCommentAlt } from "react-icons/tfi";
 import { toast } from "react-toastify";
+import useRankHooks from "../../../hooks/userRank";
 
 const BoardContent = () => {
   const curContent = useSelector((state: RootState) => state.board.content);
+
   const userInfo = useSelector((state: RootState) => state.member.member);
   const beforePageIndex = useSelector(
     (state: RootState) => state.board.currentPage
@@ -91,6 +93,8 @@ const BoardContent = () => {
       }
     }
   };
+
+  const userRankHooks = useRankHooks();
 
   const handleHelp = async (event: React.MouseEvent<SVGAElement>) => {
     event.preventDefault();
@@ -160,6 +164,15 @@ const BoardContent = () => {
         </div>
       </div>
       <div className={styled.postMetadata}>
+        <span>
+          <img
+            style={{ width: "40px", marginRight: "5px" }}
+            src={`/icon/rankIcon/${userRankHooks.getUserRank(
+              curContent?.memberHelpNumber
+            )}.png`}
+            alt="유저 등급"
+          />
+        </span>
         <span className={styled.nickname}>{curContent?.nickname}</span>
         <span className={styled.separator}></span>
         <span className={styled.createdTime}>

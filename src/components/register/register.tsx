@@ -74,10 +74,10 @@ function RegisterComponent() {
     const result = await postRegister(requestDTO);
 
     if (result === "success") {
-      alert("회원 가입 완료");
+      toast.success("회원 가입 완료");
       regitserHooks.goLogin();
     } else {
-      alert("실패");
+      toast.error("회원 가입 실패");
     }
   };
 

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 //import { RootState } from "../../redux/store/store";
 import { PageNumber, getBoardList } from "../../api/board/getBoardList";
 import {
@@ -17,11 +17,14 @@ import IdeOptionType from "../../enum/ideOptionType";
 import { ContentType } from "../../enum/mainOptionType";
 import { setIdeOption } from "../../redux/reducers/ide/ideOptionReducer";
 import { setMainOption } from "../../redux/reducers/mainpageReducer";
+import { RootState } from "../../redux/store/store";
+import BoardOption from "../../enum/boardOptionType";
 
 function useBoardHooks() {
   //보드 리스트
   //const boardStatus = useSelector((state: RootState) => state.board.boardList);
   const dispatch = useDispatch();
+  const boardOption = useSelector((state: RootState) => state.board.option);
 
   const updateBoardList = async (pageNumber: number) => {
     try {
@@ -91,17 +94,23 @@ function useBoardHooks() {
   const switchOption = (option: string) => {
     switch (option) {
       case "content":
-        dispatch(setIdeOption(IdeOptionType.BoardContent));
-        dispatch(setMainOption(ContentType.BoardContent));
+        if (boardOption === BoardOption.IdePage)
+          dispatch(setIdeOption(IdeOptionType.BoardContent));
+        else if (boardOption === BoardOption.MainPage)
+          dispatch(setMainOption(ContentType.BoardContent));
         return;
 
       case "write":
-        dispatch(setIdeOption(IdeOptionType.BoardWrite));
-        dispatch(setMainOption(ContentType.BoardWrite));
+        if (boardOption === BoardOption.IdePage)
+          dispatch(setIdeOption(IdeOptionType.BoardWrite));
+        else if (boardOption === BoardOption.MainPage)
+          dispatch(setMainOption(ContentType.BoardWrite));
         return;
       case "list":
-        dispatch(setIdeOption(IdeOptionType.BoardList));
-        dispatch(setMainOption(ContentType.BoardList));
+        if (boardOption === BoardOption.IdePage)
+          dispatch(setIdeOption(IdeOptionType.BoardList));
+        else if (boardOption === BoardOption.MainPage)
+          dispatch(setMainOption(ContentType.BoardList));
         return;
       default:
         return;
