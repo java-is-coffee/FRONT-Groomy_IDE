@@ -13,6 +13,10 @@ import {
   getCommentList,
 } from "../../api/board/getCommentList";
 import { getBoardContent } from "../../api/board/getBoardContent";
+import IdeOptionType from "../../enum/ideOptionType";
+import { ContentType } from "../../enum/mainOptionType";
+import { setIdeOption } from "../../redux/reducers/ide/ideOptionReducer";
+import { setMainOption } from "../../redux/reducers/mainpageReducer";
 
 function useBoardHooks() {
   //보드 리스트
@@ -84,7 +88,33 @@ function useBoardHooks() {
     return "null";
   }
 
-  return { updateBoardList, updateCommentList, updateBoardDetail, dateFormat };
+  const switchOption = (option: string) => {
+    switch (option) {
+      case "content":
+        dispatch(setIdeOption(IdeOptionType.BoardContent));
+        dispatch(setMainOption(ContentType.BoardContent));
+        return;
+
+      case "write":
+        dispatch(setIdeOption(IdeOptionType.BoardWrite));
+        dispatch(setMainOption(ContentType.BoardWrite));
+        return;
+      case "list":
+        dispatch(setIdeOption(IdeOptionType.BoardList));
+        dispatch(setMainOption(ContentType.BoardList));
+        return;
+      default:
+        return;
+    }
+  };
+
+  return {
+    updateBoardList,
+    updateCommentList,
+    updateBoardDetail,
+    dateFormat,
+    switchOption,
+  };
 }
 
 export default useBoardHooks;

@@ -20,12 +20,11 @@ import MDEditor from "@uiw/react-md-editor";
 import { CiBookmarkPlus } from "react-icons/ci";
 import { CiBookmarkMinus } from "react-icons/ci";
 import styled from "./boardContent.module.css";
-import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
-import IdeOptionType from "../../../enum/ideOptionType";
 import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 import { setBackLog } from "../../../redux/reducers/myPageReducer";
 import { MdOutlineBookmarkAdd } from "react-icons/md";
 import { TfiCommentAlt } from "react-icons/tfi";
+import { toast } from "react-toastify";
 
 const BoardContent = () => {
   const curContent = useSelector((state: RootState) => state.board.content);
@@ -57,8 +56,7 @@ const BoardContent = () => {
     if (beforePageIndex) {
       boardHooks.updateBoardList(beforePageIndex);
       dispatch(patchContent(null));
-      dispatch(setIdeOption(IdeOptionType.BoardList));
-      dispatch(setMainOption(ContentType.BoardList));
+      boardHooks.switchOption("list");
     }
     if (isBack) {
       dispatch(patchContent(null));
@@ -69,13 +67,12 @@ const BoardContent = () => {
 
   const handleEdit = () => {
     dispatch(patchIsEdited(true));
-    dispatch(setIdeOption(IdeOptionType.BoardWrite));
-    dispatch(setMainOption(ContentType.BoardWrite));
+    boardHooks.switchOption("write");
   };
 
   const hadleDelete = async () => {
     if (!window.confirm("게시글을 삭제 하시겠습니까?")) {
-      alert("게시글 삭제가 취소 되었습니다.");
+      toast.success("게시글 삭제가 취소 되었습니다.");
     } else {
       if (curContent) {
         await removeBoard(curContent.boardId);

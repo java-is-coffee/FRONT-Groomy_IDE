@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import BoardItem from "./boardItem";
-import { ContentType } from "../../../enum/mainOptionType";
 import { useDispatch, useSelector } from "react-redux";
 import EditIcon from "@mui/icons-material/Edit";
 import { RootState } from "../../../redux/store/store";
@@ -19,9 +18,6 @@ import styled from "./boardList.module.css";
 import { searchBoardList } from "../../../api/board/searchBoardList";
 import useBoardHooks from "../../../hooks/board/boardHook";
 import SeachPaging from "./searchPaging";
-import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
-import IdeOptionType from "../../../enum/ideOptionType";
-import { setMainOption } from "../../../redux/reducers/mainpageReducer";
 import { Button, Fab, TextField } from "@mui/material";
 
 export enum SearchCompleted {
@@ -64,14 +60,12 @@ const BoardListContainer = () => {
       dispatch(patchContentId(fetchContentId));
       boardHooks.updateCommentList(fetchContentId);
 
-      dispatch(setIdeOption(IdeOptionType.BoardContent));
-      dispatch(setMainOption(ContentType.BoardContent));
+      boardHooks.switchOption("content");
     }
     //타겟 id가 존재하지 않는다면 새로운 게시글 이라는뜻.
     else {
       dispatch(patchContent(null));
-      dispatch(setIdeOption(IdeOptionType.BoardWrite));
-      dispatch(setMainOption(ContentType.BoardWrite));
+      boardHooks.switchOption("write");
     }
   };
 
