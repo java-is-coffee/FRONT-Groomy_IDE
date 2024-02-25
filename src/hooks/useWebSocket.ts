@@ -26,6 +26,7 @@ const useWebSocket = () => {
       const client = Stomp.over(socket);
       patchAccessToken();
       const storedToken = localStorage.getItem("accessToken")?.trim();
+      client.debug = () => {};
       client.connect(
         { Authorization: `${storedToken}` },
         (frame) => {
@@ -63,7 +64,6 @@ const useWebSocket = () => {
           subscriptions.delete(destination); // 구독 해제 시 맵에서 제거
         },
       };
-
       subscriptions.set(destination, subscriptionObject);
 
       return subscriptionObject;
