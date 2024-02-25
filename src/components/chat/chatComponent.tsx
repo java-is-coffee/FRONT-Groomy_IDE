@@ -4,7 +4,7 @@ import { Input, IconButton } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import useWebSocket from "../../hooks/useWebSocket";
-import { FaCircleArrowUp } from "react-icons/fa6";
+import { FaArrowDown, FaCircleArrowUp } from "react-icons/fa6";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import chatStyles from "./chat.module.css";
 import { useParams } from "react-router-dom";
@@ -244,6 +244,10 @@ const ChatComponent: React.FC = () => {
     );
   }
 
+  const scrollToBottom = () => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return curMember === null ? (
     <div></div>
   ) : (
@@ -279,6 +283,7 @@ const ChatComponent: React.FC = () => {
           </form>
         </div>
       )}
+      {/* 메시지 */}
       <div className={chatStyles.chat_messages_container}>
         <div className={chatStyles.chat_messages_warpper} ref={startOfMessage}>
           {filteredChatLog.map((message, index) => (
@@ -318,23 +323,40 @@ const ChatComponent: React.FC = () => {
           <div ref={endOfMessagesRef} />
         </div>
       </div>
+
+      {/* 최하단 이동 버튼 */}
+      <div>
+        <form
+          className={chatStyles.chat_input_container}
+          onSubmit={handleSendMessage}
+        >
+        </form>
+        <div className= {chatStyles.scrollToBottomButton}>
+          <IconButton onClick={scrollToBottom} className={chatStyles.btn_2}>
+            <FaArrowDown />
+          </IconButton>
+        </div>
+      </div>
+      
+      {/* 하단 */}
       <form
         className={chatStyles.chat_input_container}
-        onSubmit={(e: any) => handleSendMessage(e)}
+        onSubmit={handleSendMessage}
       >
         <Input
+          className={chatStyles.chat_input}
           size="small"
-          placeholder={"채팅을 입력하세요"}
+          placeholder="채팅을 입력하세요"
           autoFocus
           required
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           style={{
-            width: "85%",
+            flexGrow: 1,
             marginRight: "10px",
           }}
         />
-        <IconButton aria-label="send-btn" type="submit">
+        <IconButton aria-label="send-btn" type="submit" className={chatStyles.btn_3}>
           <FaCircleArrowUp />
         </IconButton>
       </form>
