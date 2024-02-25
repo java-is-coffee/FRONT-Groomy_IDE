@@ -1,4 +1,5 @@
-import { useParams } from "react-router-dom";
+//ci/cd 주석
+// import { useParams } from "react-router-dom";
 import ChatComponent from "../../chat/chatComponent";
 import sideStyles from "./sideContents.module.css";
 
@@ -8,10 +9,9 @@ const Chat = () => {
       {/* <div className={sideStyles[`side-container-header`]}>
         <span className={sideStyles[`side-container-title`]}>CHAT</span>
       </div> */}
-      <ChatComponent /> 
+      <ChatComponent />
     </div>
   );
 };
 
 export default Chat;
-

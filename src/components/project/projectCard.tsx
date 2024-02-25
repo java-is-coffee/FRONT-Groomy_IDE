@@ -16,7 +16,6 @@ import { removeInvitedProjects } from "../../redux/reducers/projectReducer";
 import { getProjectMemberList } from "../../api/member/getProjectMemberList";
 import { IMember } from "../../api/member/imemberDTO";
 
-
 type projectProps = {
   projectDetails: ProjectDetails;
   type: string;
@@ -112,13 +111,13 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
     }
   }, [fetchProjectMemberList, type]);
 
+  //ci/cd주석처리
 
-
-  const handleProjectSelect = () => {
-    nav(`/chat/${projectDetails.projectId}`, {
-      state: { projectName: projectDetails.projectName }
-    });
-  };
+  // const handleProjectSelect = () => {
+  //   nav(`/chat/${projectDetails.projectId}`, {
+  //     state: { projectName: projectDetails.projectName }
+  //   });
+  // };
 
   return (
     <div
