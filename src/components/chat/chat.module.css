@@ -1,12 +1,9 @@
 /* 모달 */
 .modal {
-  display: block;
-  top: 0;
-  left: 0%;
-  height: 100%;
-  max-height: 97vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   width: 100%;
-  z-index: 1000;
   overflow: hidden;
   font-family: "Inter", sans-serif;
 }
@@ -18,18 +15,19 @@
   box-sizing: border-box;
   justify-content: space-between;
   align-items: center;
-  padding: 23px 10px 10px 10px;
   background-color: #ffffff;
   margin: 0 auto;
-
   font-size: 24px; 
   font-weight: bold;
-  /* padding: 15px 10px;  */
+  width: 100%;
+  flex-grow: 0;
+  padding: 15px 10px; 
+  height: 60px; 
 }
 
 .chat_project_name {
-  font-size: 1em;
-  font-weight: bold;
+  font-size: 0.8em;
+  font-weight: 700;
   margin-right: 10px;
   color: rgb(0, 0, 0);
 }
@@ -63,12 +61,11 @@
   position: relative;
   transition: 1s all ease-in-out;
   z-index: 100;
+  overflow-y: auto;
 }
 
 .chat_messages_warpper {
   overflow-y: scroll;
-  /* scrollbar-width: none; */
-  /* -ms-overflow-style: none; */
   height: 88vh;
 }
 
@@ -82,8 +79,8 @@
   word-break: break-word;
   padding: 5px;
   width: fit-content; 
-  min-width: 10%; /* 최소 너비 설정 */
-  max-width: 80%; /* 최대 너비 설정 */
+  min-width: 10%; 
+  max-width: 80%;
   word-wrap: break-word;
 
   font-size: 0.9em; 
@@ -93,6 +90,7 @@
 .chat_message.mine {
   align-self: flex-end;
   margin-left: auto;
+  margin-right: 18px;
   background-color: var(--sub-theme-color);
   color: white;
   justify-content: flex-end;
@@ -154,7 +152,6 @@
 }
 
 
-
 /* 하단 */
 .chat_input_container {
   display: flex;
@@ -178,5 +175,74 @@
   align-items: center;
   justify-content: center;
   font-size: 1rem;
+}
+
+
+/* 검색 */
+.searchBarContainer{
+  position: flex; 
+  z-index: 101;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: auto; 
+  overflow: visible;
+  flex-wrap: nowrap;
+  transition: all 0.3s ease;
+  width: 100%; 
+  margin: auto; 
+  box-sizing: border-box;
+}
+
+.searchInput {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.btn, .cancelButton {
+  padding: 0px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.btn:hover, .cancelButton:hover {
+  background-color: #e5e5ea;
+}
+
+
+.searchButton, .cancelButton {
+  flex: 0 0 auto;
+}
+
+/* 스크롤 */
+.chat_messages_warpper::-webkit-scrollbar {
+  width: 7px; 
+}
+
+.chat_messages_warpper::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 4px;
+}
+
+.chat_messages_warpper::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* 하이라이팅 */
+.markHighlight {
+  background-color: #0dadfde3; 
+  color: #ffffff;
+  padding: 0.2em 0.4em; 
+  margin: 0 0.2em; 
+  border-radius: 0.5em; 
+  box-decoration-break: clone; 
 }
 

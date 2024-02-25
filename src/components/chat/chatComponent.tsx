@@ -10,7 +10,7 @@ import chatStyles from "./chat.module.css";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { selectProjects } from "../../redux/reducers/projectReducer";
 import SearchIcon from '@mui/icons-material/Search';
-
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 type Message = {
@@ -247,8 +247,18 @@ const ChatComponent: React.FC = () => {
     }
   };
 
-  // 
 
+  // 하이라이팅
+  function highlightText(text: string, highlight: string) {
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return parts.map((part, index) =>
+      part.toLowerCase() === highlight.toLowerCase() ? (
+        <mark key={index} className={chatStyles.markHighlight}>{part}</mark>
+      ) : (
+        part
+      )
+    );
+  }
 
   return curMember === null ? (
     <div></div>
@@ -262,24 +272,27 @@ const ChatComponent: React.FC = () => {
       </div>
       {showSearchBar && (
         <div className={chatStyles.searchBarContainer}>
-          <form onSubmit={handleSearch}>
+          <form onSubmit={handleSearch} className={chatStyles.searchForm}>
             <input
+              className={chatStyles.searchInput}
               type="text"
               placeholder="검색어를 입력하세요"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button type="submit">검색</button>
+            <IconButton type="submit" className={chatStyles.searchButton}>
+              <SearchIcon />
+            </IconButton>
+            <IconButton className={chatStyles.cancelButton} onClick={() => { setSearchTerm(''); setFilteredChatLog(chatLog); }}>
+              <CancelIcon />
+            </IconButton>
           </form>
         </div>
       )}
       <div className={chatStyles.chat_messages_container}>
-        <div className={chatStyles.chat_messages_warpper}>
-          <div ref={startOfMessage}  style={{ minHeight: "20px"}}/>
+        <div className={chatStyles.chat_messages_warpper} ref={startOfMessage}> 
           {filteredChatLog.map((message, index) => (
-            <div
-              key={index}
-              className={`${chatStyles.chat_message} ${
+            <div key={index} className={`${chatStyles.chat_message} ${
                 curMember.name === message.name
                   ? chatStyles.mine
                   : chatStyles.others
@@ -297,7 +310,9 @@ const ChatComponent: React.FC = () => {
                 </span>
               </div>
               <div className={chatStyles.chat_message_content}>
-                <span className={chatStyles.chat_text}>{message.message}</span>
+              <div className={chatStyles.chat_message_content}>
+                {searchTerm ? highlightText(message.message, searchTerm) : message.message}
+              </div>
               </div>
               <div>
                 <span className={chatStyles.chat_user_createdTime}>
@@ -311,10 +326,7 @@ const ChatComponent: React.FC = () => {
       </div>
       <form
         className={chatStyles.chat_input_container}
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSendMessage();
-        }}
+        onSubmit={handleSendMessage}
       >
         <Input
           size="small"
