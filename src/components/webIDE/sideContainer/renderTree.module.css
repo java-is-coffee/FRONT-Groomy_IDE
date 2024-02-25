@@ -28,7 +28,7 @@
 }
 
 .tree-container {
-  height: 94vh;
+  height: 100%;
   overflow-y: auto;
 }
 
