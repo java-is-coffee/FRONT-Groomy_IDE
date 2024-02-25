@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import CodeTab from "./codeTab";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import MonacoEditor from "./monacoEditor";
 import useWebSocket from "../../../hooks/useWebSocket";
 import { useParams } from "react-router-dom";
 
