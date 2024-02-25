@@ -23,6 +23,9 @@ import styled from "./boardContent.module.css";
 import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
 import IdeOptionType from "../../../enum/ideOptionType";
 import { setMainOption } from "../../../redux/reducers/mainpageReducer";
+import { setBackLog } from "../../../redux/reducers/myPageReducer";
+import { MdOutlineBookmarkAdd } from "react-icons/md";
+import { TfiCommentAlt } from "react-icons/tfi";
 
 const BoardContent = () => {
   const curContent = useSelector((state: RootState) => state.board.content);
@@ -36,6 +39,7 @@ const BoardContent = () => {
   const boardHooks = useBoardUpdate();
 
   const [boardOptionCheck, setBoardOptionCheck] = useState(false);
+  const isBack = useSelector((state: RootState) => state.myPage.isBack);
 
   const dispatch = useDispatch();
 
@@ -56,17 +60,20 @@ const BoardContent = () => {
       dispatch(setIdeOption(IdeOptionType.BoardList));
       dispatch(setMainOption(ContentType.BoardList));
     }
+    if (isBack) {
+      dispatch(patchContent(null));
+      dispatch(setMainOption(ContentType.MyPage));
+      dispatch(setBackLog(!isBack));
+    }
   };
 
-  const handleEdit = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
+  const handleEdit = () => {
     dispatch(patchIsEdited(true));
     dispatch(setIdeOption(IdeOptionType.BoardWrite));
     dispatch(setMainOption(ContentType.BoardWrite));
   };
 
-  const hadleDelete = async (event: React.MouseEvent<HTMLDivElement>) => {
-    event.preventDefault();
+  const hadleDelete = async () => {
     if (!window.confirm("게시글을 삭제 하시겠습니까?")) {
       alert("게시글 삭제가 취소 되었습니다.");
     } else {
@@ -103,87 +110,103 @@ const BoardContent = () => {
     }
   };
 
-  function dateFormat(date: string | undefined): string {
-    if (date) {
-      let editDate = date.substring(0, 19);
-      let sliceDate = editDate.split("T");
-
-      const result = sliceDate[0] + " " + sliceDate[1];
-      return result;
-    }
-    return "null";
-  }
-
   return (
-    <div className={styled["content-container"]}>
-      <div className={styled.top}>
+    <div className={styled.boardContentContainer}>
+      <div className={styled.option}>
         <MdKeyboardArrowLeft
-          className={styled.dot}
-          size={48}
+          className={styled.iconButton}
+          size={"28px"}
           onClick={backList}
         />
-        {curContent && curContent.completed ? (
-          <span className={styled["completed-box"]}>해결됨</span>
-        ) : (
-          <span className={styled["completed-box"]}>미해결</span>
-        )}
         {checkOwner ? (
-          <div className={styled["dropdown"]}>
+          <div className={styled.editDropdownContainer}>
             <HiOutlineDotsHorizontal
-              className={styled.dot}
-              size={48}
+              className={styled.iconButton}
+              size={"28px"}
               onClick={() => setBoardOptionCheck((prev) => !prev)}
             />
             <div
-              className={`${styled["dropdown-menu"]} ${
-                boardOptionCheck ? " " : `${styled["hidden"]}`
+              className={`${styled.editDropdownMenu} ${
+                boardOptionCheck
+                  ? styled.dropdownMenuVisible
+                  : styled.dropdownMenuHidden
               }`}
             >
-              <div className={styled["dropdown-item"]} onClick={handleEdit}>
-                Edit
-              </div>
-              <div className={styled["dropdown-item"]} onClick={hadleDelete}>
-                Delete
-              </div>
+              <button onClick={handleEdit}>EDIT</button>
+              <button onClick={hadleDelete}>DELETE</button>
             </div>
           </div>
         ) : curContent?.memberScrapped ? (
-          <CiBookmarkMinus size={48} onClick={handleScrap} />
+          <CiBookmarkMinus size={"28px"} onClick={handleScrap} />
         ) : (
-          <CiBookmarkPlus size={48} onClick={handleScrap} />
+          <CiBookmarkPlus size={"28px"} onClick={handleScrap} />
         )}
       </div>
-
-      <h1>{curContent?.title}</h1>
-
-      <div>
-        {curContent?.nickname} | {dateFormat(curContent?.createdTime)} | 조회수
-        : {curContent?.viewNumber}
+      <div className={styled.headerSection}>
+        <div className={styled.contentHeader}>
+          <span className={styled.boardTitle}>{curContent?.title}</span>
+          {curContent && curContent.completed ? (
+            <span
+              className={styled.statusBadge}
+              style={{ backgroundColor: "green", color: "white" }}
+            >
+              해결됨
+            </span>
+          ) : (
+            <span
+              className={styled.statusBadge}
+              style={{ backgroundColor: "tomato", color: "white" }}
+            >
+              미해결
+            </span>
+          )}
+        </div>
       </div>
-      <hr />
-
-      {curContent ? (
+      <div className={styled.postMetadata}>
+        <span className={styled.nickname}>{curContent?.nickname}</span>
+        <span className={styled.separator}></span>
+        <span className={styled.createdTime}>
+          {boardHooks.dateFormat(curContent?.createdTime)}
+        </span>
+        <span className={styled.Separator}></span>
+        <span className={styled.viewNumber}>
+          조회수: {curContent?.viewNumber}
+        </span>
+        <span className={styled.comment}>
+          답변: {curContent?.commentNumber}
+        </span>
+      </div>
+      {curContent && (
         <MDEditor.Markdown
-          style={{ padding: 30, backgroundColor: "unset" }}
+          style={{
+            padding: "7px",
+            marginTop: "20px",
+            backgroundColor: "unset",
+            color: "black",
+          }}
           source={curContent.content}
         />
-      ) : (
-        " "
       )}
-
-      <h3 className={styled["help-container"]}>
-        <FaThumbsUp
-          size={36}
-          style={{ marginRight: "15px" }}
-          onClick={handleHelp}
-        />
-        도움됐어요! : {curContent?.helpNumber}
-      </h3>
-      <h5 className={styled["help-container"]}>
-        스크랩 : {curContent?.scrapNumber}
-      </h5>
-      <h2>답변 {curContent?.commentNumber}</h2>
-      <hr />
+      <div className={styled.optionBtn}>
+        <div className={styled.interactionStats}>
+          <div className={styled.iconContainer}>
+            <FaThumbsUp size={"14px"} onClick={handleHelp} />
+          </div>
+          {curContent?.helpNumber}
+        </div>
+        <div className={styled.interactionStats}>
+          <div>
+            <MdOutlineBookmarkAdd size={"18px"} onClick={handleScrap} />
+          </div>
+          {curContent?.scrapNumber}
+        </div>
+        <div className={styled.interactionStats}>
+          <div>
+            <TfiCommentAlt size={"14px"} />
+          </div>
+          {curContent?.commentNumber}
+        </div>
+      </div>
       <Comment />
     </div>
   );

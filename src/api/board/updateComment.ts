@@ -47,7 +47,6 @@ export const updateComment = async (
     );
 
     if (response.status === 200) {
-      console.log(response);
       return response.data;
     } else {
       console.error(

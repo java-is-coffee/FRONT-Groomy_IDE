@@ -7,6 +7,10 @@ function useLoginHooks() {
     navigate("/");
   };
 
+  const goLogin = () => {
+    navigate("/login");
+  };
+
   const goRegister = () => {
     navigate("/register");
   };
@@ -15,7 +19,7 @@ function useLoginHooks() {
     navigate("/resetPassword");
   };
 
-  return { goMain, goRegister, goResetPassword };
+  return { goMain, goRegister, goResetPassword, goLogin };
 }
 
 export default useLoginHooks;

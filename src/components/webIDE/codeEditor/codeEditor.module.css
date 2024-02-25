@@ -10,7 +10,7 @@
   border-bottom: 1px solid #ccc; /* 탭 아래에 구분선 추가 */
   background-color: var(--main-theme-color);
   width: 100%;
-  height: 35px;
+  height: 40px;
   min-height: 35px;
   scrollbar-width: none;
   overflow-x: hidden;

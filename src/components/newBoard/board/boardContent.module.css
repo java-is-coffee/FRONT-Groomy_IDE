@@ -1,4 +1,5 @@
-.content-container {
+/* 게시글 전체 컨테이너 */
+.boardContentContainer {
   width: 100%;
   padding: 15px;
   background-color: var(--main-theme-color);
@@ -6,76 +7,128 @@
   min-height: 92.5vh;
   overflow-y: auto;
   box-sizing: border-box;
-  border: 2px solid black;
-  overflow-y: auto;
+  border-top: 1px solid #d9d9d9;
 }
 
-.top {
-  position: relative;
+.option {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.headerSection {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 7px;
 }
 
-.dot {
-  padding: 2px;
+.contentHeader {
+  display: flex;
+  align-items: center;
 }
 
-.hidden {
-  display: none;
+.boardTitle {
+  font-size: 26px;
+  font-weight: bold;
 }
 
-.dot:hover {
+.postMetadata {
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 15px; /* 하단 컨텐츠와의 간격 */
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.postMetadata .separator {
+  margin: 0 10px; /* 구분자와 다른 요소들 사이의 간격 */
+  color: #aaa; /* 구분자 색상 */
+}
+
+.nickname,
+.createdTime,
+.viewNumber {
+  padding: 2px 5px; /* 패딩 */
+  border-radius: 4px; /* 경계 모서리 둥글게 */
+}
+
+.optionBtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.interactionStats {
+  display: flex;
+  align-items: center; /* 아이콘과 숫자를 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center;
+  width: 40px; /* 동그라미 크기 조절 */
+  height: 40px; /* 동그라미 크기 조절 */
+  border-radius: 10px; /* 동그라미 모양 만들기 */
+  border: 1px solid var(--sub-theme-color); /* 테두리 색상 */
+  margin: 10px; /* 주변 요소와의 간격 */
+  background-color: #f9f9f9; /* 배경색 */
+  cursor: pointer; /* 마우스 오버 시 커서 변경 */
+}
+
+.interactionStats .iconConatiner {
+  padding: 5px;
+}
+
+.interactionStats:hover {
+  background-color: var(--sub-theme-color); /* 호버 시 배경색 변경 */
+  color: white;
+}
+
+.interactionStats > svg {
+  margin-right: 5px; /* 아이콘과 숫자 사이 간격 */
+}
+
+/* 아이콘 버튼: 뒤로 가기 및 드롭다운 메뉴 버튼 */
+.iconButton {
+  margin: 2px;
+}
+
+.iconButton:hover {
   background-color: rgb(218, 218, 218);
 }
 
-.help-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.completed-box {
+/* 상태 배지: 해결됨/미해결 */
+.statusBadge {
   background: #ccf0fe;
-  border-radius: 50px;
-  margin-right: 15px;
-  padding: 8px;
+  padding: 5px;
+  border-radius: 8px;
+  margin-left: 15px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
-/* 드롭다운 버튼 스타일링 */
-.dropdown button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  position: relative; /* 버튼을 기준으로 드롭다운 메뉴를 위치시킵니다. */
+.comment {
+  padding: 7px;
 }
 
-/* 드롭다운 버튼에 마우스를 올렸을 때의 스타일링 */
-.dropdown button:hover {
-  background-color: #f2f2f2;
+/* 드롭다운 메뉴 컨테이너 */
+.editDropdownContainer {
+  position: relative;
 }
 
-/* 드롭다운 메뉴 스타일링 */
-.dropdown-menu {
-  position: absolute; /* 상대적 위치 지정된 버튼에 대해 절대적 위치 지정 */
+/* 드롭다운 메뉴 */
+.editDropdownMenu {
+  position: absolute;
   right: 0;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 100; /* 다른 요소 위에 나타나도록 z-index 설정 */
+  z-index: 100;
 }
 
-/* 드롭다운 메뉴 내부의 버튼 스타일링 */
-.dropdown-menu button {
+.editDropdownMenu button {
   padding: 10px;
   width: 100%;
   text-align: left;
@@ -87,35 +140,62 @@
   font-weight: bold;
 }
 
-.dropdown-menu button:last-child {
+.editDropdownMenu button:hover {
+  border-bottom: none;
+  background-color: var(--sub-theme-color);
+  color: white;
+}
+
+.editDropdownMenu button:last-child {
   border-bottom: none;
   color: tomato;
 }
 
-.dropdown-menu button:last-child:hover {
+.editDropdownMenu button:last-child:hover {
   border-bottom: none;
   background-color: rgb(230, 114, 94);
   color: white;
 }
 
-/* 드롭다운 메뉴 내부의 버튼에 마우스를 올렸을 때의 스타일링 */
-.dropdown-menu button:hover {
-  background-color: var(--sub-theme-color);
-  color: white;
+/* 숨김 처리된 요소 */
+.dropdownMenuHidden {
+  display: none;
 }
 
-.dropdown-item {
-  border: 0.5px solid black;
-  padding: 5px 5px 15px 5px;
-  width: 10vh;
-  text-align: center;
+/* 추가: 아이콘 버튼 스타일링 */
+.backIconButton,
+.editIconButton,
+.deleteIconButton,
+.scrapIconButton {
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 
-.dropdown-item:nth-child(2) {
-  color: red;
+.backIconButton:hover,
+.editIconButton:hover,
+.deleteIconButton:hover,
+.scrapIconButton:hover {
+  transform: scale(1.1);
 }
 
-.dropdown-item:hover {
-  background-color: rgb(218, 218, 218);
+/* 상태 배지 커스터마이징 */
+.statusBadge.completed {
+  background-color: #4caf50; /* 해결됨 상태의 색상 */
+}
+
+.statusBadge.unresolved {
+  background-color: #f44336; /* 미해결 상태의 색상 */
+}
+
+/* 스크랩 아이콘 */
+.scrapIconButton {
+  color: gold; /* 스크랩된 상태를 나타내는 색상 */
+}
+.scrapIconButton.active {
+  transform: scale(1.2); /* 활성 상태일 때 아이콘 확대 */
+}
+
+/* 드롭다운 메뉴와 항목에 대한 추가 스타일 */
+.editDropdownContainer.active .editDropdownMenu {
+  display: block; /* 드롭다운 메뉴 활성화 시 보여주기 */
 }

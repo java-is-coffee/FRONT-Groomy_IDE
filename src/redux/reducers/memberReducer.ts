@@ -16,7 +16,7 @@ const memberReducer = createSlice({
   name: "Member",
   initialState,
   reducers: {
-    setMember: (state, action: PayloadAction<MemberInfo>) => {
+    setMember: (state, action: PayloadAction<MemberInfo | null>) => {
       state.member = action.payload;
     },
   },

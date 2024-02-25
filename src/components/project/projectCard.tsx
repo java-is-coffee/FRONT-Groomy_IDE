@@ -110,7 +110,8 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
     if (type === "project") {
       fetchProjectMemberList();
     }
-  }, [fetchProjectMemberList]);
+  }, [fetchProjectMemberList, type]);
+
 
 
   const handleProjectSelect = () => {
