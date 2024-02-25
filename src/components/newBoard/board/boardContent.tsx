@@ -96,7 +96,7 @@ const BoardContent = () => {
 
   const userRankHooks = useRankHooks();
 
-  const handleHelp = async (event: React.MouseEvent<SVGAElement>) => {
+  const handleHelp = async (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     if (curContent && userInfo) {
       const fixContent = await postHelpNumber(
@@ -116,14 +116,14 @@ const BoardContent = () => {
       <div className={styled.option}>
         <MdKeyboardArrowLeft
           className={styled.iconButton}
-          size={"28px"}
+          size={"48px"}
           onClick={backList}
         />
         {checkOwner ? (
           <div className={styled.editDropdownContainer}>
             <HiOutlineDotsHorizontal
               className={styled.iconButton}
-              size={"28px"}
+              size={"48px"}
               onClick={() => setBoardOptionCheck((prev) => !prev)}
             />
             <div
@@ -138,9 +138,9 @@ const BoardContent = () => {
             </div>
           </div>
         ) : curContent?.memberScrapped ? (
-          <CiBookmarkMinus size={"28px"} onClick={handleScrap} />
+          <CiBookmarkMinus size={"48px"} onClick={handleScrap} />
         ) : (
-          <CiBookmarkPlus size={"28px"} onClick={handleScrap} />
+          <CiBookmarkPlus size={"48px"} onClick={handleScrap} />
         )}
       </div>
       <div className={styled.headerSection}>
@@ -198,15 +198,15 @@ const BoardContent = () => {
         />
       )}
       <div className={styled.optionBtn}>
-        <div className={styled.interactionStats}>
+        <div className={styled.interactionStats} onClick={handleHelp}>
           <div className={styled.iconContainer}>
-            <FaThumbsUp size={"14px"} onClick={handleHelp} />
+            <FaThumbsUp size={"14px"} />
           </div>
           {curContent?.helpNumber}
         </div>
         <div className={styled.interactionStats}>
           <div>
-            <MdOutlineBookmarkAdd size={"18px"} onClick={handleScrap} />
+            <MdOutlineBookmarkAdd size={"18px"} />
           </div>
           {curContent?.scrapNumber}
         </div>

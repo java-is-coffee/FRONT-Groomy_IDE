@@ -21,8 +21,6 @@ import { RootState } from "../../redux/store/store";
 import BoardOption from "../../enum/boardOptionType";
 
 function useBoardHooks() {
-  //보드 리스트
-  //const boardStatus = useSelector((state: RootState) => state.board.boardList);
   const dispatch = useDispatch();
   const boardOption = useSelector((state: RootState) => state.board.option);
 

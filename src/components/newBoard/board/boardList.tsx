@@ -122,12 +122,12 @@ const BoardListContainer = () => {
     <div className={styled["list-container"]}>
       <div className={styled["header"]}>
         <span>질문 게시판</span>
+        <FaClipboardQuestion
+          className="mr-15"
+          size={25}
+          onClick={resetBoadList}
+        />
         <div style={{ display: "flex", alignItems: "center" }}>
-          <FaClipboardQuestion
-            className="mr-15"
-            size={25}
-            onClick={resetBoadList}
-          />
           <SlMagnifier
             size={25}
             onClick={() => setSearchModalOpen(!searchModalOpen)}
