@@ -58,6 +58,7 @@ const MonacoEditorV2 = () => {
   const handleEditorDidMount: OnMount = (editor, monaco) => {
     setEditorInstance(editor);
     monacoRef.current = monaco;
+    console.log(monaco.editor.getModels());
     const currentModelId = editor.getModel()?.id;
     monaco.editor.getModels().forEach((model) => {
       if (model.id !== currentModelId) {
@@ -128,7 +129,8 @@ const MonacoEditorV2 = () => {
   useEffect(() => {
     if (!editorInstance || !yDocs[curFile.id] || !providers[curFile.id]) return;
     bindEditor(editorInstance);
-  }, [editorInstance, yDocs, curFile, providers, bindEditor]);
+    // eslint-disable-next-line
+  }, [editorInstance, curFile, yDocs[curFile.id], providers[curFile.id]]);
 
   // cmd + s || ctrl + s 입력시 저장 메서드 호출
   useEffect(() => {
