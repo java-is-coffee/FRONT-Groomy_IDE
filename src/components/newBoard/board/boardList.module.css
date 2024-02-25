@@ -1,12 +1,11 @@
 .list-container {
   width: 100%;
-  padding: 15px;
+  padding: 0px 15px;
   background-color: var(--main-theme-color);
-  max-height: 92.5vh;
-  min-height: 92.5vh;
+  max-height: 100vh;
   overflow-y: auto;
   box-sizing: border-box;
-  border: 2px solid black;
+  border: 1px solid #d9d9d9;
 }
 
 .hidden {
@@ -14,12 +13,30 @@
 }
 
 .header {
-  margin: -15px -15px 10px -15px;
-  padding: 15px;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px;
+  padding: 0 15px;
   background-color: white;
   border-bottom: 1px solid black;
+  width: 100%;
+  font-size: 0.8em;
+  font-weight: 700;
+  color: rgb(0, 0, 0);
+  margin-bottom: 10px;
+  height: 35px; 
+}
+
+.clipboard-icon {
+  margin: 0px 15px; 
+}
+
+.icons-right {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  margin: 0px 15px; 
 }
 
 .input {
@@ -74,4 +91,18 @@
 .paging {
   display: flex;
   justify-content: center;
+}
+
+/* 스크롤바 */
+.list-container::-webkit-scrollbar {
+  width: 7px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 4px; 
+}
+
+.list-container::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

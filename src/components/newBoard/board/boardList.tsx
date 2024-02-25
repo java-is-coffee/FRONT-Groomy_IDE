@@ -126,19 +126,20 @@ const BoardListContainer = () => {
   return (
     <div className={styled["list-container"]}>
       <div className={styled["header"]}>
+      <span>질문 게시판</span>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <FaClipboardQuestion
           className="mr-15"
           size={25}
           onClick={resetBoadList}
         />
-        질문 게시판
-        <span>
-          <SlMagnifier
-            size={25}
-            onClick={() => setSearchModalOpen(!searchModalOpen)}
-          />
-        </span>
+        <SlMagnifier
+          size={25}
+          onClick={() => setSearchModalOpen(!searchModalOpen)}
+        />
       </div>
+    </div>
+      
       {/* 검색 파트 */}
       <div
         id="searchForm"

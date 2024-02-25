@@ -8,6 +8,8 @@ import ResetPassword from "./routes/resetPassword";
 import WebIDE from "./routes/webIDE";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ChatComponent from "./components/chat/chatComponent";
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/code-editor/:projectId" element={<WebIDE />}></Route>
+          <Route path="/chat/:projectId" element={<ChatComponent />} />
         </Routes>
       </Router>
       <ToastContainer
