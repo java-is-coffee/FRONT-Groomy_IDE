@@ -18,12 +18,13 @@
   align-items: center;
   background-color: #ffffff;
   margin: 0 auto;
-  font-size: 24px; 
+  font-size: 20px; 
   font-weight: bold;
   width: 100%;
   flex-grow: 0;
-  padding: 15px 10px; 
-  height: 35px; 
+  padding: 15px 0px 15px 15px; 
+  height: 38px; 
+  border-bottom: 1px solid black;
 }
 
 .chat_project_name {
@@ -179,7 +180,7 @@
   flex-grow: 1; 
   border: 1px solid #ccc; 
   border-radius: 4px;
-  padding: 8px 10px; 
+  padding: 5px 10px; 
   font-size: 16px; 
   margin-right: 10px; 
 }
