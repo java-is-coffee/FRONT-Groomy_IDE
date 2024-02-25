@@ -25,10 +25,20 @@ const BoardItem: React.FC<boardProps> = ({ BoardDetails }) => {
     // 게시글 상단 미해결 과 제목
     <div className={styled["board-item"]} id={`${BoardDetails.boardId}`}>
       <div style={{ marginTop: "15px" }}>
-        {BoardDetails.completed ? (
-          <span className={styled["completed-box"]}>해결됨</span>
+        {BoardDetails && BoardDetails.completed ? (
+          <span
+            className={styled.statusBadge}
+            style={{ backgroundColor: "green", color: "white" }}
+          >
+            해결됨
+          </span>
         ) : (
-          <span className={styled["completed-box"]}>미해결</span>
+          <span
+            className={styled.statusBadge}
+            style={{ backgroundColor: "tomato", color: "white" }}
+          >
+            미해결
+          </span>
         )}
         <span>{BoardDetails.title}</span>
       </div>

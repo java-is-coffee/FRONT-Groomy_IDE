@@ -63,3 +63,23 @@
   align-items: center;
   padding-top: 10px;
 }
+
+/* 상태 배지: 해결됨/미해결 */
+.statusBadge {
+  background: #ccf0fe;
+  padding: 5px;
+  border-radius: 8px;
+  margin-left: 5px;
+  margin-right: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* 상태 배지 커스터마이징 */
+.statusBadge.completed {
+  background-color: #4caf50; /* 해결됨 상태의 색상 */
+}
+
+.statusBadge.unresolved {
+  background-color: #f44336; /* 미해결 상태의 색상 */
+}

@@ -10,6 +10,7 @@ import {
 import MDEditor from "@uiw/react-md-editor";
 import {
   patchBoardList,
+  patchCommentList,
   patchContent,
   patchCurrentPage,
   patchIsEdited,
@@ -74,6 +75,7 @@ function BoardWritePage() {
       if (response) {
         dispatch(patchCurrentPage(1));
         dispatch(patchBoardList(null));
+        dispatch(patchCommentList(null));
         dispatch(patchContent(response));
         boardHooks.switchOption("content");
       }
