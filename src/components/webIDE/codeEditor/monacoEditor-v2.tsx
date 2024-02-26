@@ -167,6 +167,8 @@ const MonacoEditorV2 = () => {
         <div className={editorStyles[`code-edit-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>Loading... Editor...</span>
+          <span style={{ fontSize: "17px" }}>저장 : cmt + s | ctrl + s</span>
+          <span style={{ fontSize: "17px" }}>찾기 : cmd + f | ctrl + s</span>
           <div className={editorStyles[`loader`]}></div>
         </div>
       </div>

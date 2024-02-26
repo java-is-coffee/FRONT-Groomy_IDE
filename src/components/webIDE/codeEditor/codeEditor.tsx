@@ -53,6 +53,8 @@ const CodeEditor = () => {
         <div className={editorStyles[`code-edit-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>select file to edit</span>
+          <span style={{ fontSize: "17px" }}>저장 : cmd + s | ctrl + s</span>
+          <span style={{ fontSize: "17px" }}>찾기 : cmd + f | ctrl + s</span>
         </div>
       )}
     </div>
