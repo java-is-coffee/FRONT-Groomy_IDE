@@ -51,21 +51,23 @@ const InvitedProjectListContainer: React.FC = () => {
     console.log();
   }, [invitedProjects, dispatch]);
   return (
-    <div className={projectListStyles[`project-list`]}>
+    <div>
       {invitedProjects?.length === 0 ? (
         <div className={projectListStyles[`project-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>초대가 없습니다...</span>
         </div>
       ) : (
-        invitedProjects &&
-        invitedProjects.map((project) => (
-          <ProjectCard
-            key={project.projectId}
-            projectDetails={project}
-            type="project"
-          />
-        ))
+        <div className={projectListStyles[`project-list`]}>
+          {invitedProjects &&
+            invitedProjects.map((project) => (
+              <ProjectCard
+                key={project.projectId}
+                projectDetails={project}
+                type="project"
+              />
+            ))}
+        </div>
       )}
     </div>
   );

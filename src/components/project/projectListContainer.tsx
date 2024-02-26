@@ -30,21 +30,23 @@ const ProjectListContainer = () => {
     }
   }, [projects, dispatch]);
   return (
-    <div className={projectListStyles[`project-list`]}>
+    <div>
       {projects?.length === 0 ? (
         <div className={projectListStyles[`project-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />
           <span>프로젝트를 생성해보세요</span>
         </div>
       ) : (
-        projects &&
-        projects.map((project) => (
-          <ProjectCard
-            key={project.projectId}
-            projectDetails={project}
-            type="project"
-          />
-        ))
+        <div className={projectListStyles[`project-list`]}>
+          {projects &&
+            projects.map((project) => (
+              <ProjectCard
+                key={project.projectId}
+                projectDetails={project}
+                type="project"
+              />
+            ))}
+        </div>
       )}
     </div>
   );
