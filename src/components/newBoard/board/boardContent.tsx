@@ -7,6 +7,8 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { FaThumbsUp } from "react-icons/fa";
 import {
   patchBoardList,
+  patchComment,
+  patchCommentList,
   patchContent,
   patchIsEdited,
 } from "../../../redux/reducers/boardReducer";
@@ -80,6 +82,9 @@ const BoardContent = () => {
         await removeBoard(curContent.boardId);
         dispatch(patchContent(null));
         dispatch(patchBoardList(null));
+        dispatch(patchCommentList(null));
+        dispatch(patchComment(null));
+        boardHooks.switchOption("list");
       }
     }
   };

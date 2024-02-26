@@ -10,7 +10,13 @@ import { setMember } from "../../redux/reducers/memberReducer";
 import MyPageBoard from "./myPageBoard";
 import ScrappedBoard from "./scrappedBoard";
 import MycommentList from "./myCommentList";
-import { patchCurrentPage } from "../../redux/reducers/boardReducer";
+import {
+  patchBoardList,
+  patchComment,
+  patchCommentList,
+  patchContent,
+  patchCurrentPage,
+} from "../../redux/reducers/boardReducer";
 import postNewNickname, {
   NewUserInfo,
 } from "../../api/myPage/patchNewNickname";
@@ -34,6 +40,12 @@ function MyPageContainer() {
   const dispatch = useDispatch();
   // member 정보 불러오기
   useEffect(() => {
+    //입장 시, 모든 리스트 초기화
+    dispatch(patchContent(null));
+    dispatch(patchCurrentPage(null));
+    dispatch(patchBoardList(null));
+    dispatch(patchCommentList(null));
+    dispatch(patchComment(null));
     const fetchMemberData = async () => {
       const hasMemberInfo = await getMemberInfo();
       dispatch(patchCurrentPage(null));
