@@ -5,7 +5,6 @@ import IdeOptionType from "../../enum/ideOptionType";
 import Explorer from "./sideContainer/explorer";
 
 import Chat from "./sideContainer/chat";
-import LiveShare from "./sideContainer/liveShare";
 
 import ideStyles from "./ideSytles.module.css";
 import BoardContent from "../newBoard/board/boardContent";
@@ -31,8 +30,6 @@ const SideContainer: React.FC = () => {
         return <BoardWritePage />;
       case IdeOptionType.Chat:
         return <Chat />;
-      case IdeOptionType.LiveShare:
-        return <LiveShare />;
       default:
         return null;
     }

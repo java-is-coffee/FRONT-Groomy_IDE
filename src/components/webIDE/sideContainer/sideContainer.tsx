@@ -7,7 +7,6 @@ import Explorer from "./explorer";
 import "../../../styles/webIDE/sideContainer/sideContainer.css";
 
 import Chat from "./chat";
-import LiveShare from "./liveShare";
 import BoardContent from "../../newBoard/board/boardContent";
 import BoardWritePage from "../../newBoard/board/newBoardContent";
 import { setOption } from "../../../redux/reducers/boardReducer";
@@ -31,8 +30,6 @@ const SideContainer: React.FC = () => {
         return <BoardWritePage />;
       case IdeOptionType.Chat:
         return <Chat />;
-      case IdeOptionType.LiveShare:
-        return <LiveShare />;
       default:
         return null;
     }

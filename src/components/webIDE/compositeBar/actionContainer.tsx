@@ -1,5 +1,5 @@
 import { VscFiles } from "react-icons/vsc";
-import { SiSlideshare } from "react-icons/si";
+import { IoMdExit } from "react-icons/io";
 import { GoCommentDiscussion } from "react-icons/go";
 import { GiBlackBook } from "react-icons/gi";
 import IdeOptionType from "../../../enum/ideOptionType";
@@ -9,6 +9,7 @@ import { setIdeOption } from "../../../redux/reducers/ide/ideOptionReducer";
 import { toggleSideContainer } from "../../../redux/reducers/ide/ideSideContainerReducer";
 
 import actionStyles from "./compositeBar.module.css";
+import { useNavigate } from "react-router-dom";
 
 const ActionContainer = () => {
   const dispatch = useDispatch();
@@ -50,10 +51,16 @@ const ActionContainer = () => {
     dispatch(setIdeOption(option));
   };
 
+  const nav = useNavigate();
+  const handleExitProject = () => {
+    nav("/");
+    // connect("ws/project");
+  };
+
   return (
     <div className={actionStyles[`action-container`]}>
       <div
-        className={`${actionStyles[`action-option`]}{
+        className={`${actionStyles[`action-option`]} ${
           selectedOption === IdeOptionType.File ? actionStyles.selected : ""
         }`}
         id="file"
@@ -82,15 +89,11 @@ const ActionContainer = () => {
         <GoCommentDiscussion size={"24px"} />
       </div>
       <div
-        className={`${actionStyles[`action-option`]} ${
-          selectedOption === IdeOptionType.LiveShare
-            ? actionStyles.selected
-            : ""
-        }`}
-        id="live-share"
-        onClick={changeOption}
+        className={actionStyles[`action-option`]}
+        id="exit"
+        onClick={handleExitProject}
       >
-        <SiSlideshare size={"24px"} />
+        <IoMdExit size={"24px"} />
       </div>
     </div>
   );
