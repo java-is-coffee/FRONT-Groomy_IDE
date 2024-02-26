@@ -144,7 +144,7 @@ const MonacoEditorV2 = () => {
             try {
               const result = await postFileDetails(saveItem);
               if (result) {
-                toast.done("저장완료");
+                toast.success("저장완료");
               } else {
                 toast.error("서버에 저장을 실패하였습니다.");
               }
