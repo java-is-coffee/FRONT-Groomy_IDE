@@ -40,7 +40,6 @@ export const deleteProjectMember = async (
         toast.error("루트 사용자만 멤버 조작이 가능합니다.");
       } else {
         // 유저에게 메시지 전달
-        toast("유저 목록을 불러오는데 오류가 발생했습니다.");
       }
     }
     return false;

@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import CodeTab from "./codeTab";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store/store";
-import MonacoEditor from "./monacoEditor";
 import useWebSocket from "../../../hooks/useWebSocket";
 import { useParams } from "react-router-dom";
 
 import editorStyles from "./codeEditor.module.css";
+import MonacoEditorV2 from "./monacoEditor-v2";
 
 // enum EditorTheme {
 //   iplastic = "iplastic",
@@ -47,7 +47,8 @@ const CodeEditor = () => {
     <div className={editorStyles[`code-container`]}>
       <CodeTab />
       {editFiles.length !== 0 ? (
-        <MonacoEditor />
+        // <MonacoEditor />
+        <MonacoEditorV2 />
       ) : (
         <div className={editorStyles[`code-edit-starter`]}>
           <img src="/icon/Logo.png" alt="logo..." />

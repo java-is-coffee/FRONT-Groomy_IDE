@@ -4,27 +4,13 @@ import { Input, IconButton } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import useWebSocket from "../../hooks/useWebSocket";
-import { FaCircleArrowUp } from "react-icons/fa6";
+import { FaArrowDown, FaCircleArrowUp } from "react-icons/fa6";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import chatStyles from "./chat.module.css";
 import { useParams } from "react-router-dom";
 import { selectProjects } from "../../redux/reducers/projectReducer";
 import SearchIcon from "@mui/icons-material/Search";
 import CancelIcon from "@mui/icons-material/Cancel";
-
-//ci/cd를 위해서 잠시 주석처리했습니다. 사용하신다면 해당 주석 삭제해주세용.
-
-// type Message = {
-//   id: number;
-//   text: string;
-//   user_name: string;
-//   user_icon: JSX.Element;
-//   is_mine: boolean;
-// };
-
-// type ChatComponentsProps = {
-//   projectId: string | undefined;
-// };
 
 interface IChatDTO {
   memberId: number;
@@ -52,14 +38,8 @@ const ChatComponent: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const [projectName, setProjectName] = useState("");
 
-  // const location = useLocation();
-  // const navigate = useNavigate();
-
-  //connect 제거했씁니다 (ci/cd)
   const { stompClient, subscribe, unsubscribe, sendMessage } = useWebSocket();
 
-  // const searchParams = new URLSearchParams(location.search);
-  // const currentPage = parseInt(searchParams.get('page') || '1', 10);
 
   // 채팅 불러오기
   useEffect(() => {
@@ -111,8 +91,9 @@ const ChatComponent: React.FC = () => {
   //   setInputValue(event.target.value);
   // };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e: any) => {
     console.log("message send");
+    e.preventDefault();
     if (!curMember) {
       console.log("새로고침 진행해주세요");
       return;
@@ -139,14 +120,14 @@ const ChatComponent: React.FC = () => {
         p.projectId.toString() === projectId
     );
     if (project) {
-      setProjectName(project.projectName); // 프로젝트 이름 설정
+      setProjectName(project.projectName); 
     }
   }, [projectId, projects]);
 
-  // 자동 스크롤
-  useEffect(() => {
-    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatLog]);
+  // // 자동 스크롤
+  // useEffect(() => {
+  //   endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [chatLog]);
 
   //웹소켓
   useEffect(() => {
@@ -263,6 +244,10 @@ const ChatComponent: React.FC = () => {
     );
   }
 
+  const scrollToBottom = () => {
+    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return curMember === null ? (
     <div></div>
   ) : (
@@ -298,6 +283,7 @@ const ChatComponent: React.FC = () => {
           </form>
         </div>
       )}
+      {/* 메시지 */}
       <div className={chatStyles.chat_messages_container}>
         <div className={chatStyles.chat_messages_warpper} ref={startOfMessage}>
           {filteredChatLog.map((message, index) => (
@@ -337,23 +323,40 @@ const ChatComponent: React.FC = () => {
           <div ref={endOfMessagesRef} />
         </div>
       </div>
+
+      {/* 최하단 이동 버튼 */}
+      <div>
+        <form
+          className={chatStyles.chat_input_container}
+          onSubmit={handleSendMessage}
+        >
+        </form>
+        <div className= {chatStyles.scrollToBottomButton}>
+          <IconButton onClick={scrollToBottom} className={chatStyles.btn_2}>
+            <FaArrowDown />
+          </IconButton>
+        </div>
+      </div>
+      
+      {/* 하단 */}
       <form
         className={chatStyles.chat_input_container}
         onSubmit={handleSendMessage}
       >
         <Input
+          className={chatStyles.chat_input}
           size="small"
-          placeholder={"채팅을 입력하세요"}
+          placeholder="채팅을 입력하세요"
           autoFocus
           required
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           style={{
-            width: "85%",
+            flexGrow: 1,
             marginRight: "10px",
           }}
         />
-        <IconButton aria-label="send-btn" type="submit">
+        <IconButton aria-label="send-btn" type="submit" className={chatStyles.btn_3}>
           <FaCircleArrowUp />
         </IconButton>
       </form>

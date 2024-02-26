@@ -86,9 +86,11 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
   };
 
   const handleAcceptInvite = () => {
+    dispatch(removeInvitedProjects(projectDetails.projectId));
     fetchAcceptProject();
   };
   const handleRejectInvite = () => {
+    dispatch(removeInvitedProjects(projectDetails.projectId));
     fetchRejectProject();
   };
 
@@ -110,14 +112,6 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
       fetchProjectMemberList();
     }
   }, [fetchProjectMemberList, type]);
-
-  //ci/cd주석처리
-
-  // const handleProjectSelect = () => {
-  //   nav(`/chat/${projectDetails.projectId}`, {
-  //     state: { projectName: projectDetails.projectName }
-  //   });
-  // };
 
   return (
     <div

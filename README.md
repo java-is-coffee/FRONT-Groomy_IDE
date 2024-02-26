@@ -7,7 +7,10 @@
 </p>
 
 ## 프로젝트 소개
+
 초보 개발자가 성장할 수 있는 web-IDE
+
+> 배포주소 : http://groomy-ide-front.s3-website.ap-northeast-2.amazonaws.com/
 
 ## ⚙ Stacks
 
@@ -26,30 +29,36 @@
 ## 구현 기능
 
 ### 로그인
-  - 이메일과 비밀번호로 로그인
-  - 구글 계정으로 로그인
+
+- 이메일과 비밀번호로 로그인
+- 구글 계정으로 로그인
 
 ### 회원가입
-  - 이메일, 비밀번호, 이름, 닉네임을 통해 회원가입 
+
+- 이메일, 비밀번호, 이름, 닉네임을 통해 회원가입
 
 ### 메인 페이지
-  - 프로젝트 목록
-  - 메뉴바 (유저 정보, 프로젝트 탭, 게시판 탭)
-  - 새로운 프로젝트 생성 버튼
+
+- 프로젝트 목록
+- 메뉴바 (유저 정보, 프로젝트 탭, 게시판 탭)
+- 새로운 프로젝트 생성 버튼
 
 ### IDE
-  - 파일 탐색기 구현
-  - 코드 에디터 구현
-  - 메뉴바 (파일 탐색기, 프로젝트 탭, 게시판 탭)
+
+- 파일 탐색기 구현
+- 코드 에디터 구현
+- 메뉴바 (파일 탐색기, 프로젝트 탭, 게시판 탭)
 
 ### 채팅
-  - 프로젝트에 참여한 인원들끼리의 채팅 구현
+
+- 프로젝트에 참여한 인원들끼리의 채팅 구현
 
 ### 게시판
-  - 게시글 목록 보기
-  - 게시글 작성 하기
-  - 게시글 수정 하기
-  - 게시글 삭제 하기
+
+- 게시글 목록 보기
+- 게시글 작성 하기
+- 게시글 수정 하기
+- 게시글 삭제 하기
 
 ## 🤝 Convention
 
@@ -57,7 +66,7 @@
 
 ```
  - <lable>/<jira issue number>
-        |           |           
+        |           |
         |           └─⫸ (Your Issue Number)
         |
         └─⫸ (Docs|Feat|Fix|Refactor|Test)
@@ -88,10 +97,9 @@ PR 요청 시 빌드를 진행하도록 작성
 - PR하는 브랜치가 main, develop 일 때, /back 폴더의 프로젝트를 빌드
 ```
 
-
 ## 👤 Contributor
 
-| 노홍석  | 양경진 |  정고운   | 
-| :--------: | :--------: | :------: |
-|     <img src="https://contrib.rocks/image?repo=nohsa97/nohsa97" />  |  <img src="https://contrib.rocks/image?repo=koreaygj/koreaygj" />    |<img src="https://contrib.rocks/image?repo=gooowoon/Netflex" /> | 
-| @nohsa97  | @koreaygj |  @gooowoon   | 
+|                             노홍석                             |                              양경진                              |                             정고운                              |
+| :------------------------------------------------------------: | :--------------------------------------------------------------: | :-------------------------------------------------------------: |
+| <img src="https://contrib.rocks/image?repo=nohsa97/nohsa97" /> | <img src="https://contrib.rocks/image?repo=koreaygj/koreaygj" /> | <img src="https://contrib.rocks/image?repo=gooowoon/Netflex" /> |
+|                            @nohsa97                            |                            @koreaygj                             |                            @gooowoon                            |
