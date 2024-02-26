@@ -27,7 +27,7 @@ const SelfWritten = () => {
     (state: RootState) => state.myPage.myBoardList
   );
 
-  const isBack = useSelector((state: RootState) => state.myPage.isBack);
+  // const isBack = useSelector((state: RootState) => state.myPage.isBack);
 
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ const SelfWritten = () => {
     dispatch(patchContentId(id));
     boardHooks.updateCommentList(id);
     dispatch(setMainOption(ContentType.BoardContent));
-    dispatch(setBackLog(!isBack));
+    dispatch(setBackLog(true));
   };
 
   return (

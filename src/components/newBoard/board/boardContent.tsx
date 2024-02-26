@@ -65,7 +65,7 @@ const BoardContent = () => {
     if (isBack) {
       dispatch(patchContent(null));
       dispatch(setMainOption(ContentType.MyPage));
-      dispatch(setBackLog(!isBack));
+      dispatch(setBackLog(false));
     }
   };
 

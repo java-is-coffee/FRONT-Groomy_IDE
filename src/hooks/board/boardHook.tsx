@@ -33,7 +33,6 @@ function useBoardHooks() {
       };
       const storedBoard: BoardDetails[] | null = await getBoardList(Page);
       if (storedBoard) {
-        console.log(storedBoard);
         dispatch(patchBoardList(storedBoard));
       }
     } catch (error) {
