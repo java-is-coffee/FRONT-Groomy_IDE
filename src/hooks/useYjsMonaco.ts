@@ -48,8 +48,14 @@ const useYjsMonaco = (
     };
     const initializeYDoc = () => {
       if (!tempToken || !projectId || !fileId) return;
-
+      let isContentExist: boolean = false;
+      if (yDocs[fileId]) {
+        isContentExist = true;
+      }
       const yDocument = yDocs[fileId] || new Y.Doc();
+      if (!isContentExist) {
+        yDocument.getText("monaco").insert(0, curFile.content);
+      }
       const wsProvider = new WebsocketProvider(
         `ws://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/YJS/`,
         `${projectId}/${fileId}`,
