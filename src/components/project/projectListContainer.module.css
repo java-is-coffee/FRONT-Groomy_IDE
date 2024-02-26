@@ -5,3 +5,24 @@
   gap: 40px;
   justify-items: center;
 }
+
+.project-starter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use the full height of the viewport */
+  text-align: center;
+  color: #808080; /* This is a light gray color, adjust as needed */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Choose a font-family that fits your design */
+}
+
+.project-starter img {
+  max-width: 300px; /* Adjust as needed */
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.project-starter span {
+  font-size: 18px; /* Adjust as needed */
+  letter-spacing: 1px; /* Adjust as needed */
+}
