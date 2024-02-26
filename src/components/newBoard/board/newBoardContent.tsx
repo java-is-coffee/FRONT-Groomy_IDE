@@ -12,6 +12,7 @@ import {
   patchBoardList,
   patchCommentList,
   patchContent,
+  patchContentId,
   patchCurrentPage,
   patchIsEdited,
 } from "../../../redux/reducers/boardReducer";
@@ -36,6 +37,7 @@ function BoardWritePage() {
   const isEdit = useSelector((state: RootState) => state.board.isEdited);
 
   const boardHooks = useBoardHooks();
+  const dispatch = useDispatch();
 
   const backList = () => {
     //수정 중이면 해당 게시글로
@@ -77,11 +79,11 @@ function BoardWritePage() {
         dispatch(patchBoardList(null));
         dispatch(patchCommentList(null));
         dispatch(patchContent(response));
+        dispatch(patchContentId(response.boardId));
         boardHooks.switchOption("content");
       }
     }
   };
-  const dispatch = useDispatch();
 
   const handleEdit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
