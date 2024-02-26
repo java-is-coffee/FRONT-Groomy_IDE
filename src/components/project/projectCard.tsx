@@ -86,9 +86,11 @@ const ProjectCard: React.FC<projectProps> = ({ projectDetails, type }) => {
   };
 
   const handleAcceptInvite = () => {
+    dispatch(removeInvitedProjects(projectDetails.projectId));
     fetchAcceptProject();
   };
   const handleRejectInvite = () => {
+    dispatch(removeInvitedProjects(projectDetails.projectId));
     fetchRejectProject();
   };
 
