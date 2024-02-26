@@ -26,7 +26,7 @@ const ScrappedBoard = () => {
     (state: RootState) => state.myPage.scrappedBoardList
   );
 
-  const isBack = useSelector((state: RootState) => state.myPage.isBack);
+  // const isBack = useSelector((state: RootState) => state.myPage.isBack);
 
   const dispatch = useDispatch();
 
@@ -51,7 +51,7 @@ const ScrappedBoard = () => {
     dispatch(patchContentId(id));
     boardHooks.updateCommentList(id);
     dispatch(setMainOption(ContentType.BoardContent));
-    dispatch(setBackLog(!isBack));
+    dispatch(setBackLog(true));
   };
 
   return (

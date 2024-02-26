@@ -16,6 +16,7 @@ import {
   patchCommentList,
   patchContent,
   patchCurrentPage,
+  patchPage,
 } from "../../redux/reducers/boardReducer";
 import postNewNickname, {
   NewUserInfo,
@@ -42,7 +43,7 @@ function MyPageContainer() {
   useEffect(() => {
     //입장 시, 모든 리스트 초기화
     dispatch(patchContent(null));
-    dispatch(patchCurrentPage(null));
+    dispatch(patchPage(null));
     dispatch(patchBoardList(null));
     dispatch(patchCommentList(null));
     dispatch(patchComment(null));

@@ -6,6 +6,8 @@ import { RootState } from "../../../redux/store/store";
 import {
   BoardDetails,
   patchBoardList,
+  patchComment,
+  patchCommentList,
   patchContent,
   patchContentId,
   patchIsSeacrh,
@@ -19,6 +21,7 @@ import { searchBoardList } from "../../../api/board/searchBoardList";
 import useBoardHooks from "../../../hooks/board/boardHook";
 import SeachPaging from "./searchPaging";
 import { Button, Fab, TextField } from "@mui/material";
+import { setBackLog } from "../../../redux/reducers/myPageReducer";
 
 export enum SearchCompleted {
   All = "all",
@@ -42,7 +45,10 @@ const BoardListContainer = () => {
   const boardHooks = useBoardHooks();
 
   useEffect(() => {
-    console.log("보드 리스트 업데이트 ");
+    dispatch(setBackLog(false));
+    dispatch(patchContent(null));
+    dispatch(patchCommentList(null));
+    dispatch(patchComment(null));
 
     const fetchBoardList = async () => {
       await boardHooks.updateBoardList(1);
@@ -50,7 +56,7 @@ const BoardListContainer = () => {
     if (!boardList) {
       fetchBoardList();
     }
-  }, [accessToken, boardList, boardHooks]);
+  }, [accessToken, boardList, boardHooks, dispatch]);
 
   //타겟 아이디가 존재한다 > 게시글 입장. 타겟 아이디가 없다. 새로운 게시글 작성
   const chageComponent = (event: React.MouseEvent<HTMLDivElement>) => {
