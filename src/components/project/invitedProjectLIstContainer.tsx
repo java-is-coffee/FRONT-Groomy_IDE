@@ -64,7 +64,7 @@ const InvitedProjectListContainer: React.FC = () => {
               <ProjectCard
                 key={project.projectId}
                 projectDetails={project}
-                type="project"
+                type="invited"
               />
             ))}
         </div>
